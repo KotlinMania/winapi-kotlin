@@ -1,5 +1,5 @@
 // port-lint: source shared/basetsd.rs
-package io.github.kotlinmania.winapi.shared
+package io.github.kotlinmania.winapi.shared.basetsd
 
 import io.github.kotlinmania.winapi.CInt
 import io.github.kotlinmania.winapi.CSchar
