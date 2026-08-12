@@ -59,8 +59,11 @@ fun MAKELONG(a: WORD, b: WORD): LONG =
     ((a.toUInt() or (b.toUInt() shl 16))).toInt()
 
 fun LOWORD(l: DWORD): WORD = (l and 0xffffu).toUShort()
+
 fun HIWORD(l: DWORD): WORD = ((l shr 16) and 0xffffu).toUShort()
+
 fun LOBYTE(l: WORD): BYTE = (l.toUInt() and 0xffu).toUByte()
+
 fun HIBYTE(l: WORD): BYTE = ((l.toUInt() shr 8) and 0xffu).toUByte()
 
 typealias SPHANDLE = ULong
