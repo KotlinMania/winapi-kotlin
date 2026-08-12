@@ -1,7 +1,6 @@
 // port-lint: source shared/guiddef.rs
 package io.github.kotlinmania.winapi.shared.guiddef
 
-import io.github.kotlinmania.winapi.CUchar
 import io.github.kotlinmania.winapi.CUlong
 import io.github.kotlinmania.winapi.CUshort
 
@@ -26,10 +25,10 @@ class GUID(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is GUID) return false
-        return Data1 == other.Data1
-            && Data2 == other.Data2
-            && Data3 == other.Data3
-            && Data4.contentEquals(other.Data4)
+        return Data1 == other.Data1 &&
+            Data2 == other.Data2 &&
+            Data3 == other.Data3 &&
+            Data4.contentEquals(other.Data4)
     }
 
     override fun hashCode(): Int {
@@ -70,11 +69,12 @@ typealias REFCLSID = ULong
 typealias REFFMTID = ULong
 
 /** Expansion of upstream `DEFINE_GUID!{IID_NULL, 0x00..., 0x0000, ... }`. */
-val IID_NULL: GUID = GUID(
-    Data1 = 0u,
-    Data2 = 0u,
-    Data3 = 0u,
-    Data4 = ubyteArrayOf(0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u),
-)
+val IID_NULL: GUID =
+    GUID(
+        Data1 = 0u,
+        Data2 = 0u,
+        Data3 = 0u,
+        Data4 = ubyteArrayOf(0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u),
+    )
 
 fun IsEqualGUID(g1: GUID, g2: GUID): Boolean = g1 == g2

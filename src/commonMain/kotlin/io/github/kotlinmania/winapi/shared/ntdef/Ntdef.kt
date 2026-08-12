@@ -47,6 +47,7 @@ const val SYSTEM_CACHE_ALIGNMENT_SIZE: ULong = 64u
 
 typealias PVOID = ULong
 typealias PVOID64 = ULong // 64-bit pointer, even when in 32-bit
+
 // VOID in C maps to Unit-equivalent; in Kotlin there is no "VOID" type
 // referenced from a typealias chain, so VOID is omitted: the Kotlin port
 // uses Unit at function return positions where Rust would use
@@ -89,6 +90,7 @@ typealias PCWCHAR = ULong
 typealias LPCUWCHAR = ULong // Unaligned pointer
 typealias PCUWCHAR = ULong // Unaligned pointer
 typealias UCSCHAR = CUlong
+
 const val UCSCHAR_INVALID_CHARACTER: UCSCHAR = 0xffffffffu
 const val MIN_UCSCHAR: UCSCHAR = 0u
 const val MAX_UCSCHAR: UCSCHAR = 0x0010FFFFu
@@ -117,10 +119,13 @@ typealias PZZSTR = ULong
 typealias PCZZSTR = ULong
 typealias PNZCH = ULong
 typealias PCNZCH = ULong
+
 // Skipping TCHAR things
 typealias DOUBLE = CDouble
 
-data class QUAD(val UseThisFieldToCopy: Int64)
+data class QUAD(
+    val UseThisFieldToCopy: Int64,
+)
 
 typealias PSHORT = ULong
 typealias PLONG = ULong
@@ -163,9 +168,9 @@ data class GROUP_AFFINITY(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is GROUP_AFFINITY) return false
-        return Mask == other.Mask
-            && Group == other.Group
-            && Reserved.contentEquals(other.Reserved)
+        return Mask == other.Mask &&
+            Group == other.Group &&
+            Reserved.contentEquals(other.Reserved)
     }
 
     override fun hashCode(): Int {
@@ -188,6 +193,7 @@ typealias FCHAR = UCHAR
 typealias FSHORT = USHORT
 typealias FLONG = ULONG
 typealias HRESULT = CLong
+
 const val OBJ_HANDLE_TAGBITS: ULong = 0x00000003u
 typealias CCHAR = CChar
 typealias CSHORT = CShort
@@ -199,7 +205,9 @@ typealias LCID = ULONG
 typealias PLCID = PULONG
 typealias LANGID = USHORT
 
-enum class COMPARTMENT_ID(val raw: ULong) {
+enum class COMPARTMENT_ID(
+    val raw: ULong,
+) {
     UNSPECIFIED_COMPARTMENT_ID(0u),
     DEFAULT_COMPARTMENT_ID(1u),
 }
@@ -212,8 +220,11 @@ typealias PNTSTATUS = ULong
 typealias PCNTSTATUS = ULong
 
 fun NT_SUCCESS(Status: NTSTATUS): Boolean = Status >= 0
+
 fun NT_INFORMATION(Status: NTSTATUS): Boolean = (Status.toUInt() shr 30) == 1u
+
 fun NT_WARNING(Status: NTSTATUS): Boolean = (Status.toUInt() shr 30) == 2u
+
 fun NT_ERROR(Status: NTSTATUS): Boolean = (Status.toUInt() shr 30) == 3u
 
 const val APPLICATION_ERROR_MASK: ULONG = 0x20000000u
@@ -225,11 +236,15 @@ typealias SECURITY_STATUS = CLong
 typealias TIME = LARGE_INTEGER
 typealias PTIME = ULong
 
-data class FLOAT128(val LowPart: Int64, val HighPart: Int64)
+data class FLOAT128(
+    val LowPart: Int64,
+    val HighPart: Int64,
+)
 
 typealias PFLOAT128 = ULong
 typealias LONGLONG = Int64
 typealias ULONGLONG = Uint64
+
 const val MAXLONGLONG: LONGLONG = 0x7fffffffffffffffL
 typealias PLONGLONG = ULong
 typealias PULONGLONG = ULong
@@ -242,7 +257,9 @@ typealias USN = LONGLONG
  * the 64-bit value as authoritative storage and exposes the struct view
  * through computed accessors that bit-slice it.
  */
-class LARGE_INTEGER(var QuadPart: LONGLONG) {
+class LARGE_INTEGER(
+    var QuadPart: LONGLONG,
+) {
     var LowPart: ULONG
         get() = (QuadPart and 0xFFFFFFFFL).toUInt()
         set(value) {
@@ -255,7 +272,9 @@ class LARGE_INTEGER(var QuadPart: LONGLONG) {
         }
 
     override fun equals(other: Any?): Boolean = other is LARGE_INTEGER && QuadPart == other.QuadPart
+
     override fun hashCode(): Int = QuadPart.hashCode()
+
     override fun toString(): String = "LARGE_INTEGER(QuadPart=$QuadPart)"
 }
 
@@ -266,7 +285,9 @@ typealias PLARGE_INTEGER = ULong
  * pair of 32-bit low/high views. See [LARGE_INTEGER] for the rationale
  * on the storage model.
  */
-class ULARGE_INTEGER(var QuadPart: ULONGLONG) {
+class ULARGE_INTEGER(
+    var QuadPart: ULONGLONG,
+) {
     var LowPart: ULONG
         get() = (QuadPart and 0xFFFFFFFFu).toUInt()
         set(value) {
@@ -279,7 +300,9 @@ class ULARGE_INTEGER(var QuadPart: ULONGLONG) {
         }
 
     override fun equals(other: Any?): Boolean = other is ULARGE_INTEGER && QuadPart == other.QuadPart
+
     override fun hashCode(): Int = QuadPart.hashCode()
+
     override fun toString(): String = "ULARGE_INTEGER(QuadPart=$QuadPart)"
 }
 
@@ -287,7 +310,10 @@ typealias PULARGE_INTEGER = ULong
 typealias RTL_REFERENCE_COUNT = LONG_PTR
 typealias PRTL_REFERENCE_COUNT = ULong
 
-data class LUID(val LowPart: ULONG, val HighPart: LONG)
+data class LUID(
+    val LowPart: ULONG,
+    val HighPart: LONG,
+)
 
 typealias PLUID = ULong
 typealias DWORDLONG = ULONGLONG
@@ -295,17 +321,23 @@ typealias PDWORDLONG = ULong
 typealias PHYSICAL_ADDRESS = LARGE_INTEGER
 typealias PPHYSICAL_ADDRESS = ULong
 
-enum class EVENT_TYPE(val raw: ULong) {
+enum class EVENT_TYPE(
+    val raw: ULong,
+) {
     NotificationEvent(0u),
     SynchronizationEvent(1u),
 }
 
-enum class TIMER_TYPE(val raw: ULong) {
+enum class TIMER_TYPE(
+    val raw: ULong,
+) {
     NotificationTimer(0u),
     SynchronizationTimer(1u),
 }
 
-enum class WAIT_TYPE(val raw: ULong) {
+enum class WAIT_TYPE(
+    val raw: ULong,
+) {
     WaitAll(0u),
     WaitAny(1u),
     WaitNotification(2u),
@@ -336,6 +368,7 @@ data class CSTRING(
 )
 
 typealias PCSTRING = ULong
+
 const val ANSI_NULL: CHAR = 0
 typealias CANSI_STRING = STRING
 typealias PCANSI_STRING = PSTRING
@@ -348,6 +381,7 @@ data class UNICODE_STRING(
 
 typealias PUNICODE_STRING = ULong
 typealias PCUNICODE_STRING = ULong
+
 const val UNICODE_NULL: WCHAR = 0u
 const val UNICODE_STRING_MAX_BYTES: USHORT = 65534u
 const val UNICODE_STRING_MAX_CHARS: ULong = 32767u
@@ -362,7 +396,9 @@ data class LIST_ENTRY(
 typealias PLIST_ENTRY = ULong
 typealias PRLIST_ENTRY = ULong // Restricted pointer
 
-data class SINGLE_LIST_ENTRY(val Next: ULong) // *mut SINGLE_LIST_ENTRY
+data class SINGLE_LIST_ENTRY(
+    val Next: ULong,
+) // *mut SINGLE_LIST_ENTRY
 
 typealias PSINGLE_LIST_ENTRY = ULong
 
@@ -378,10 +414,14 @@ class RTL_BALANCED_NODE(
 ) {
     var Left: ULong
         get() = Children[0]
-        set(value) { Children[0] = value }
+        set(value) {
+            Children[0] = value
+        }
     var Right: ULong
         get() = Children[1]
-        set(value) { Children[1] = value }
+        set(value) {
+            Children[1] = value
+        }
 }
 
 const val RTL_BALANCED_NODE_RESERVED_PARENT_MASK: ULONG_PTR = 3u
@@ -394,13 +434,21 @@ typealias PRTL_BALANCED_NODE = ULong
 fun RTL_BALANCED_NODE_GET_PARENT_POINTER(parentValue: ULONG_PTR): PRTL_BALANCED_NODE =
     parentValue and RTL_BALANCED_NODE_RESERVED_PARENT_MASK.inv()
 
-data class LIST_ENTRY32(val Flink: ULONG, val Blink: ULONG)
+data class LIST_ENTRY32(
+    val Flink: ULONG,
+    val Blink: ULONG,
+)
 typealias PLIST_ENTRY32 = ULong
 
-data class LIST_ENTRY64(val Flink: ULONGLONG, val Blink: ULONGLONG)
+data class LIST_ENTRY64(
+    val Flink: ULONGLONG,
+    val Blink: ULONGLONG,
+)
 typealias PLIST_ENTRY64 = ULong
 
-data class SINGLE_LIST_ENTRY32(val Next: ULONG)
+data class SINGLE_LIST_ENTRY32(
+    val Next: ULONG,
+)
 typealias PSINGLE_LIST_ENTRY32 = ULong
 
 // Upstream takes raw pointers; the pure-Kotlin port copies field-by-field
@@ -411,7 +459,9 @@ fun ListEntry32To64(l32: LIST_ENTRY32, l64: LIST_ENTRY64): LIST_ENTRY64 =
 fun ListEntry64To32(l64: LIST_ENTRY64): LIST_ENTRY32 =
     LIST_ENTRY32(Flink = l64.Flink.toUInt(), Blink = l64.Blink.toUInt())
 
-class WNF_STATE_NAME(val Data: UIntArray = UIntArray(2)) {
+class WNF_STATE_NAME(
+    val Data: UIntArray = UIntArray(2),
+) {
     init {
         require(Data.size == 2) { "WNF_STATE_NAME.Data must be 2 entries" }
     }
@@ -420,14 +470,22 @@ class WNF_STATE_NAME(val Data: UIntArray = UIntArray(2)) {
 typealias PWNF_STATE_NAME = ULong
 typealias PCWNF_STATE_NAME = ULong
 
-data class STRING32(val Length: USHORT, val MaximumLength: USHORT, val Buffer: ULONG)
+data class STRING32(
+    val Length: USHORT,
+    val MaximumLength: USHORT,
+    val Buffer: ULONG,
+)
 typealias PSTRING32 = ULong
 typealias UNICODE_STRING32 = STRING32
 typealias PUNICODE_STRING32 = ULong
 typealias ANSI_STRING32 = STRING32
 typealias PANSI_STRING32 = ULong
 
-data class STRING64(val Length: USHORT, val MaximumLength: USHORT, val Buffer: ULONGLONG)
+data class STRING64(
+    val Length: USHORT,
+    val MaximumLength: USHORT,
+    val Buffer: ULONGLONG,
+)
 typealias PSTRING64 = ULong
 typealias UNICODE_STRING64 = STRING64
 typealias PUNICODE_STRING64 = ULong
@@ -493,23 +551,27 @@ fun InitializeObjectAttributes(
     a: ULONG,
     r: HANDLE,
     s: PVOID,
-): OBJECT_ATTRIBUTES = OBJECT_ATTRIBUTES(
-    // sizeof(OBJECT_ATTRIBUTES) on the 64-bit ABI: 6 fields, all 8 bytes wide
-    // after the Length / Attributes 32-bit fields pad to 8 → 48 bytes total.
-    Length = 48u,
-    RootDirectory = r,
-    ObjectName = n,
-    Attributes = a,
-    SecurityDescriptor = s,
-    SecurityQualityOfService = NULL,
-)
+): OBJECT_ATTRIBUTES =
+    OBJECT_ATTRIBUTES(
+        // sizeof(OBJECT_ATTRIBUTES) on the 64-bit ABI: 6 fields, all 8 bytes wide
+        // after the Length / Attributes 32-bit fields pad to 8 → 48 bytes total.
+        Length = 48u,
+        RootDirectory = r,
+        ObjectName = n,
+        Attributes = a,
+        SecurityDescriptor = s,
+        SecurityQualityOfService = NULL,
+    )
 
 const val FALSE: BOOLEAN = 0u
 const val TRUE: BOOLEAN = 1u
 const val NULL: PVOID = 0u
 const val NULL64: PVOID64 = 0u
 
-data class OBJECTID(val Lineage: GUID, val Uniquifier: ULONG)
+data class OBJECTID(
+    val Lineage: GUID,
+    val Uniquifier: ULONG,
+)
 
 // CHAR is a signed byte; the byte literals encode the high-bit MIN/MAX
 // pair that C/Rust spell as 0x80 (-128) and 0x7f (127). Kotlin Byte
@@ -523,11 +585,14 @@ const val MAXLONG: LONG = 0x7fffffff
 const val MAXUCHAR: UCHAR = 0xffu
 const val MAXUSHORT: USHORT = 0xffffu
 const val MAXULONG: ULONG = 0xffffffffu
+
 // PEXCEPTION_ROUTINE: Can't define here, because it needs EXCEPTION_RECORD and CONTEXT.
 typealias KIRQL = UCHAR
 typealias PKIRQL = ULong
 
-enum class NT_PRODUCT_TYPE(val raw: ULong) {
+enum class NT_PRODUCT_TYPE(
+    val raw: ULong,
+) {
     NtProductWinNt(1u),
     NtProductLanManNt(2u),
     NtProductServer(3u),
@@ -535,7 +600,9 @@ enum class NT_PRODUCT_TYPE(val raw: ULong) {
 
 typealias PNT_PRODUCT_TYPE = ULong
 
-enum class SUITE_TYPE(val raw: ULong) {
+enum class SUITE_TYPE(
+    val raw: ULong,
+) {
     SmallBusiness(0u),
     Enterprise(1u),
     BackOffice(2u),
@@ -1127,7 +1194,9 @@ const val SORT_GEORGIAN_MODERN: USHORT = 0x1u
 // as `#[inline] pub fn`. Kotlin only needs the function form; const
 // initializers below use it directly.
 fun MAKELANGID(p: USHORT, s: USHORT): LANGID = ((s.toUInt() shl 10) or p.toUInt()).toUShort()
+
 fun PRIMARYLANGID(lgid: LANGID): USHORT = (lgid.toUInt() and 0x3ffu).toUShort()
+
 fun SUBLANGID(lgid: LANGID): USHORT = (lgid.toUInt() shr 10).toUShort()
 
 const val NLS_VALID_LOCALE_MASK: ULONG = 0x000fffffu
@@ -1139,7 +1208,9 @@ fun MAKESORTLCID(lgid: LANGID, srtid: USHORT, ver: USHORT): LCID =
     MAKELCID(lgid, srtid) or (ver.toULong() shl 20).toUInt()
 
 fun LANGIDFROMLCID(lcid: LCID): LANGID = lcid.toUShort()
+
 fun SORTIDFROMLCID(lcid: LCID): USHORT = ((lcid shr 16) and 0xfu).toUShort()
+
 fun SORTVERSIONFROMLCID(lcid: LCID): USHORT = ((lcid shr 16) and 0xfu).toUShort()
 
 const val LOCALE_NAME_MAX_LENGTH: ULong = 85u
