@@ -1,0 +1,18 @@
+// port-lint: source shared/windowsx.rs
+package io.github.kotlinmania.winapi.shared.windowsx
+
+import io.github.kotlinmania.winapi.CInt
+import io.github.kotlinmania.winapi.shared.minwindef.DWORD
+import io.github.kotlinmania.winapi.shared.minwindef.HIWORD
+import io.github.kotlinmania.winapi.shared.minwindef.LOWORD
+import io.github.kotlinmania.winapi.shared.minwindef.LPARAM
+
+// Macro APIs, window message crackers, and control APIs
+
+fun GET_X_LPARAM(lp: LPARAM): CInt {
+    return LOWORD(lp.toUInt()).toShort().toInt()
+}
+
+fun GET_Y_LPARAM(lp: LPARAM): CInt {
+    return HIWORD(lp.toUInt()).toShort().toInt()
+}
