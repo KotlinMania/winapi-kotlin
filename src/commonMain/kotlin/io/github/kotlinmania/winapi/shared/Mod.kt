@@ -11,9 +11,15 @@
 package io.github.kotlinmania.winapi.shared
 
 // Sub-modules translated from the Rust `shared/` directory:
+//   basetsd  -> Basetsd.kt
+//   cderr    -> Cderr.kt
 //   guiddef  -> Guiddef.kt
+//   in6addr  -> In6addr.kt
+//   inaddr   -> Inaddr.kt
 //   minwindef -> Minwindef.kt
-//   ntdef   -> Ntdef.kt
+//   ntdef    -> Ntdef.kt
+//   windef   -> Windef.kt
+//   windowsx -> Windowsx.kt
 // Each Kotlin file corresponds to one upstream header file and is surfaced
 // unconditionally (Cargo feature gating is upstream build configuration
 // that does not survive translation).
