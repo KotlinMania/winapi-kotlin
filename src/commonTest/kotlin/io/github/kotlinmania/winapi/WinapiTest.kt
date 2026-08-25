@@ -143,4 +143,32 @@ class WinapiTest {
         assertEquals(0x1000u, PDERR_PRINTERCODES)
         assertEquals(0x3000u, FNERR_FILENAMECODES)
     }
+
+    @Test
+    fun testWindefStructures() {
+        val rect = io.github.kotlinmania.winapi.shared.windef.RECT(left = 10, top = 20, right = 100, bottom = 200)
+        assertEquals(10, rect.left)
+        assertEquals(20, rect.top)
+        assertEquals(100, rect.right)
+        assertEquals(200, rect.bottom)
+
+        val pt = io.github.kotlinmania.winapi.shared.windef.POINT(x = 50, y = 75)
+        assertEquals(50, pt.x)
+        assertEquals(75, pt.y)
+
+        val sz = io.github.kotlinmania.winapi.shared.windef.SIZE(cx = 800, cy = 600)
+        assertEquals(800, sz.cx)
+        assertEquals(600, sz.cy)
+
+        assertEquals(0xFFFFFFFFu, io.github.kotlinmania.winapi.shared.windef.DPI_AWARENESS.DPI_AWARENESS_INVALID.value)
+        assertEquals(0u, io.github.kotlinmania.winapi.shared.windef.DPI_AWARENESS.DPI_AWARENESS_UNAWARE.value)
+        assertEquals(-1L, io.github.kotlinmania.winapi.shared.windef.DPI_AWARENESS_CONTEXT_UNAWARE)
+    }
+
+    @Test
+    fun testWindowsxMacros() {
+        val lp: io.github.kotlinmania.winapi.shared.minwindef.LPARAM = 0x00640032L // x = 0x0032 (50), y = 0x0064 (100)
+        assertEquals(50, io.github.kotlinmania.winapi.shared.windowsx.GET_X_LPARAM(lp))
+        assertEquals(100, io.github.kotlinmania.winapi.shared.windowsx.GET_Y_LPARAM(lp))
+    }
 }
