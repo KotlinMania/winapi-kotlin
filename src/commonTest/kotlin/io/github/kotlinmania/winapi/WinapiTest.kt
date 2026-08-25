@@ -1,11 +1,18 @@
 package io.github.kotlinmania.winapi
 
+import io.github.kotlinmania.winapi.shared.cderr.CDERR_DIALOGFAILURE
+import io.github.kotlinmania.winapi.shared.cderr.CDERR_STRUCTSIZE
+import io.github.kotlinmania.winapi.shared.cderr.FNERR_FILENAMECODES
+import io.github.kotlinmania.winapi.shared.cderr.PDERR_PRINTERCODES
 import io.github.kotlinmania.winapi.shared.guiddef.GUID
 import io.github.kotlinmania.winapi.shared.guiddef.IID_NULL
 import io.github.kotlinmania.winapi.shared.guiddef.IsEqualCLSID
 import io.github.kotlinmania.winapi.shared.guiddef.IsEqualFMTID
 import io.github.kotlinmania.winapi.shared.guiddef.IsEqualGUID
 import io.github.kotlinmania.winapi.shared.guiddef.IsEqualIID
+import io.github.kotlinmania.winapi.shared.in6addr.IN6_ADDR
+import io.github.kotlinmania.winapi.shared.inaddr.IN_ADDR
+import io.github.kotlinmania.winapi.shared.inaddr.InAddrSUnB
 import io.github.kotlinmania.winapi.shared.minwindef.FALSE
 import io.github.kotlinmania.winapi.shared.minwindef.FILETIME
 import io.github.kotlinmania.winapi.shared.minwindef.HIBYTE
@@ -96,5 +103,44 @@ class WinapiTest {
                 Data4 = ubyteArrayOf(1u, 2u, 3u),
             )
         }
+    }
+
+    @Test
+    fun testInAddr() {
+        val inAddr = IN_ADDR(s_addr = 0x0100007Fu) // 127.0.0.1 in little-endian
+        assertEquals(0x0100007Fu, inAddr.s_addr)
+        val bytes = inAddr.s_un_b
+        assertEquals(127u.toUByte(), bytes.s_b1)
+        assertEquals(0u.toUByte(), bytes.s_b2)
+        assertEquals(0u.toUByte(), bytes.s_b3)
+        assertEquals(1u.toUByte(), bytes.s_b4)
+
+        inAddr.s_un_b = InAddrSUnB(s_b1 = 192u, s_b2 = 168u, s_b3 = 1u, s_b4 = 100u)
+        val b = inAddr.s_un_b
+        assertEquals(192u.toUByte(), b.s_b1)
+        assertEquals(168u.toUByte(), b.s_b2)
+        assertEquals(1u.toUByte(), b.s_b3)
+        assertEquals(100u.toUByte(), b.s_b4)
+    }
+
+    @Test
+    fun testIn6Addr() {
+        val bytes = UByteArray(16) { it.toUByte() }
+        val in6 = IN6_ADDR(bytes)
+        assertEquals(16, in6.bytes.size)
+        assertEquals(8, in6.words.size)
+        assertEquals(0x0100u.toUShort(), in6.words[0])
+
+        assertFailsWith<IllegalArgumentException> {
+            IN6_ADDR(UByteArray(10))
+        }
+    }
+
+    @Test
+    fun testCderrConstants() {
+        assertEquals(0xFFFFu, CDERR_DIALOGFAILURE)
+        assertEquals(0x0001u, CDERR_STRUCTSIZE)
+        assertEquals(0x1000u, PDERR_PRINTERCODES)
+        assertEquals(0x3000u, FNERR_FILENAMECODES)
     }
 }
