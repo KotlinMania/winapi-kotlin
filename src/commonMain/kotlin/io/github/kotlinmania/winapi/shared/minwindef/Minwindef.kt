@@ -1,4 +1,4 @@
-// port-lint: source shared/minwindef.rs
+// port-lint: source winapi/src/shared/minwindef.rs
 package io.github.kotlinmania.winapi.shared.minwindef
 
 import io.github.kotlinmania.winapi.CFloat

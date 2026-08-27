@@ -1,4 +1,4 @@
-// port-lint: source shared/windef.rs
+// port-lint: source winapi/src/shared/windef.rs
 package io.github.kotlinmania.winapi.shared.windef
 
 import io.github.kotlinmania.winapi.shared.minwindef.DWORD

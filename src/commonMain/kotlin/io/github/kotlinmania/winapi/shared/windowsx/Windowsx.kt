@@ -1,4 +1,4 @@
-// port-lint: source shared/windowsx.rs
+// port-lint: source winapi/src/shared/windowsx.rs
 package io.github.kotlinmania.winapi.shared.windowsx
 
 import io.github.kotlinmania.winapi.CInt
