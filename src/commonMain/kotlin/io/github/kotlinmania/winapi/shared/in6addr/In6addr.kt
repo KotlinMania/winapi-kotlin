@@ -1,4 +1,4 @@
-// port-lint: source winapi/src/shared/in6addr.rs
+// port-lint: source shared/in6addr.rs
 package io.github.kotlinmania.winapi.shared.in6addr
 
 import io.github.kotlinmania.winapi.shared.minwindef.UCHAR

@@ -4,12 +4,12 @@ Based on AST analysis, here are the concrete next steps.
 
 ## Summary
 
-- **Files Present:** 11/405 (2.7%)
-- **Function parity:** 25/507 matched (target 56) — 4.9%
-- **Class/type parity:** 333/5867 matched (target 406) — 5.7%
-- **Combined symbol parity:** 358/6374 matched (target 462) — 5.6%
-- **Average inline-code cosine:** 0.39 (function body across 9 matched files)
-- **Average documentation cosine:** 0.05 (doc text across 9 matched files)
+- **Files Present:** 11/404 (2.7%)
+- **Function parity:** 25/497 matched (target 56) — 5.0%
+- **Class/type parity:** 333/5865 matched (target 406) — 5.7%
+- **Combined symbol parity:** 358/6362 matched (target 462) — 5.6%
+- **Average inline-code cosine:** 0.35 (function body across 10 matched files)
+- **Average documentation cosine:** 0.04 (doc text across 10 matched files)
 - **Cheat-zeroed Files:** 7
 - **Critical Issues:** 7 files with <0.60 function similarity
 
@@ -22,7 +22,7 @@ No incomplete high-dependency files detected.
 Critical missing files (>10 dependencies):
 
 1. **shared.dxgiformat** (15 deps)
-   - Path: `winapi/src/shared/dxgiformat.rs`
+   - Path: `shared/dxgiformat.rs`
    - Essential for 15 other files
 
 ## Detailed Work Items
@@ -84,9 +84,9 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 51/51 matched
 - **Missing types:** _none_
 
-### 6. winapi.lib
+### 6. lib
 
-- **Target:** `winapi.Lib [STUB]`
+- **Target:** `winapi.Lib [ZERO]`
 - **Similarity:** 0.00
 - **Dependents:** 0
 - **Priority Score:** 2510.0
