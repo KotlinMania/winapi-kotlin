@@ -1,4 +1,4 @@
-// port-lint: source winapi/src/shared/ntdef.rs
+// port-lint: source shared/ntdef.rs
 package io.github.kotlinmania.winapi.shared.ntdef
 
 import io.github.kotlinmania.winapi.CChar
