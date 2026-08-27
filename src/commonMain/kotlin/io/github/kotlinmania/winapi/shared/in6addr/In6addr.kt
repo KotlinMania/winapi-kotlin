@@ -1,9 +1,6 @@
 // port-lint: source shared/in6addr.rs
 package io.github.kotlinmania.winapi.shared.in6addr
 
-import io.github.kotlinmania.winapi.shared.minwindef.UCHAR
-import io.github.kotlinmania.winapi.shared.minwindef.USHORT
-
 public class IN6_ADDR(
     public val bytes: UByteArray = UByteArray(16),
 ) {
