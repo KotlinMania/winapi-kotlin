@@ -4,14 +4,14 @@ Based on AST analysis, here are the concrete next steps.
 
 ## Summary
 
-- **Files Present:** 10/404 (2.5%)
-- **Function parity:** 25/497 matched (target 45) — 5.0%
-- **Class/type parity:** 333/5865 matched (target 404) — 5.7%
-- **Combined symbol parity:** 358/6362 matched (target 449) — 5.6%
-- **Average inline-code cosine:** 0.35 (function body across 10 matched files)
-- **Average documentation cosine:** 0.04 (doc text across 10 matched files)
-- **Cheat-zeroed Files:** 6
-- **Critical Issues:** 6 files with <0.60 function similarity
+- **Files Present:** 11/405 (2.7%)
+- **Function parity:** 25/507 matched (target 56) — 4.9%
+- **Class/type parity:** 333/5867 matched (target 406) — 5.7%
+- **Combined symbol parity:** 358/6374 matched (target 462) — 5.6%
+- **Average inline-code cosine:** 0.39 (function body across 9 matched files)
+- **Average documentation cosine:** 0.05 (doc text across 9 matched files)
+- **Cheat-zeroed Files:** 7
+- **Critical Issues:** 7 files with <0.60 function similarity
 
 ## Priority 1: Fix Incomplete High-Dependency Files
 
@@ -22,7 +22,7 @@ No incomplete high-dependency files detected.
 Critical missing files (>10 dependencies):
 
 1. **shared.dxgiformat** (15 deps)
-   - Path: `shared/dxgiformat.rs`
+   - Path: `winapi/src/shared/dxgiformat.rs`
    - Essential for 15 other files
 
 ## Detailed Work Items
@@ -84,15 +84,15 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 51/51 matched
 - **Missing types:** _none_
 
-### 6. lib
+### 6. winapi.lib
 
-- **Target:** `winapi.Lib [ZERO]`
+- **Target:** `winapi.Lib [STUB]`
 - **Similarity:** 0.00
 - **Dependents:** 0
 - **Priority Score:** 2510.0
-- **Functions:** 0/0 matched
+- **Functions:** 0/0 matched (target 11)
 - **Missing functions:** _none_
-- **Types:** 25/25 matched
+- **Types:** 25/25 matched (target 26)
 - **Missing types:** _none_
 
 ### 7. shared.windef
@@ -128,7 +128,18 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 0/0 matched
 - **Missing types:** _none_
 
-### 10. shared.cderr
+### 10. shared.mod
+
+- **Target:** `shared.Mod [STUB]`
+- **Similarity:** 0.00
+- **Dependents:** 0
+- **Priority Score:** 10.0
+- **Functions:** 0/0 matched
+- **Missing functions:** _none_
+- **Types:** 0/0 matched (target 1)
+- **Missing types:** _none_
+
+### 11. shared.cderr
 
 - **Target:** `cderr.Cderr`
 - **Similarity:** 1.00
@@ -147,23 +158,4 @@ For each file to be considered "complete":
 - All tests ported
 - Documentation ported
 - port-lint header present
-
-## Reexport / Wiring Modules
-
-These files match `reexport_modules` patterns in `.ast_distance_config.json`. They are filtered out of
-normal priority and missing-file ladders because they are wiring
-modules, not direct logic ports. Consult them for call-site routing;
-do not treat them as the next implementation target by default.
-
-### Missing
-
-| Source | Expected target | Deps | Source path | Expected path |
-|--------|-----------------|------|-------------|---------------|
-| `km.mod` | `km.Mod` | 0 | `km/mod.rs` | `km/Mod.kt` |
-| `shared.mod` | `shared.Mod` | 0 | `shared/mod.rs` | `shared/Mod.kt` |
-| `ucrt.mod` | `ucrt.Mod` | 0 | `ucrt/mod.rs` | `ucrt/Mod.kt` |
-| `gl.mod` | `um.gl.Mod` | 0 | `um/gl/mod.rs` | `um/gl/Mod.kt` |
-| `um.mod` | `um.Mod` | 0 | `um/mod.rs` | `um/Mod.kt` |
-| `vc.mod` | `vc.Mod` | 0 | `vc/mod.rs` | `vc/Mod.kt` |
-| `winrt.mod` | `winrt.Mod` | 0 | `winrt/mod.rs` | `winrt/Mod.kt` |
 

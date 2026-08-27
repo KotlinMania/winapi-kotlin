@@ -1,3 +1,4 @@
+// port-lint: tests winapi/src/lib.rs
 package io.github.kotlinmania.winapi
 
 import io.github.kotlinmania.winapi.shared.cderr.CDERR_DIALOGFAILURE

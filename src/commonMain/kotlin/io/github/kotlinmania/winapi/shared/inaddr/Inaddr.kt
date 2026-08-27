@@ -1,4 +1,4 @@
-// port-lint: source shared/inaddr.rs
+// port-lint: source winapi/src/shared/inaddr.rs
 package io.github.kotlinmania.winapi.shared.inaddr
 
 import io.github.kotlinmania.winapi.shared.minwindef.UCHAR
