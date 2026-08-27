@@ -21,12 +21,13 @@ public class IN_ADDR(
     public var s_addr: ULONG = 0u,
 ) {
     public var s_un_b: InAddrSUnB
-        get() = InAddrSUnB(
-            s_b1 = (s_addr and 0xFFu).toUByte(),
-            s_b2 = ((s_addr shr 8) and 0xFFu).toUByte(),
-            s_b3 = ((s_addr shr 16) and 0xFFu).toUByte(),
-            s_b4 = ((s_addr shr 24) and 0xFFu).toUByte(),
-        )
+        get() =
+            InAddrSUnB(
+                s_b1 = (s_addr and 0xFFu).toUByte(),
+                s_b2 = ((s_addr shr 8) and 0xFFu).toUByte(),
+                s_b3 = ((s_addr shr 16) and 0xFFu).toUByte(),
+                s_b4 = ((s_addr shr 24) and 0xFFu).toUByte(),
+            )
         set(value) {
             s_addr = value.s_b1.toUInt() or
                 (value.s_b2.toUInt() shl 8) or
@@ -35,10 +36,11 @@ public class IN_ADDR(
         }
 
     public var s_un_w: InAddrSUnW
-        get() = InAddrSUnW(
-            s_w1 = (s_addr and 0xFFFFu).toUShort(),
-            s_w2 = ((s_addr shr 16) and 0xFFFFu).toUShort(),
-        )
+        get() =
+            InAddrSUnW(
+                s_w1 = (s_addr and 0xFFFFu).toUShort(),
+                s_w2 = ((s_addr shr 16) and 0xFFFFu).toUShort(),
+            )
         set(value) {
             s_addr = value.s_w1.toUInt() or (value.s_w2.toUInt() shl 16)
         }

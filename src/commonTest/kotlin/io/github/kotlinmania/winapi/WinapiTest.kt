@@ -5,6 +5,20 @@ import io.github.kotlinmania.winapi.shared.cderr.CDERR_DIALOGFAILURE
 import io.github.kotlinmania.winapi.shared.cderr.CDERR_STRUCTSIZE
 import io.github.kotlinmania.winapi.shared.cderr.FNERR_FILENAMECODES
 import io.github.kotlinmania.winapi.shared.cderr.PDERR_PRINTERCODES
+import io.github.kotlinmania.winapi.shared.d3d9types.D3DCOLORVALUE
+import io.github.kotlinmania.winapi.shared.d3d9types.D3DCOLOR_ARGB
+import io.github.kotlinmania.winapi.shared.d3d9types.D3DCOLOR_RGBA
+import io.github.kotlinmania.winapi.shared.d3d9types.D3DCOLOR_XRGB
+import io.github.kotlinmania.winapi.shared.dxgiformat.DXGI_FORMAT_R8G8B8A8_UNORM
+import io.github.kotlinmania.winapi.shared.dxgiformat.DXGI_FORMAT_UNKNOWN
+import io.github.kotlinmania.winapi.shared.dxgitype.DXGI_CPU_ACCESS_NONE
+import io.github.kotlinmania.winapi.shared.dxgitype.DXGI_MODE_DESC
+import io.github.kotlinmania.winapi.shared.dxgitype.DXGI_MODE_ROTATION_IDENTITY
+import io.github.kotlinmania.winapi.shared.dxgitype.DXGI_MODE_SCALING_UNSPECIFIED
+import io.github.kotlinmania.winapi.shared.dxgitype.DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED
+import io.github.kotlinmania.winapi.shared.dxgitype.DXGI_RATIONAL
+import io.github.kotlinmania.winapi.shared.dxgitype.DXGI_RGB
+import io.github.kotlinmania.winapi.shared.dxgitype.DXGI_USAGE_SHADER_INPUT
 import io.github.kotlinmania.winapi.shared.guiddef.GUID
 import io.github.kotlinmania.winapi.shared.guiddef.IID_NULL
 import io.github.kotlinmania.winapi.shared.guiddef.IsEqualCLSID
@@ -147,17 +161,23 @@ class WinapiTest {
 
     @Test
     fun testWindefStructures() {
-        val rect = io.github.kotlinmania.winapi.shared.windef.RECT(left = 10, top = 20, right = 100, bottom = 200)
+        val rect =
+            io.github.kotlinmania.winapi.shared.windef
+                .RECT(left = 10, top = 20, right = 100, bottom = 200)
         assertEquals(10, rect.left)
         assertEquals(20, rect.top)
         assertEquals(100, rect.right)
         assertEquals(200, rect.bottom)
 
-        val pt = io.github.kotlinmania.winapi.shared.windef.POINT(x = 50, y = 75)
+        val pt =
+            io.github.kotlinmania.winapi.shared.windef
+                .POINT(x = 50, y = 75)
         assertEquals(50, pt.x)
         assertEquals(75, pt.y)
 
-        val sz = io.github.kotlinmania.winapi.shared.windef.SIZE(cx = 800, cy = 600)
+        val sz =
+            io.github.kotlinmania.winapi.shared.windef
+                .SIZE(cx = 800, cy = 600)
         assertEquals(800, sz.cx)
         assertEquals(600, sz.cy)
 
@@ -169,7 +189,66 @@ class WinapiTest {
     @Test
     fun testWindowsxMacros() {
         val lp: io.github.kotlinmania.winapi.shared.minwindef.LPARAM = 0x00640032L // x = 0x0032 (50), y = 0x0064 (100)
-        assertEquals(50, io.github.kotlinmania.winapi.shared.windowsx.GET_X_LPARAM(lp))
-        assertEquals(100, io.github.kotlinmania.winapi.shared.windowsx.GET_Y_LPARAM(lp))
+        assertEquals(
+            50,
+            io.github.kotlinmania.winapi.shared.windowsx
+                .GET_X_LPARAM(lp),
+        )
+        assertEquals(
+            100,
+            io.github.kotlinmania.winapi.shared.windowsx
+                .GET_Y_LPARAM(lp),
+        )
+    }
+
+    @Test
+    fun testDxgiFormatAndType() {
+        assertEquals(0u, DXGI_FORMAT_UNKNOWN)
+        assertEquals(28u, DXGI_FORMAT_R8G8B8A8_UNORM)
+        assertEquals(0u, DXGI_CPU_ACCESS_NONE)
+        assertEquals(16u, DXGI_USAGE_SHADER_INPUT)
+
+        val rgb = DXGI_RGB(red = 1.0f, green = 0.5f, blue = 0.25f)
+        assertEquals(1.0f, rgb.red)
+        assertEquals(0.5f, rgb.green)
+        assertEquals(0.25f, rgb.blue)
+
+        val desc =
+            DXGI_MODE_DESC(
+                width = 1920u,
+                height = 1080u,
+                refreshRate = DXGI_RATIONAL(numerator = 60u, denominator = 1u),
+                format = DXGI_FORMAT_R8G8B8A8_UNORM,
+                scanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED,
+                scaling = DXGI_MODE_SCALING_UNSPECIFIED,
+            )
+        assertEquals(1920u, desc.width)
+        assertEquals(1080u, desc.height)
+        assertEquals(60u, desc.refreshRate.numerator)
+        assertEquals(DXGI_MODE_ROTATION_IDENTITY, 1u)
+    }
+
+    @Test
+    fun testD3d9Colors() {
+        val color = D3DCOLOR_ARGB(0xFFu, 0x12u, 0x34u, 0x56u)
+        assertEquals(0xFF123456u, color)
+        assertEquals(0xFF123456u, D3DCOLOR_RGBA(0x12u, 0x34u, 0x56u, 0xFFu))
+        assertEquals(0xFF123456u, D3DCOLOR_XRGB(0x12u, 0x34u, 0x56u))
+
+        val cv = D3DCOLORVALUE(r = 1.0f, g = 0.0f, b = 0.0f, a = 1.0f)
+        assertEquals(1.0f, cv.r)
+        assertEquals(0.0f, cv.g)
+        assertEquals(0.0f, cv.b)
+        assertEquals(1.0f, cv.a)
+    }
+
+    @Test
+    fun testHidUsageConstants() {
+        assertEquals(0x00u.toUShort(), io.github.kotlinmania.winapi.shared.hidusage.HID_USAGE_PAGE_UNDEFINED)
+        assertEquals(0x01u.toUShort(), io.github.kotlinmania.winapi.shared.hidusage.HID_USAGE_PAGE_GENERIC)
+        assertEquals(0x02u.toUShort(), io.github.kotlinmania.winapi.shared.hidusage.HID_USAGE_GENERIC_MOUSE)
+        assertEquals(0x06u.toUShort(), io.github.kotlinmania.winapi.shared.hidusage.HID_USAGE_GENERIC_KEYBOARD)
+        assertEquals(0x04u.toUShort(), io.github.kotlinmania.winapi.shared.hidusage.HID_USAGE_KEYBOARD_aA)
+        assertEquals(0x1Du.toUShort(), io.github.kotlinmania.winapi.shared.hidusage.HID_USAGE_KEYBOARD_zZ)
     }
 }
