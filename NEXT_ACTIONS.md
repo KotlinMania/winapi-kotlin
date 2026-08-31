@@ -4,12 +4,12 @@ Based on AST analysis, here are the concrete next steps.
 
 ## Summary
 
-- **Files Present:** 15/404 (3.7%)
-- **Function parity:** 31/497 matched (target 65) — 6.2%
-- **Class/type parity:** 337/5865 matched (target 429) — 5.7%
-- **Combined symbol parity:** 368/6362 matched (target 494) — 5.8%
-- **Average inline-code cosine:** 0.45 (function body across 14 matched files)
-- **Average documentation cosine:** 0.03 (doc text across 14 matched files)
+- **Files Present:** 15/405 (3.7%)
+- **Function parity:** 31/507 matched (target 65) — 6.1%
+- **Class/type parity:** 337/5867 matched (target 429) — 5.7%
+- **Combined symbol parity:** 368/6374 matched (target 494) — 5.8%
+- **Average inline-code cosine:** 0.49 (function body across 13 matched files)
+- **Average documentation cosine:** 0.03 (doc text across 13 matched files)
 - **Cheat-zeroed Files:** 8
 - **Critical Issues:** 8 files with <0.60 function similarity
 
@@ -104,9 +104,9 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 51/51 matched
 - **Missing types:** _none_
 
-### 8. lib
+### 8. winapi.lib
 
-- **Target:** `winapi.Lib [ZERO]`
+- **Target:** `winapi.Lib [STUB]`
 - **Similarity:** 0.00
 - **Dependents:** 0
 - **Priority Score:** 2510.0

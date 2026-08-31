@@ -1,4 +1,4 @@
-// port-lint: source shared/mod.rs
+// port-lint: source winapi/src/shared/mod.rs
 // Tracking ledger for upstream `tmp/winapi/src/shared/mod.rs`.
 //
 // The Rust mod.rs is pure "Headers shared between user mode and kernel
