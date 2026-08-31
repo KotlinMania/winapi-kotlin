@@ -1,4 +1,4 @@
-// port-lint: source shared/dxgitype.rs
+// port-lint: source winapi/src/shared/dxgitype.rs
 package io.github.kotlinmania.winapi.shared.dxgitype
 
 import io.github.kotlinmania.winapi.CFloat

@@ -1,4 +1,4 @@
-// port-lint: source shared/guiddef.rs
+// port-lint: source winapi/src/shared/guiddef.rs
 package io.github.kotlinmania.winapi.shared.guiddef
 
 import io.github.kotlinmania.winapi.CUlong
