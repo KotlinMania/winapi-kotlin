@@ -1,4 +1,4 @@
-// port-lint: source winapi/src/shared/dxgiformat.rs
+// port-lint: source shared/dxgiformat.rs
 package io.github.kotlinmania.winapi.shared.dxgiformat
 
 import io.github.kotlinmania.winapi.CUint

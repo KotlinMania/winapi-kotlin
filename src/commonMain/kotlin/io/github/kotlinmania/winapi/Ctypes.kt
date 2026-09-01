@@ -1,4 +1,4 @@
-// port-lint: source winapi/src/lib.rs
+// port-lint: source lib.rs
 package io.github.kotlinmania.winapi
 
 // Parceled from upstream lib.rs `pub mod ctypes { ... }`. The

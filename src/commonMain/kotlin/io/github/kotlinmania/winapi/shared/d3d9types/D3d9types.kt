@@ -1,4 +1,4 @@
-// port-lint: source winapi/src/shared/d3d9types.rs
+// port-lint: source shared/d3d9types.rs
 package io.github.kotlinmania.winapi.shared.d3d9types
 
 import io.github.kotlinmania.winapi.CFloat
