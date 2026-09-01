@@ -1,4 +1,4 @@
-// port-lint: source winapi/src/lib.rs
+// port-lint: source lib.rs
 package io.github.kotlinmania.winapi
 
 import io.github.kotlinmania.winapi.shared.guiddef.GUID

@@ -1,4 +1,4 @@
-// port-lint: source winapi/src/shared/cderr.rs
+// port-lint: source shared/cderr.rs
 package io.github.kotlinmania.winapi.shared.cderr
 
 import io.github.kotlinmania.winapi.shared.minwindef.DWORD

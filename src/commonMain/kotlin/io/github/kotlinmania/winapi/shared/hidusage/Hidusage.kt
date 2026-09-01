@@ -1,4 +1,4 @@
-// port-lint: source winapi/src/shared/hidusage.rs
+// port-lint: source shared/hidusage.rs
 package io.github.kotlinmania.winapi.shared.hidusage
 
 import io.github.kotlinmania.winapi.shared.minwindef.USHORT
