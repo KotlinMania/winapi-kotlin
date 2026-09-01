@@ -16,8 +16,11 @@
     "lint": true
   },
   "reexport_modules": [
+    "lib",
     "lib.rs",
-    "shared/mod.rs"
+    "winapi/src/lib.rs",
+    "shared/mod.rs",
+    "winapi/src/shared/mod.rs"
   ]
 }
 
