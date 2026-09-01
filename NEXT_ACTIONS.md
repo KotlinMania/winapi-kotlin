@@ -5,12 +5,12 @@ Based on AST analysis, here are the concrete next steps.
 ## Summary
 
 - **Files Present:** 15/405 (3.7%)
-- **Function parity:** 31/507 matched (target 65) — 6.1%
-- **Class/type parity:** 337/5867 matched (target 429) — 5.7%
-- **Combined symbol parity:** 368/6374 matched (target 494) — 5.8%
+- **Function parity:** 31/507 matched (target 51) — 6.1%
+- **Class/type parity:** 312/5842 matched (target 403) — 5.3%
+- **Combined symbol parity:** 343/6349 matched (target 454) — 5.4%
 - **Average inline-code cosine:** 0.49 (function body across 13 matched files)
 - **Average documentation cosine:** 0.03 (doc text across 13 matched files)
-- **Cheat-zeroed Files:** 8
+- **Cheat-zeroed Files:** 7
 - **Critical Issues:** 8 files with <0.60 function similarity
 
 ## Priority 1: Fix Incomplete High-Dependency Files
@@ -104,18 +104,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 51/51 matched
 - **Missing types:** _none_
 
-### 8. winapi.lib
-
-- **Target:** `winapi.Lib [STUB]`
-- **Similarity:** 0.00
-- **Dependents:** 0
-- **Priority Score:** 2510.0
-- **Functions:** 0/0 matched (target 14)
-- **Missing functions:** _none_
-- **Types:** 25/25 matched (target 26)
-- **Missing types:** _none_
-
-### 9. shared.windef
+### 8. shared.windef
 
 - **Target:** `windef.Windef`
 - **Similarity:** 1.00
@@ -126,7 +115,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 22/22 matched (target 49)
 - **Missing types:** _none_
 
-### 10. shared.guiddef
+### 9. shared.guiddef
 
 - **Target:** `guiddef.Guiddef`
 - **Similarity:** 0.88
@@ -137,7 +126,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 12/12 matched (target 13)
 - **Missing types:** _none_
 
-### 11. shared.hidusage
+### 10. shared.hidusage
 
 - **Target:** `hidusage.Hidusage [ZERO]`
 - **Similarity:** 0.00
@@ -148,7 +137,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 2/2 matched
 - **Missing types:** _none_
 
-### 12. shared.windowsx
+### 11. shared.windowsx
 
 - **Target:** `windowsx.Windowsx`
 - **Similarity:** 0.65
@@ -159,7 +148,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 0/0 matched
 - **Missing types:** _none_
 
-### 13. shared.dxgitype
+### 12. shared.dxgitype
 
 - **Target:** `dxgitype.Dxgitype`
 - **Similarity:** 1.00
@@ -170,7 +159,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 1/1 matched (target 15)
 - **Missing types:** _none_
 
-### 14. shared.mod
+### 13. shared.mod
 
 - **Target:** `shared.Mod [STUB]`
 - **Similarity:** 0.00
@@ -181,7 +170,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 0/0 matched (target 1)
 - **Missing types:** _none_
 
-### 15. shared.cderr
+### 14. shared.cderr
 
 - **Target:** `cderr.Cderr`
 - **Similarity:** 1.00
@@ -200,4 +189,17 @@ For each file to be considered "complete":
 - All tests ported
 - Documentation ported
 - port-lint header present
+
+## Reexport / Wiring Modules
+
+These files match `reexport_modules` patterns in `.ast_distance_config.json`. They are filtered out of
+normal priority and missing-file ladders because they are wiring
+modules, not direct logic ports. Consult them for call-site routing;
+do not treat them as the next implementation target by default.
+
+### Matched
+
+| Source | Target | Path |
+|--------|--------|------|
+| `winapi.lib` | `winapi.Lib` | `winapi/src/lib` |
 
