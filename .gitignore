@@ -66,6 +66,8 @@ local.properties
 # to (`build/swift-test/lib*.a` + `.swiftmodule/` bundles when run with
 # the Xcode-style env vars) is already covered by `build/` above.
 .swiftpm/
+.build/
+swift-test-harness/
 DerivedData/
 *.xcuserstate
 *.xcworkspace/xcuserdata/
