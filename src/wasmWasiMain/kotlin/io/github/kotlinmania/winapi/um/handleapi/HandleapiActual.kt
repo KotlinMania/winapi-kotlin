@@ -1,0 +1,44 @@
+// port-lint: source um/handleapi.rs
+package io.github.kotlinmania.winapi.um.handleapi
+
+import io.github.kotlinmania.winapi.shared.minwindef.BOOL
+import io.github.kotlinmania.winapi.shared.minwindef.DWORD
+import io.github.kotlinmania.winapi.um.winnt.HANDLE
+
+public actual fun CloseHandle(hObject: HANDLE): BOOL = 0
+
+public actual fun DuplicateHandle(
+    hSourceProcessHandle: HANDLE,
+    hSourceHandle: HANDLE,
+    hTargetProcessHandle: HANDLE,
+    lpTargetHandle: ULongArray,
+    dwDesiredAccess: DWORD,
+    bInheritHandle: BOOL,
+    dwOptions: DWORD,
+): BOOL {
+    if (lpTargetHandle.isNotEmpty()) {
+        lpTargetHandle[0] = 0uL
+    }
+    return 0
+}
+
+public actual fun CompareObjectHandles(
+    hFirstObjectHandle: HANDLE,
+    hSecondObjectHandle: HANDLE,
+): BOOL = 0
+
+public actual fun GetHandleInformation(
+    hObject: HANDLE,
+    lpdwFlags: UIntArray,
+): BOOL {
+    if (lpdwFlags.isNotEmpty()) {
+        lpdwFlags[0] = 0u
+    }
+    return 0
+}
+
+public actual fun SetHandleInformation(
+    hObject: HANDLE,
+    dwMask: DWORD,
+    dwFlags: DWORD,
+): BOOL = 0

@@ -70,3 +70,13 @@ DerivedData/
 *.xcuserstate
 *.xcworkspace/xcuserdata/
 *.xcodeproj/xcuserdata/
+
+# Node native addon build artifacts
+native/node-winapi/build/
+native/node-winapi/node_modules/
+native/node-winapi/package-lock.json
+
+# C wrapper objects and static library
+src/nativeInterop/cinterop/*.o
+src/nativeInterop/cinterop/*.a
+src/nativeInterop/cinterop/*.o.tmp

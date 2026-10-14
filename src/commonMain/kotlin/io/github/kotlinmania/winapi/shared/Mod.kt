@@ -25,11 +25,14 @@ package io.github.kotlinmania.winapi.shared
 //   mprapidef              -> Mprapidef.kt
 //   ntdef                  -> Ntdef.kt
 //   qos                    -> Qos.kt
+//   rpcndr                 -> Rpcndr.kt
 //   transportsettingcommon -> Transportsettingcommon.kt
 //   tvout                  -> Tvout.kt
 //   windef                 -> Windef.kt
 //   windowsx               -> Windowsx.kt
 //   wnnc                   -> Wnnc.kt
+//   wtypes                 -> Wtypes.kt
+//   wtypesbase             -> Wtypesbase.kt
 // Each Kotlin file corresponds to one upstream header file and is surfaced
 // unconditionally (Cargo feature gating is upstream build configuration
 // that does not survive translation).
