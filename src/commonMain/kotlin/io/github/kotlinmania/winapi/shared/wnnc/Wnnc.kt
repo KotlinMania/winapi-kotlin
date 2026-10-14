@@ -1,0 +1,76 @@
+// port-lint: source shared/wnnc.rs
+package io.github.kotlinmania.winapi.shared.wnnc
+
+import io.github.kotlinmania.winapi.shared.minwindef.DWORD
+
+/** Provides the Windows Networking WNNC_NET definitions to winnetwk.h and the IFS Kit. */
+public const val WNNC_NET_MSNET: DWORD = 0x00010000u
+public const val WNNC_NET_SMB: DWORD = 0x00020000u
+public const val WNNC_NET_NETWARE: DWORD = 0x00030000u
+public const val WNNC_NET_VINES: DWORD = 0x00040000u
+public const val WNNC_NET_10NET: DWORD = 0x00050000u
+public const val WNNC_NET_LOCUS: DWORD = 0x00060000u
+public const val WNNC_NET_SUN_PC_NFS: DWORD = 0x00070000u
+public const val WNNC_NET_LANSTEP: DWORD = 0x00080000u
+public const val WNNC_NET_9TILES: DWORD = 0x00090000u
+public const val WNNC_NET_LANTASTIC: DWORD = 0x000A0000u
+public const val WNNC_NET_AS400: DWORD = 0x000B0000u
+public const val WNNC_NET_FTP_NFS: DWORD = 0x000C0000u
+public const val WNNC_NET_PATHWORKS: DWORD = 0x000D0000u
+public const val WNNC_NET_LIFENET: DWORD = 0x000E0000u
+public const val WNNC_NET_POWERLAN: DWORD = 0x000F0000u
+public const val WNNC_NET_BWNFS: DWORD = 0x00100000u
+public const val WNNC_NET_COGENT: DWORD = 0x00110000u
+public const val WNNC_NET_FARALLON: DWORD = 0x00120000u
+public const val WNNC_NET_APPLETALK: DWORD = 0x00130000u
+public const val WNNC_NET_INTERGRAPH: DWORD = 0x00140000u
+public const val WNNC_NET_SYMFONET: DWORD = 0x00150000u
+public const val WNNC_NET_CLEARCASE: DWORD = 0x00160000u
+public const val WNNC_NET_FRONTIER: DWORD = 0x00170000u
+public const val WNNC_NET_BMC: DWORD = 0x00180000u
+public const val WNNC_NET_DCE: DWORD = 0x00190000u
+public const val WNNC_NET_AVID: DWORD = 0x001A0000u
+public const val WNNC_NET_DOCUSPACE: DWORD = 0x001B0000u
+public const val WNNC_NET_MANGOSOFT: DWORD = 0x001C0000u
+public const val WNNC_NET_SERNET: DWORD = 0x001D0000u
+public const val WNNC_NET_RIVERFRONT1: DWORD = 0x001E0000u
+public const val WNNC_NET_RIVERFRONT2: DWORD = 0x001F0000u
+public const val WNNC_NET_DECORB: DWORD = 0x00200000u
+public const val WNNC_NET_PROTSTOR: DWORD = 0x00210000u
+public const val WNNC_NET_FJ_REDIR: DWORD = 0x00220000u
+public const val WNNC_NET_DISTINCT: DWORD = 0x00230000u
+public const val WNNC_NET_TWINS: DWORD = 0x00240000u
+public const val WNNC_NET_RDR2SAMPLE: DWORD = 0x00250000u
+public const val WNNC_NET_CSC: DWORD = 0x00260000u
+public const val WNNC_NET_3IN1: DWORD = 0x00270000u
+public const val WNNC_NET_EXTENDNET: DWORD = 0x00290000u
+public const val WNNC_NET_STAC: DWORD = 0x002A0000u
+public const val WNNC_NET_FOXBAT: DWORD = 0x002B0000u
+public const val WNNC_NET_YAHOO: DWORD = 0x002C0000u
+public const val WNNC_NET_EXIFS: DWORD = 0x002D0000u
+public const val WNNC_NET_DAV: DWORD = 0x002E0000u
+public const val WNNC_NET_KNOWARE: DWORD = 0x002F0000u
+public const val WNNC_NET_OBJECT_DIRE: DWORD = 0x00300000u
+public const val WNNC_NET_MASFAX: DWORD = 0x00310000u
+public const val WNNC_NET_HOB_NFS: DWORD = 0x00320000u
+public const val WNNC_NET_SHIVA: DWORD = 0x00330000u
+public const val WNNC_NET_IBMAL: DWORD = 0x00340000u
+public const val WNNC_NET_LOCK: DWORD = 0x00350000u
+public const val WNNC_NET_TERMSRV: DWORD = 0x00360000u
+public const val WNNC_NET_SRT: DWORD = 0x00370000u
+public const val WNNC_NET_QUINCY: DWORD = 0x00380000u
+public const val WNNC_NET_OPENAFS: DWORD = 0x00390000u
+public const val WNNC_NET_AVID1: DWORD = 0x003A0000u
+public const val WNNC_NET_DFS: DWORD = 0x003B0000u
+public const val WNNC_NET_KWNP: DWORD = 0x003C0000u
+public const val WNNC_NET_ZENWORKS: DWORD = 0x003D0000u
+public const val WNNC_NET_DRIVEONWEB: DWORD = 0x003E0000u
+public const val WNNC_NET_VMWARE: DWORD = 0x003F0000u
+public const val WNNC_NET_RSFX: DWORD = 0x00400000u
+public const val WNNC_NET_MFILES: DWORD = 0x00410000u
+public const val WNNC_NET_MS_NFS: DWORD = 0x00420000u
+public const val WNNC_NET_GOOGLE: DWORD = 0x00430000u
+public const val WNNC_NET_NDFS: DWORD = 0x00440000u
+public const val WNNC_NET_DOCUSHARE: DWORD = 0x00450000u
+public const val WNNC_CRED_MANAGER: DWORD = 0xFFFF0000u
+public const val WNNC_NET_LANMAN: DWORD = WNNC_NET_SMB

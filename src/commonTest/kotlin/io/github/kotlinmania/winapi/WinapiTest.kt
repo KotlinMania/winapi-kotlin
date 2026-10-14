@@ -38,6 +38,29 @@ import io.github.kotlinmania.winapi.shared.minwindef.MAKELONG
 import io.github.kotlinmania.winapi.shared.minwindef.MAKEWORD
 import io.github.kotlinmania.winapi.shared.minwindef.MAX_PATH
 import io.github.kotlinmania.winapi.shared.minwindef.TRUE
+import io.github.kotlinmania.winapi.shared.mprapidef.MAX_DEVICETYPE_NAME
+import io.github.kotlinmania.winapi.shared.mprapidef.MAX_DEVICE_NAME
+import io.github.kotlinmania.winapi.shared.mprapidef.MAX_INTERFACE_NAME_LEN
+import io.github.kotlinmania.winapi.shared.mprapidef.MAX_MEDIA_NAME
+import io.github.kotlinmania.winapi.shared.mprapidef.MAX_PHONE_NUMBER_LEN
+import io.github.kotlinmania.winapi.shared.mprapidef.MAX_PORT_NAME
+import io.github.kotlinmania.winapi.shared.mprapidef.MAX_TRANSPORT_NAME_LEN
+import io.github.kotlinmania.winapi.shared.qos.FLOWSPEC
+import io.github.kotlinmania.winapi.shared.transportsettingcommon.TRANSPORT_SETTING_ID
+import io.github.kotlinmania.winapi.shared.tvout.VIDEOPARAMETERS
+import io.github.kotlinmania.winapi.shared.tvout.VP_COMMAND_GET
+import io.github.kotlinmania.winapi.shared.tvout.VP_COMMAND_SET
+import io.github.kotlinmania.winapi.shared.tvout.VP_FLAGS_COPYPROTECT
+import io.github.kotlinmania.winapi.shared.tvout.VP_FLAGS_TV_MODE
+import io.github.kotlinmania.winapi.shared.tvout.VP_TV_STANDARD_NTSC_433
+import io.github.kotlinmania.winapi.shared.tvout.VP_TV_STANDARD_WIN_VGA
+import io.github.kotlinmania.winapi.shared.wnnc.WNNC_CRED_MANAGER
+import io.github.kotlinmania.winapi.shared.wnnc.WNNC_NET_DOCUSHARE
+import io.github.kotlinmania.winapi.shared.wnnc.WNNC_NET_LANMAN
+import io.github.kotlinmania.winapi.shared.wnnc.WNNC_NET_MSNET
+import io.github.kotlinmania.winapi.shared.wnnc.WNNC_NET_NETWARE
+import io.github.kotlinmania.winapi.shared.wnnc.WNNC_NET_SMB
+import io.github.kotlinmania.winapi.shared.wnnc.WNNC_NET_VINES
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -250,5 +273,91 @@ class WinapiTest {
         assertEquals(0x06u.toUShort(), io.github.kotlinmania.winapi.shared.hidusage.HID_USAGE_GENERIC_KEYBOARD)
         assertEquals(0x04u.toUShort(), io.github.kotlinmania.winapi.shared.hidusage.HID_USAGE_KEYBOARD_aA)
         assertEquals(0x1Du.toUShort(), io.github.kotlinmania.winapi.shared.hidusage.HID_USAGE_KEYBOARD_zZ)
+    }
+
+    @Test
+    fun testTransportSettingId() {
+        val guid =
+            GUID(
+                Data1 = 0x12345678u,
+                Data2 = 0x1234u,
+                Data3 = 0x5678u,
+                Data4 = ubyteArrayOf(1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u),
+            )
+        val ts = TRANSPORT_SETTING_ID(Guid = guid)
+        assertEquals(guid, ts.Guid)
+        assertEquals(ts, TRANSPORT_SETTING_ID(Guid = guid))
+    }
+
+    @Test
+    fun testQosFlowspec() {
+        val flowspec =
+            FLOWSPEC(
+                TokenRate = 1000u,
+                TokenBucketSize = 2000u,
+                PeakBandwidth = 3000u,
+                Latency = 50u,
+                DelayVariation = 10u,
+                ServiceType = 1u,
+                MaxSduSize = 1500u,
+                MinimumPolicedSize = 128u,
+            )
+        assertEquals(1000u, flowspec.TokenRate)
+        assertEquals(2000u, flowspec.TokenBucketSize)
+        assertEquals(3000u, flowspec.PeakBandwidth)
+        assertEquals(50u, flowspec.Latency)
+        assertEquals(10u, flowspec.DelayVariation)
+        assertEquals(1u, flowspec.ServiceType)
+        assertEquals(1500u, flowspec.MaxSduSize)
+        assertEquals(128u, flowspec.MinimumPolicedSize)
+
+        val defaultFlowspec = FLOWSPEC()
+        assertEquals(0u, defaultFlowspec.TokenRate)
+        assertEquals(0u, defaultFlowspec.ServiceType)
+    }
+
+    @Test
+    fun testMprapidefConstants() {
+        assertEquals(256uL, MAX_INTERFACE_NAME_LEN)
+        assertEquals(40uL, MAX_TRANSPORT_NAME_LEN)
+        assertEquals(16uL, MAX_MEDIA_NAME)
+        assertEquals(16uL, MAX_PORT_NAME)
+        assertEquals(128uL, MAX_DEVICE_NAME)
+        assertEquals(128uL, MAX_PHONE_NUMBER_LEN)
+        assertEquals(16uL, MAX_DEVICETYPE_NAME)
+    }
+
+    @Test
+    fun testWnncConstants() {
+        assertEquals(0x00010000u, WNNC_NET_MSNET)
+        assertEquals(0x00020000u, WNNC_NET_SMB)
+        assertEquals(0x00030000u, WNNC_NET_NETWARE)
+        assertEquals(0x00040000u, WNNC_NET_VINES)
+        assertEquals(0x00450000u, WNNC_NET_DOCUSHARE)
+        assertEquals(0xFFFF0000u, WNNC_CRED_MANAGER)
+        assertEquals(WNNC_NET_SMB, WNNC_NET_LANMAN)
+    }
+
+    @Test
+    fun testTvoutVideoParameters() {
+        assertEquals(0x0001u, VP_COMMAND_GET)
+        assertEquals(0x0002u, VP_COMMAND_SET)
+        assertEquals(0x0001u, VP_FLAGS_TV_MODE)
+        assertEquals(0x0100u, VP_FLAGS_COPYPROTECT)
+        assertEquals(0x8000u, VP_TV_STANDARD_WIN_VGA)
+        assertEquals(0x00010000u, VP_TV_STANDARD_NTSC_433)
+
+        val vp = VIDEOPARAMETERS()
+        assertEquals(IID_NULL, vp.Guid)
+        assertEquals(0u, vp.dwCommand)
+        assertEquals(256, vp.bOEMCopyProtection.size)
+
+        assertFailsWith<IllegalArgumentException> {
+            VIDEOPARAMETERS(bOEMCopyProtection = UByteArray(100))
+        }
+
+        val vp2 = VIDEOPARAMETERS()
+        assertEquals(vp, vp2)
+        assertEquals(vp.hashCode(), vp2.hashCode())
     }
 }

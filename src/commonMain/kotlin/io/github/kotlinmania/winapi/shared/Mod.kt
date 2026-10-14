@@ -20,11 +20,16 @@ package io.github.kotlinmania.winapi.shared
 //   guiddef    -> Guiddef.kt
 //   hidusage   -> Hidusage.kt
 //   in6addr    -> In6addr.kt
-//   inaddr     -> Inaddr.kt
-//   minwindef  -> Minwindef.kt
-//   ntdef      -> Ntdef.kt
-//   windef     -> Windef.kt
-//   windowsx   -> Windowsx.kt
+//   inaddr                 -> Inaddr.kt
+//   minwindef              -> Minwindef.kt
+//   mprapidef              -> Mprapidef.kt
+//   ntdef                  -> Ntdef.kt
+//   qos                    -> Qos.kt
+//   transportsettingcommon -> Transportsettingcommon.kt
+//   tvout                  -> Tvout.kt
+//   windef                 -> Windef.kt
+//   windowsx               -> Windowsx.kt
+//   wnnc                   -> Wnnc.kt
 // Each Kotlin file corresponds to one upstream header file and is surfaced
 // unconditionally (Cargo feature gating is upstream build configuration
 // that does not survive translation).
