@@ -1,0 +1,5 @@
+headers = stddef.h stdint.h winapi_wrapper.h
+headerFilter = *
+compilerOpts = -Isrc/nativeInterop/cinterop
+staticLibraries = winapi_wrapper.a
+linkerOpts.mingw = -loleaut32 -lkernel32 -luser32 -ladvapi32 -lws2_32

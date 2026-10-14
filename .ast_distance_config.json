@@ -20,7 +20,9 @@
     "lib.rs",
     "winapi/src/lib.rs",
     "shared/mod.rs",
-    "winapi/src/shared/mod.rs"
+    "winapi/src/shared/mod.rs",
+    "um/mod.rs",
+    "winapi/src/um/mod.rs"
   ]
 }
 
