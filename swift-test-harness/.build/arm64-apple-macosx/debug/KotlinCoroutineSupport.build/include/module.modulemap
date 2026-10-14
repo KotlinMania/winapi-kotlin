@@ -1,0 +1,3 @@
+module KotlinCoroutineSupport {
+    header "/Volumes/stuff/Projects/kotlinmania/winapi-kotlin/swift-test-harness/.build/arm64-apple-macosx/debug/KotlinCoroutineSupport.build/include/KotlinCoroutineSupport-Swift.h"
+}

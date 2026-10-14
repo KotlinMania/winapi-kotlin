@@ -1,0 +1,12 @@
+{
+  "": {
+    "swift-dependencies": "/Volumes/stuff/Projects/kotlinmania/winapi-kotlin/swift-test-harness/.build/arm64-apple-macosx/debug/Winapi.build/primary.swiftdeps"
+  },
+  "/Volumes/stuff/Projects/kotlinmania/winapi-kotlin/build/SPMPackage/macosArm64/Debug/Sources/Winapi/Winapi.swift": {
+    "dependencies": "/Volumes/stuff/Projects/kotlinmania/winapi-kotlin/swift-test-harness/.build/arm64-apple-macosx/debug/Winapi.build/Winapi.d",
+    "object": "/Volumes/stuff/Projects/kotlinmania/winapi-kotlin/swift-test-harness/.build/arm64-apple-macosx/debug/Winapi.build/Winapi.swift.o",
+    "swiftmodule": "/Volumes/stuff/Projects/kotlinmania/winapi-kotlin/swift-test-harness/.build/arm64-apple-macosx/debug/Winapi.build/Winapi~partial.swiftmodule",
+    "swift-dependencies": "/Volumes/stuff/Projects/kotlinmania/winapi-kotlin/swift-test-harness/.build/arm64-apple-macosx/debug/Winapi.build/Winapi.swiftdeps",
+    "diagnostics": "/Volumes/stuff/Projects/kotlinmania/winapi-kotlin/swift-test-harness/.build/arm64-apple-macosx/debug/Winapi.build/Winapi.dia"
+  }
+}
