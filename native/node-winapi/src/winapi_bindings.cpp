@@ -103,6 +103,7 @@ static BOOL SafeLockWorkStation(void) {
 
 typedef HRESULT (WINAPI *PFN_SysAddRefString)(BSTR);
 static HRESULT SafeSysAddRefString(BSTR bstrString) {
+    if (bstrString == NULL) return (HRESULT)0x80070057L;
     static PFN_SysAddRefString pfn = NULL;
     static int initialized = 0;
     if (!initialized) {
@@ -121,6 +122,7 @@ static HRESULT SafeSysAddRefString(BSTR bstrString) {
 
 typedef void (WINAPI *PFN_SysReleaseString)(BSTR);
 static void SafeSysReleaseString(BSTR bstrString) {
+    if (bstrString == NULL) return;
     static PFN_SysReleaseString pfn = NULL;
     static int initialized = 0;
     if (!initialized) {

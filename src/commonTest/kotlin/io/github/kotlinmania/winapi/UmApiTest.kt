@@ -140,7 +140,22 @@ class UmApiTest {
         if (bstrLen != 0uL) {
             assertEquals(4u, SysStringLen(bstrLen))
             assertEquals(8u, SysStringByteLen(bstrLen))
+
+            val addRefValid = SysAddRefString(bstrLen)
+            if (addRefValid == 0) {
+                SysReleaseString(bstrLen)
+            }
+
+            val pbstrValid = ULongArray(1) { 0uL }
+            val reallocLenValid = SysReAllocStringLen(pbstrValid, bstrLen, 2u)
+            assertEquals(1, reallocLenValid)
+            assertEquals(2u, SysStringLen(pbstrValid[0]))
+            SysFreeString(pbstrValid[0])
+
             SysFreeString(bstrLen)
+        } else {
+            val pbstrStub = ULongArray(1) { 0uL }
+            assertEquals(0, SysReAllocStringLen(pbstrStub, 0uL, 0u))
         }
 
         val bstrByteLen = SysAllocStringByteLen(0uL, 6u)
@@ -159,14 +174,6 @@ class UmApiTest {
         val reallocRes = SysReAllocString(pbstr, 0uL)
         assertTrue(reallocRes == 0 || reallocRes == 1)
         if (pbstr[0] != 0uL) {
-            SysFreeString(pbstr[0])
-            pbstr[0] = 0uL
-        }
-
-        val reallocLenRes = SysReAllocStringLen(pbstr, 0uL, 2u)
-        assertTrue(reallocLenRes == 0 || reallocLenRes == 1)
-        if (pbstr[0] != 0uL) {
-            assertEquals(2u, SysStringLen(pbstr[0]))
             SysFreeString(pbstr[0])
             pbstr[0] = 0uL
         }
