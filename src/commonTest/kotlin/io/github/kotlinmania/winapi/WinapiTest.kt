@@ -21,10 +21,9 @@ import io.github.kotlinmania.winapi.shared.dxgitype.DXGI_RGB
 import io.github.kotlinmania.winapi.shared.dxgitype.DXGI_USAGE_SHADER_INPUT
 import io.github.kotlinmania.winapi.shared.guiddef.GUID
 import io.github.kotlinmania.winapi.shared.guiddef.IID_NULL
-import io.github.kotlinmania.winapi.shared.guiddef.IsEqualCLSID
-import io.github.kotlinmania.winapi.shared.guiddef.IsEqualFMTID
+
 import io.github.kotlinmania.winapi.shared.guiddef.IsEqualGUID
-import io.github.kotlinmania.winapi.shared.guiddef.IsEqualIID
+
 import io.github.kotlinmania.winapi.shared.in6addr.IN6_ADDR
 import io.github.kotlinmania.winapi.shared.inaddr.IN_ADDR
 import io.github.kotlinmania.winapi.shared.inaddr.InAddrSUnB
@@ -114,9 +113,6 @@ class WinapiTest {
             )
         assertEquals(IID_NULL, g1)
         assertTrue(IsEqualGUID(g1, IID_NULL))
-        assertTrue(IsEqualIID(g1, IID_NULL))
-        assertTrue(IsEqualCLSID(g1, IID_NULL))
-        assertTrue(IsEqualFMTID(g1, IID_NULL))
         assertEquals(g1.hashCode(), IID_NULL.hashCode())
 
         val g2 =

@@ -48,20 +48,14 @@ typealias LPCGUID = ULong
 typealias IID = GUID
 typealias LPIID = ULong
 
-/** Re-export of [IsEqualGUID] under the IID alias. */
-fun IsEqualIID(g1: IID, g2: IID): Boolean = IsEqualGUID(g1, g2)
 
 typealias CLSID = GUID
 typealias LPCLSID = ULong
 
-/** Re-export of [IsEqualGUID] under the CLSID alias. */
-fun IsEqualCLSID(g1: CLSID, g2: CLSID): Boolean = IsEqualGUID(g1, g2)
 
 typealias FMTID = GUID
 typealias LPFMTID = ULong
 
-/** Re-export of [IsEqualGUID] under the FMTID alias. */
-fun IsEqualFMTID(g1: FMTID, g2: FMTID): Boolean = IsEqualGUID(g1, g2)
 
 typealias REFGUID = ULong
 typealias REFIID = ULong
