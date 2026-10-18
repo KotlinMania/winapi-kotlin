@@ -6,7 +6,7 @@ package io.github.kotlinmania.winapi.um.processthreadsapi
 import io.github.kotlinmania.winapi.shared.minwindef.BOOL
 import io.github.kotlinmania.winapi.shared.minwindef.DWORD
 import io.github.kotlinmania.winapi.shared.minwindef.UINT
-import io.github.kotlinmania.winapi.um.winnt.HANDLE
+import io.github.kotlinmania.winapi.shared.ntdef.HANDLE
 import winapi.cinterop.winapi_exit_process
 import winapi.cinterop.winapi_get_current_process
 import winapi.cinterop.winapi_get_current_process_id

@@ -4,7 +4,7 @@ package io.github.kotlinmania.winapi.um.processthreadsapi
 import io.github.kotlinmania.winapi.shared.minwindef.BOOL
 import io.github.kotlinmania.winapi.shared.minwindef.DWORD
 import io.github.kotlinmania.winapi.shared.minwindef.UINT
-import io.github.kotlinmania.winapi.um.winnt.HANDLE
+import io.github.kotlinmania.winapi.shared.ntdef.HANDLE
 
 public actual fun GetCurrentProcess(): HANDLE = (-1L).toULong()
 
