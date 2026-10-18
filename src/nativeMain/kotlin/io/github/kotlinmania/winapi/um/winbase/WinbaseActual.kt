@@ -6,7 +6,7 @@ package io.github.kotlinmania.winapi.um.winbase
 import io.github.kotlinmania.winapi.shared.minwindef.HGLOBAL
 import io.github.kotlinmania.winapi.shared.minwindef.HLOCAL
 import io.github.kotlinmania.winapi.shared.minwindef.ULONG
-import io.github.kotlinmania.winapi.um.winnt.LONG
+import io.github.kotlinmania.winapi.shared.ntdef.LONG
 import winapi.cinterop.winapi_global_free
 import winapi.cinterop.winapi_local_free
 import winapi.cinterop.winapi_rtl_nt_status_to_dos_error

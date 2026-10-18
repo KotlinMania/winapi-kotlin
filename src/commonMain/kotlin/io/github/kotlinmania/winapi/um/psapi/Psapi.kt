@@ -6,8 +6,8 @@ import io.github.kotlinmania.winapi.shared.basetsd.ULONG_PTR
 import io.github.kotlinmania.winapi.shared.minwindef.BOOL
 import io.github.kotlinmania.winapi.shared.minwindef.DWORD
 import io.github.kotlinmania.winapi.shared.minwindef.LPVOID
-import io.github.kotlinmania.winapi.um.winnt.HANDLE
-import io.github.kotlinmania.winapi.um.winnt.PVOID
+import io.github.kotlinmania.winapi.shared.ntdef.HANDLE
+import io.github.kotlinmania.winapi.shared.ntdef.PVOID
 
 public const val LIST_MODULES_DEFAULT: DWORD = 0x0u
 public const val LIST_MODULES_32BIT: DWORD = 0x01u

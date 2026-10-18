@@ -6,51 +6,18 @@ import io.github.kotlinmania.winapi.shared.basetsd.ULONG_PTR
 import io.github.kotlinmania.winapi.shared.minwindef.BYTE
 import io.github.kotlinmania.winapi.shared.minwindef.DWORD
 import io.github.kotlinmania.winapi.shared.minwindef.WORD
+import io.github.kotlinmania.winapi.shared.ntdef.HANDLE
+import io.github.kotlinmania.winapi.shared.ntdef.LONG
+import io.github.kotlinmania.winapi.shared.ntdef.LPCSTR
+import io.github.kotlinmania.winapi.shared.ntdef.PVOID
+import io.github.kotlinmania.winapi.shared.ntdef.ULONGLONG
 
 public typealias ANYSIZE_ARRAY_LEN = Int
 
 public const val ANYSIZE_ARRAY: Int = 1
 
-public typealias PVOID = io.github.kotlinmania.winapi.shared.ntdef.PVOID
-public typealias PVOID64 = io.github.kotlinmania.winapi.shared.ntdef.PVOID64
-public typealias CHAR = io.github.kotlinmania.winapi.shared.ntdef.CHAR
-public typealias SHORT = io.github.kotlinmania.winapi.shared.ntdef.SHORT
-public typealias LONG = io.github.kotlinmania.winapi.shared.ntdef.LONG
-public typealias INT = io.github.kotlinmania.winapi.shared.ntdef.INT
-public typealias WCHAR = io.github.kotlinmania.winapi.shared.ntdef.WCHAR
-public typealias PWCHAR = io.github.kotlinmania.winapi.shared.ntdef.PWCHAR
-public typealias LPWCH = io.github.kotlinmania.winapi.shared.ntdef.LPWCH
-public typealias PWCH = io.github.kotlinmania.winapi.shared.ntdef.PWCH
-public typealias LPCWCH = io.github.kotlinmania.winapi.shared.ntdef.LPCWCH
-public typealias PCWCH = io.github.kotlinmania.winapi.shared.ntdef.PCWCH
-public typealias NWPSTR = io.github.kotlinmania.winapi.shared.ntdef.NWPSTR
-public typealias LPWSTR = io.github.kotlinmania.winapi.shared.ntdef.LPWSTR
-public typealias LPSTR = io.github.kotlinmania.winapi.shared.ntdef.LPSTR
-public typealias LPTSTR = io.github.kotlinmania.winapi.shared.ntdef.LPTSTR
-public typealias PWSTR = io.github.kotlinmania.winapi.shared.ntdef.PWSTR
-public typealias LPCWSTR = io.github.kotlinmania.winapi.shared.ntdef.LPCWSTR
-public typealias PCWSTR = io.github.kotlinmania.winapi.shared.ntdef.PCWSTR
-public typealias LPCSTR = io.github.kotlinmania.winapi.shared.ntdef.LPCSTR
-public typealias PCSTR = io.github.kotlinmania.winapi.shared.ntdef.PCSTR
 public typealias LPCTSTR = LPCSTR
-public typealias CCHAR = io.github.kotlinmania.winapi.shared.ntdef.CCHAR
-public typealias LCID = io.github.kotlinmania.winapi.shared.ntdef.LCID
-public typealias PLCID = io.github.kotlinmania.winapi.shared.ntdef.PLCID
-public typealias LANGID = io.github.kotlinmania.winapi.shared.ntdef.LANGID
-public typealias LONGLONG = io.github.kotlinmania.winapi.shared.ntdef.LONGLONG
-public typealias ULONGLONG = io.github.kotlinmania.winapi.shared.ntdef.ULONGLONG
-public typealias PLONGLONG = io.github.kotlinmania.winapi.shared.ntdef.PLONGLONG
-public typealias PULONGLONG = io.github.kotlinmania.winapi.shared.ntdef.PULONGLONG
-public typealias LARGE_INTEGER = io.github.kotlinmania.winapi.shared.ntdef.LARGE_INTEGER
-public typealias PLARGE_INTEGER = io.github.kotlinmania.winapi.shared.ntdef.PLARGE_INTEGER
-public typealias ULARGE_INTEGER = io.github.kotlinmania.winapi.shared.ntdef.ULARGE_INTEGER
-public typealias PULARGE_INTEGER = io.github.kotlinmania.winapi.shared.ntdef.PULARGE_INTEGER
-public typealias HANDLE = io.github.kotlinmania.winapi.shared.ntdef.HANDLE
-public typealias PHANDLE = io.github.kotlinmania.winapi.shared.ntdef.PHANDLE
-public typealias FCHAR = io.github.kotlinmania.winapi.shared.ntdef.FCHAR
-public typealias FSHORT = io.github.kotlinmania.winapi.shared.ntdef.FSHORT
-public typealias FLONG = io.github.kotlinmania.winapi.shared.ntdef.FLONG
-public typealias HRESULT = io.github.kotlinmania.winapi.shared.ntdef.HRESULT
+
 public typealias BOOLEAN = BYTE
 public typealias PBOOLEAN = ULong
 public typealias PLONG = ULong
