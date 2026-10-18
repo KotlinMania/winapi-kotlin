@@ -117,7 +117,7 @@ Do you use `winapi` in your projects? If so, you may be interested in financiall
 
 ```kotlin
 dependencies {
-    implementation("io.github.kotlinmania:winapi-kotlin:0.1.0")
+    implementation("io.github.kotlinmania:winapi-kotlin:0.2.0")
 }
 ```
 

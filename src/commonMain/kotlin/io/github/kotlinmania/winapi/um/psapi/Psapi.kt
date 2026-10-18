@@ -8,6 +8,7 @@ import io.github.kotlinmania.winapi.shared.minwindef.DWORD
 import io.github.kotlinmania.winapi.shared.minwindef.LPVOID
 import io.github.kotlinmania.winapi.shared.ntdef.HANDLE
 import io.github.kotlinmania.winapi.shared.ntdef.PVOID
+
 public const val LIST_MODULES_DEFAULT: DWORD = 0x0u
 public const val LIST_MODULES_32BIT: DWORD = 0x01u
 public const val LIST_MODULES_64BIT: DWORD = 0x02u

@@ -4,10 +4,11 @@ package io.github.kotlinmania.winapi.um.oleauto
 import io.github.kotlinmania.winapi.internal.WinapiJni
 import io.github.kotlinmania.winapi.shared.minwindef.INT
 import io.github.kotlinmania.winapi.shared.minwindef.UINT
-import io.github.kotlinmania.winapi.shared.wtypes.BSTR
-import io.github.kotlinmania.winapi.shared.wtypesbase.LPCOLESTR
 import io.github.kotlinmania.winapi.shared.ntdef.HRESULT
 import io.github.kotlinmania.winapi.shared.ntdef.LPCSTR
+import io.github.kotlinmania.winapi.shared.wtypes.BSTR
+import io.github.kotlinmania.winapi.shared.wtypesbase.LPCOLESTR
+
 public actual fun SysAllocString(psz: LPCOLESTR): BSTR =
     WinapiJni.SysAllocString(psz.toLong()).toULong()
 

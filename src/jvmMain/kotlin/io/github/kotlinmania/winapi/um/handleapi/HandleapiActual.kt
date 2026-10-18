@@ -5,6 +5,7 @@ import io.github.kotlinmania.winapi.internal.WinapiJni
 import io.github.kotlinmania.winapi.shared.minwindef.BOOL
 import io.github.kotlinmania.winapi.shared.minwindef.DWORD
 import io.github.kotlinmania.winapi.shared.ntdef.HANDLE
+
 public actual fun CloseHandle(hObject: HANDLE): BOOL =
     WinapiJni.CloseHandle(hObject.toLong())
 

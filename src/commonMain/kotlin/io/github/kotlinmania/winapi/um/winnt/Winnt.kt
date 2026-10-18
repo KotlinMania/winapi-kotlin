@@ -1,21 +1,16 @@
 // port-lint: source um/winnt.rs
 package io.github.kotlinmania.winapi.um.winnt
 
-import io.github.kotlinmania.winapi.shared.ntdef.ULONGLONG
-
-import io.github.kotlinmania.winapi.shared.ntdef.PVOID
-
-import io.github.kotlinmania.winapi.shared.ntdef.LPCSTR
-
-import io.github.kotlinmania.winapi.shared.ntdef.LONG
-
-import io.github.kotlinmania.winapi.shared.ntdef.HANDLE
-
 import io.github.kotlinmania.winapi.shared.basetsd.LONG_PTR
 import io.github.kotlinmania.winapi.shared.basetsd.ULONG_PTR
 import io.github.kotlinmania.winapi.shared.minwindef.BYTE
 import io.github.kotlinmania.winapi.shared.minwindef.DWORD
 import io.github.kotlinmania.winapi.shared.minwindef.WORD
+import io.github.kotlinmania.winapi.shared.ntdef.HANDLE
+import io.github.kotlinmania.winapi.shared.ntdef.LONG
+import io.github.kotlinmania.winapi.shared.ntdef.LPCSTR
+import io.github.kotlinmania.winapi.shared.ntdef.PVOID
+import io.github.kotlinmania.winapi.shared.ntdef.ULONGLONG
 
 public typealias ANYSIZE_ARRAY_LEN = Int
 

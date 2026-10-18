@@ -4,6 +4,7 @@ package io.github.kotlinmania.winapi.um.handleapi
 import io.github.kotlinmania.winapi.shared.minwindef.BOOL
 import io.github.kotlinmania.winapi.shared.minwindef.DWORD
 import io.github.kotlinmania.winapi.shared.ntdef.HANDLE
+
 public actual fun CloseHandle(hObject: HANDLE): BOOL = 0
 
 public actual fun DuplicateHandle(

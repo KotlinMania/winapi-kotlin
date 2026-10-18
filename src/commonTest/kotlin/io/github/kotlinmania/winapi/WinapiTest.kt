@@ -21,9 +21,7 @@ import io.github.kotlinmania.winapi.shared.dxgitype.DXGI_RGB
 import io.github.kotlinmania.winapi.shared.dxgitype.DXGI_USAGE_SHADER_INPUT
 import io.github.kotlinmania.winapi.shared.guiddef.GUID
 import io.github.kotlinmania.winapi.shared.guiddef.IID_NULL
-
 import io.github.kotlinmania.winapi.shared.guiddef.IsEqualGUID
-
 import io.github.kotlinmania.winapi.shared.in6addr.IN6_ADDR
 import io.github.kotlinmania.winapi.shared.inaddr.IN_ADDR
 import io.github.kotlinmania.winapi.shared.inaddr.InAddrSUnB

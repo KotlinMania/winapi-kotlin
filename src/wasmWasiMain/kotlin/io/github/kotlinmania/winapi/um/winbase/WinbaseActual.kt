@@ -5,6 +5,7 @@ import io.github.kotlinmania.winapi.shared.minwindef.HGLOBAL
 import io.github.kotlinmania.winapi.shared.minwindef.HLOCAL
 import io.github.kotlinmania.winapi.shared.minwindef.ULONG
 import io.github.kotlinmania.winapi.shared.ntdef.LONG
+
 public actual fun GlobalFree(hMem: HGLOBAL): HGLOBAL = 0uL
 
 public actual fun LocalFree(hMem: HLOCAL): HLOCAL = 0uL

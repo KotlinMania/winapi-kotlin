@@ -48,14 +48,11 @@ typealias LPCGUID = ULong
 typealias IID = GUID
 typealias LPIID = ULong
 
-
 typealias CLSID = GUID
 typealias LPCLSID = ULong
 
-
 typealias FMTID = GUID
 typealias LPFMTID = ULong
-
 
 typealias REFGUID = ULong
 typealias REFIID = ULong

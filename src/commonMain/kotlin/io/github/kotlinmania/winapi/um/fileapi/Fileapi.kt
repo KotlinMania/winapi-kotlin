@@ -7,16 +7,17 @@ import io.github.kotlinmania.winapi.shared.minwindef.FILETIME
 import io.github.kotlinmania.winapi.shared.minwindef.UCHAR
 import io.github.kotlinmania.winapi.shared.minwindef.ULONG
 import io.github.kotlinmania.winapi.shared.minwindef.WORD
-import io.github.kotlinmania.winapi.um.minwinbase.LPSECURITY_ATTRIBUTES
-import io.github.kotlinmania.winapi.um.winnt.BOOLEAN
 import io.github.kotlinmania.winapi.shared.ntdef.CCHAR
-import io.github.kotlinmania.winapi.um.winnt.FILE_ID_128
 import io.github.kotlinmania.winapi.shared.ntdef.HANDLE
 import io.github.kotlinmania.winapi.shared.ntdef.LARGE_INTEGER
 import io.github.kotlinmania.winapi.shared.ntdef.LONG
 import io.github.kotlinmania.winapi.shared.ntdef.LPCSTR
 import io.github.kotlinmania.winapi.shared.ntdef.LPCWSTR
 import io.github.kotlinmania.winapi.shared.ntdef.ULONGLONG
+import io.github.kotlinmania.winapi.um.minwinbase.LPSECURITY_ATTRIBUTES
+import io.github.kotlinmania.winapi.um.winnt.BOOLEAN
+import io.github.kotlinmania.winapi.um.winnt.FILE_ID_128
+
 public const val CREATE_NEW: DWORD = 1u
 public const val CREATE_ALWAYS: DWORD = 2u
 public const val OPEN_EXISTING: DWORD = 3u
