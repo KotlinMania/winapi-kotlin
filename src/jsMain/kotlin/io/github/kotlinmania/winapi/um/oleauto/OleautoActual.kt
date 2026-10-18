@@ -6,9 +6,8 @@ import io.github.kotlinmania.winapi.shared.minwindef.INT
 import io.github.kotlinmania.winapi.shared.minwindef.UINT
 import io.github.kotlinmania.winapi.shared.wtypes.BSTR
 import io.github.kotlinmania.winapi.shared.wtypesbase.LPCOLESTR
-import io.github.kotlinmania.winapi.um.winnt.HRESULT
-import io.github.kotlinmania.winapi.um.winnt.LPCSTR
-
+import io.github.kotlinmania.winapi.shared.ntdef.HRESULT
+import io.github.kotlinmania.winapi.shared.ntdef.LPCSTR
 public actual fun SysAllocString(psz: LPCOLESTR): BSTR =
     WinapiNative.SysAllocString(psz.toLong().toDouble()).toLong().toULong()
 

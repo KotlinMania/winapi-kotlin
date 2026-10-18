@@ -6,8 +6,7 @@ import io.github.kotlinmania.winapi.shared.minwindef.HGLOBAL
 import io.github.kotlinmania.winapi.shared.minwindef.HLOCAL
 import io.github.kotlinmania.winapi.shared.minwindef.UINT
 import io.github.kotlinmania.winapi.shared.minwindef.ULONG
-import io.github.kotlinmania.winapi.um.winnt.LONG
-
+import io.github.kotlinmania.winapi.shared.ntdef.LONG
 public const val FILE_BEGIN: DWORD = 0u
 public const val FILE_CURRENT: DWORD = 1u
 public const val FILE_END: DWORD = 2u

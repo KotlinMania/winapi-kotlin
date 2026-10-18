@@ -5,8 +5,7 @@ import io.github.kotlinmania.winapi.internal.WinapiJni
 import io.github.kotlinmania.winapi.shared.minwindef.HGLOBAL
 import io.github.kotlinmania.winapi.shared.minwindef.HLOCAL
 import io.github.kotlinmania.winapi.shared.minwindef.ULONG
-import io.github.kotlinmania.winapi.um.winnt.LONG
-
+import io.github.kotlinmania.winapi.shared.ntdef.LONG
 public actual fun GlobalFree(hMem: HGLOBAL): HGLOBAL =
     WinapiJni.GlobalFree(hMem.toLong()).toULong()
 

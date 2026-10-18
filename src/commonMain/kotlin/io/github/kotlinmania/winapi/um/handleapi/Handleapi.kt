@@ -3,8 +3,7 @@ package io.github.kotlinmania.winapi.um.handleapi
 
 import io.github.kotlinmania.winapi.shared.minwindef.BOOL
 import io.github.kotlinmania.winapi.shared.minwindef.DWORD
-import io.github.kotlinmania.winapi.um.winnt.HANDLE
-
+import io.github.kotlinmania.winapi.shared.ntdef.HANDLE
 public const val INVALID_HANDLE_VALUE: HANDLE = 0xFFFFFFFFFFFFFFFFuL
 
 public expect fun CloseHandle(hObject: HANDLE): BOOL

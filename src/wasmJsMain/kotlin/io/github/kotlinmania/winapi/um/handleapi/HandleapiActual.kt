@@ -4,8 +4,7 @@ package io.github.kotlinmania.winapi.um.handleapi
 import io.github.kotlinmania.winapi.internal.WinapiNapiWasm
 import io.github.kotlinmania.winapi.shared.minwindef.BOOL
 import io.github.kotlinmania.winapi.shared.minwindef.DWORD
-import io.github.kotlinmania.winapi.um.winnt.HANDLE
-
+import io.github.kotlinmania.winapi.shared.ntdef.HANDLE
 public actual fun CloseHandle(hObject: HANDLE): BOOL =
     WinapiNapiWasm.CloseHandle(hObject.toLong())
 

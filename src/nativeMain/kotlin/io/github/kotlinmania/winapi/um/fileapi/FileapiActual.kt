@@ -6,10 +6,10 @@ package io.github.kotlinmania.winapi.um.fileapi
 import io.github.kotlinmania.winapi.shared.minwindef.BOOL
 import io.github.kotlinmania.winapi.shared.minwindef.DWORD
 import io.github.kotlinmania.winapi.um.minwinbase.LPSECURITY_ATTRIBUTES
-import io.github.kotlinmania.winapi.um.winnt.HANDLE
-import io.github.kotlinmania.winapi.um.winnt.LONG
-import io.github.kotlinmania.winapi.um.winnt.LPCSTR
-import io.github.kotlinmania.winapi.um.winnt.LPCWSTR
+import io.github.kotlinmania.winapi.shared.ntdef.HANDLE
+import io.github.kotlinmania.winapi.shared.ntdef.LONG
+import io.github.kotlinmania.winapi.shared.ntdef.LPCSTR
+import io.github.kotlinmania.winapi.shared.ntdef.LPCWSTR
 import kotlinx.cinterop.IntVar
 import kotlinx.cinterop.UIntVar
 import kotlinx.cinterop.alloc

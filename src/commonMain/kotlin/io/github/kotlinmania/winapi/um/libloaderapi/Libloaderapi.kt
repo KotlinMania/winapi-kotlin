@@ -4,8 +4,7 @@ package io.github.kotlinmania.winapi.um.libloaderapi
 import io.github.kotlinmania.winapi.shared.minwindef.BOOL
 import io.github.kotlinmania.winapi.shared.minwindef.DWORD
 import io.github.kotlinmania.winapi.shared.minwindef.HMODULE
-import io.github.kotlinmania.winapi.um.winnt.PVOID
-
+import io.github.kotlinmania.winapi.shared.ntdef.PVOID
 public const val GET_MODULE_HANDLE_EX_FLAG_PIN: DWORD = 0x00000001u
 public const val GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT: DWORD = 0x00000002u
 public const val GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS: DWORD = 0x00000004u

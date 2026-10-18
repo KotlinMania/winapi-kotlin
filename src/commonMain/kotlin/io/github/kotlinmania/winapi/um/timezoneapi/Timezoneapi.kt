@@ -4,8 +4,7 @@ package io.github.kotlinmania.winapi.um.timezoneapi
 import io.github.kotlinmania.winapi.shared.minwindef.DWORD
 import io.github.kotlinmania.winapi.um.minwinbase.SYSTEMTIME
 import io.github.kotlinmania.winapi.um.winnt.BOOLEAN
-import io.github.kotlinmania.winapi.um.winnt.LONG
-
+import io.github.kotlinmania.winapi.shared.ntdef.LONG
 public const val TIME_ZONE_ID_INVALID: DWORD = 0xFFFFFFFFu
 
 public class TIME_ZONE_INFORMATION(

@@ -6,10 +6,9 @@ import io.github.kotlinmania.winapi.shared.minwindef.UINT
 import io.github.kotlinmania.winapi.shared.minwindef.WORD
 import io.github.kotlinmania.winapi.shared.wtypes.BSTR
 import io.github.kotlinmania.winapi.shared.wtypesbase.LPCOLESTR
-import io.github.kotlinmania.winapi.um.winnt.HRESULT
-import io.github.kotlinmania.winapi.um.winnt.LONG
-import io.github.kotlinmania.winapi.um.winnt.LPCSTR
-
+import io.github.kotlinmania.winapi.shared.ntdef.HRESULT
+import io.github.kotlinmania.winapi.shared.ntdef.LONG
+import io.github.kotlinmania.winapi.shared.ntdef.LPCSTR
 public typealias DISPID = LONG
 public typealias MEMBERID = DISPID
 

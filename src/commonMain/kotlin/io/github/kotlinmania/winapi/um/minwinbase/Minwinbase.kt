@@ -13,13 +13,13 @@ import io.github.kotlinmania.winapi.shared.minwindef.UINT
 import io.github.kotlinmania.winapi.shared.minwindef.ULONG
 import io.github.kotlinmania.winapi.shared.minwindef.WORD
 import io.github.kotlinmania.winapi.um.winnt.EXCEPTION_RECORD
-import io.github.kotlinmania.winapi.um.winnt.HANDLE
-import io.github.kotlinmania.winapi.um.winnt.LPSTR
-import io.github.kotlinmania.winapi.um.winnt.LPWSTR
+import io.github.kotlinmania.winapi.shared.ntdef.HANDLE
+import io.github.kotlinmania.winapi.shared.ntdef.LPSTR
+import io.github.kotlinmania.winapi.shared.ntdef.LPWSTR
 import io.github.kotlinmania.winapi.um.winnt.PCONTEXT
 import io.github.kotlinmania.winapi.um.winnt.PRTL_CRITICAL_SECTION
 import io.github.kotlinmania.winapi.um.winnt.PRTL_CRITICAL_SECTION_DEBUG
-import io.github.kotlinmania.winapi.um.winnt.PVOID
+import io.github.kotlinmania.winapi.shared.ntdef.PVOID
 import io.github.kotlinmania.winapi.um.winnt.RTL_CRITICAL_SECTION
 import io.github.kotlinmania.winapi.um.winnt.RTL_CRITICAL_SECTION_DEBUG
 

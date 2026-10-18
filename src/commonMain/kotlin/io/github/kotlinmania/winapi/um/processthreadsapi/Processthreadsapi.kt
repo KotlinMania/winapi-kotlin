@@ -6,10 +6,9 @@ import io.github.kotlinmania.winapi.shared.minwindef.DWORD
 import io.github.kotlinmania.winapi.shared.minwindef.LPBYTE
 import io.github.kotlinmania.winapi.shared.minwindef.UINT
 import io.github.kotlinmania.winapi.shared.minwindef.WORD
-import io.github.kotlinmania.winapi.um.winnt.HANDLE
-import io.github.kotlinmania.winapi.um.winnt.LPSTR
-import io.github.kotlinmania.winapi.um.winnt.LPWSTR
-
+import io.github.kotlinmania.winapi.shared.ntdef.HANDLE
+import io.github.kotlinmania.winapi.shared.ntdef.LPSTR
+import io.github.kotlinmania.winapi.shared.ntdef.LPWSTR
 public data class PROCESS_INFORMATION(
     public var hProcess: HANDLE = 0uL,
     public var hThread: HANDLE = 0uL,

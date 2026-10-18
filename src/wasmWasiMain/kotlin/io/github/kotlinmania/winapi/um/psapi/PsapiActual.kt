@@ -2,6 +2,5 @@
 package io.github.kotlinmania.winapi.um.psapi
 
 import io.github.kotlinmania.winapi.shared.minwindef.BOOL
-import io.github.kotlinmania.winapi.um.winnt.HANDLE
-
+import io.github.kotlinmania.winapi.shared.ntdef.HANDLE
 public actual fun K32EmptyWorkingSet(hProcess: HANDLE): BOOL = 0
