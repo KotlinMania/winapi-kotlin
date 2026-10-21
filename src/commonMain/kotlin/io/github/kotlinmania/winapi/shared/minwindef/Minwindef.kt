@@ -20,7 +20,7 @@ typealias USHORT = CUshort
 typealias PUSHORT = ULong
 typealias UCHAR = CUchar
 typealias PUCHAR = ULong
-typealias PSZ = ULong // *mut c_char
+typealias PSZ = ULong // Character pointer
 
 const val MAX_PATH: ULong = 260u
 const val FALSE: BOOL = 0
@@ -73,21 +73,18 @@ typealias HLOCAL = HANDLE
 typealias GLOBALHANDLE = HANDLE
 typealias LOCALHANDLE = HANDLE
 
-/** Upstream `pub enum __some_function {}` — uninhabited tag type used
- *  to give FARPROC / NEARPROC / PROC distinct nominal pointer aliases. */
+/** Uninhabited tag type used to give FARPROC / NEARPROC / PROC distinct nominal pointer aliases. */
 sealed class SomeFunction
 
-typealias FARPROC = ULong // *mut __some_function
-typealias NEARPROC = ULong // *mut __some_function
-typealias PROC = ULong // *mut __some_function
+typealias FARPROC = ULong
+typealias NEARPROC = ULong
+typealias PROC = ULong
 
 typealias ATOM = WORD
 
-// DECLARE_HANDLE!{HKEY, HKEY__} expands to `pub enum HKEY__ {}; pub
-// type HKEY = *mut HKEY__;`. Each handle gets its own uninhabited tag
-// class for nominal distinctness and a ULong typealias for the
-// pointer-value form. The same pattern repeats for HMETAFILE,
-// HINSTANCE, HRGN, HRSRC, HSPRITE, HLSURF, HSTR, HTASK, HWINSTA, HKL.
+// Each handle gets its own uninhabited tag class for nominal distinctness and
+// a ULong typealias for the pointer-value form. The same pattern repeats for
+// HMETAFILE, HINSTANCE, HRGN, HRSRC, HSPRITE, HLSURF, HSTR, HTASK, HWINSTA, HKL.
 sealed class HKEY__
 typealias HKEY = ULong
 typealias PHKEY = ULong

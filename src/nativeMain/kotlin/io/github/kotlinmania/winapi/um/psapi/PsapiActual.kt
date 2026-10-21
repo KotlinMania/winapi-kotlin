@@ -9,3 +9,6 @@ import winapi.cinterop.winapi_k32_empty_working_set
 
 public actual fun K32EmptyWorkingSet(hProcess: HANDLE): BOOL =
     winapi_k32_empty_working_set(hProcess.toLong())
+
+public actual fun EmptyWorkingSet(hProcess: HANDLE): BOOL =
+    K32EmptyWorkingSet(hProcess)

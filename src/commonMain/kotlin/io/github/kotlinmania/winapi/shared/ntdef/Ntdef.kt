@@ -20,38 +20,31 @@ import io.github.kotlinmania.winapi.shared.guiddef.GUID
 
 // Type definitions for the basic types.
 //
-// Rust `target_arch` cfg branches collapse here to the values that match
-// the only Windows native target in the matrix (x86_64 / mingwX64): the
-// other branches are documented but not emitted. Pointer types
-// (`*mut T`, `*const T`, `*mut *mut T`, etc.) collapse onto ULong since
-// the pure-Kotlin port treats pointers as opaque address tokens; the
-// pointed-to data is reached through the wrapper struct values rather
-// than by dereference.
+// Target architecture branches collapse here to the values that match
+// the Windows native target in the matrix (mingwX64). Pointer types
+// collapse onto ULong since the pure-Kotlin port treats pointers as opaque
+// address tokens; the pointed-to data is reached through the wrapper struct
+// values rather than by dereference.
 //
-// LARGE_INTEGER / ULARGE_INTEGER upstream are tagged unions overlaying
-// an i64/u64 with a `{ LowPart, HighPart }` struct view. The Kotlin port
+// LARGE_INTEGER and ULARGE_INTEGER are tagged unions overlaying
+// a 64-bit integer with a low and high struct view. The Kotlin port
 // keeps them as classes that hold the 64-bit value as the authoritative
-// storage; the low/high struct view is exposed as computed properties so
+// storage; the low and high struct view is exposed as computed properties so
 // the union semantics are preserved without raw memory reinterpretation.
 
-// x86_64 branch of #[cfg(target_arch = "x86_64")] (the non-x86_64
-// branch's MAX_NATURAL_ALIGNMENT = 4 / MEMORY_ALLOCATION_ALIGNMENT = 8
-// is documented here in prose because the workspace native target is
-// mingwX64).
+// 64-bit architecture alignment values.
 const val MAX_NATURAL_ALIGNMENT: ULong = 8u
 const val MEMORY_ALLOCATION_ALIGNMENT: ULong = 16u
 
-// x86_64 / x86 branch of SYSTEM_CACHE_ALIGNMENT_SIZE (the non-x86 branch
-// uses 128).
+// Cache alignment size.
 const val SYSTEM_CACHE_ALIGNMENT_SIZE: ULong = 64u
 
 typealias PVOID = ULong
 typealias PVOID64 = ULong // 64-bit pointer, even when in 32-bit
 
-// VOID in C maps to Unit-equivalent; in Kotlin there is no "VOID" type
+// VOID in C maps to Unit; in Kotlin there is no VOID type
 // referenced from a typealias chain, so VOID is omitted: the Kotlin port
-// uses Unit at function return positions where Rust would use
-// `*mut c_void` only when explicitly dereferenced.
+// uses Unit at function return positions.
 typealias CHAR = CChar
 typealias SHORT = CShort
 typealias LONG = CLong
@@ -183,7 +176,7 @@ data class GROUP_AFFINITY(
 
 typealias PGROUP_AFFINITY = ULong
 
-// x86_64 branch of MAXIMUM_PROC_PER_GROUP (non-x86_64 = 32).
+// 64-bit branch of MAXIMUM_PROC_PER_GROUP (32-bit = 32).
 const val MAXIMUM_PROC_PER_GROUP: UCHAR = 64u
 const val MAXIMUM_PROCESSORS: UCHAR = MAXIMUM_PROC_PER_GROUP
 
@@ -1190,9 +1183,7 @@ const val SORT_HUNGARIAN_TECHNICAL: USHORT = 0x1u
 const val SORT_GEORGIAN_TRADITIONAL: USHORT = 0x0u
 const val SORT_GEORGIAN_MODERN: USHORT = 0x1u
 
-// Upstream defines `MAKELANGID` twice — first as `macro_rules!`, then
-// as `#[inline] pub fn`. Kotlin only needs the function form; const
-// initializers below use it directly.
+// Language ID composition helper functions.
 fun MAKELANGID(p: USHORT, s: USHORT): LANGID = ((s.toUInt() shl 10) or p.toUInt()).toUShort()
 
 fun PRIMARYLANGID(lgid: LANGID): USHORT = (lgid.toUInt() and 0x3ffu).toUShort()

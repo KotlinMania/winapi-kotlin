@@ -5,7 +5,7 @@ import io.github.kotlinmania.winapi.shared.guiddef.GUID
 import io.github.kotlinmania.winapi.shared.guiddef.IID_NULL
 import io.github.kotlinmania.winapi.shared.minwindef.ULONG
 
-public class VIDEOPARAMETERS(
+public data class VIDEOPARAMETERS(
     public var Guid: GUID = IID_NULL,
     public var dwOffset: ULONG = 0u,
     public var dwCommand: ULONG = 0u,
@@ -27,70 +27,12 @@ public class VIDEOPARAMETERS(
     public var dwCPCommand: ULONG = 0u,
     public var dwCPStandard: ULONG = 0u,
     public var dwCPKey: ULONG = 0u,
-    public var bCP_APSTriggerBits: ULONG = 0u,
+    public var bCpApsTriggerBits: ULONG = 0u,
     public var bOEMCopyProtection: UByteArray = UByteArray(256),
 ) {
     init {
         require(bOEMCopyProtection.size == 256) { "VIDEOPARAMETERS.bOEMCopyProtection must be 256 bytes" }
     }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is VIDEOPARAMETERS) return false
-        return Guid == other.Guid &&
-            dwOffset == other.dwOffset &&
-            dwCommand == other.dwCommand &&
-            dwFlags == other.dwFlags &&
-            dwMode == other.dwMode &&
-            dwTVStandard == other.dwTVStandard &&
-            dwAvailableModes == other.dwAvailableModes &&
-            dwAvailableTVStandard == other.dwAvailableTVStandard &&
-            dwFlickerFilter == other.dwFlickerFilter &&
-            dwOverScanX == other.dwOverScanX &&
-            dwOverScanY == other.dwOverScanY &&
-            dwMaxUnscaledX == other.dwMaxUnscaledX &&
-            dwMaxUnscaledY == other.dwMaxUnscaledY &&
-            dwPositionX == other.dwPositionX &&
-            dwPositionY == other.dwPositionY &&
-            dwBrightness == other.dwBrightness &&
-            dwContrast == other.dwContrast &&
-            dwCPType == other.dwCPType &&
-            dwCPCommand == other.dwCPCommand &&
-            dwCPStandard == other.dwCPStandard &&
-            dwCPKey == other.dwCPKey &&
-            bCP_APSTriggerBits == other.bCP_APSTriggerBits &&
-            bOEMCopyProtection.contentEquals(other.bOEMCopyProtection)
-    }
-
-    override fun hashCode(): Int {
-        var result = Guid.hashCode()
-        result = 31 * result + dwOffset.hashCode()
-        result = 31 * result + dwCommand.hashCode()
-        result = 31 * result + dwFlags.hashCode()
-        result = 31 * result + dwMode.hashCode()
-        result = 31 * result + dwTVStandard.hashCode()
-        result = 31 * result + dwAvailableModes.hashCode()
-        result = 31 * result + dwAvailableTVStandard.hashCode()
-        result = 31 * result + dwFlickerFilter.hashCode()
-        result = 31 * result + dwOverScanX.hashCode()
-        result = 31 * result + dwOverScanY.hashCode()
-        result = 31 * result + dwMaxUnscaledX.hashCode()
-        result = 31 * result + dwMaxUnscaledY.hashCode()
-        result = 31 * result + dwPositionX.hashCode()
-        result = 31 * result + dwPositionY.hashCode()
-        result = 31 * result + dwBrightness.hashCode()
-        result = 31 * result + dwContrast.hashCode()
-        result = 31 * result + dwCPType.hashCode()
-        result = 31 * result + dwCPCommand.hashCode()
-        result = 31 * result + dwCPStandard.hashCode()
-        result = 31 * result + dwCPKey.hashCode()
-        result = 31 * result + bCP_APSTriggerBits.hashCode()
-        result = 31 * result + bOEMCopyProtection.contentHashCode()
-        return result
-    }
-
-    override fun toString(): String =
-        "VIDEOPARAMETERS(Guid=$Guid, dwOffset=$dwOffset, dwCommand=$dwCommand, dwFlags=$dwFlags, dwMode=$dwMode)"
 }
 
 public typealias PVIDEOPARAMETERS = ULong

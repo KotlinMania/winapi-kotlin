@@ -88,7 +88,7 @@ public const val WDT_INPROC_CALL: ULONG = 0x48746457u
 public const val WDT_REMOTE_CALL: ULONG = 0x52746457u
 public const val WDT_INPROC64_CALL: ULONG = 0x50746457u
 
-public data class userCLIPFORMAT_u(
+public data class USERCLIPFORMAT_U(
     public var raw: ULong = 0uL,
 ) {
     public var dwValue: DWORD
@@ -105,13 +105,13 @@ public data class userCLIPFORMAT_u(
 
 public data class userCLIPFORMAT(
     public var fContext: LONG = 0,
-    public var u: userCLIPFORMAT_u = userCLIPFORMAT_u(),
+    public var u: USERCLIPFORMAT_U = USERCLIPFORMAT_U(),
 )
 
 public typealias wireCLIPFORMAT = ULong
 public typealias CLIPFORMAT = WORD
 
-public data class GDI_NONREMOTE_u(
+public data class GDI_NONREMOTE_U(
     public var raw: ULong = 0uL,
 ) {
     public var hInproc: LONG
@@ -128,10 +128,10 @@ public data class GDI_NONREMOTE_u(
 
 public data class GDI_NONREMOTE(
     public var fContext: LONG = 0,
-    public var u: GDI_NONREMOTE_u = GDI_NONREMOTE_u(),
+    public var u: GDI_NONREMOTE_U = GDI_NONREMOTE_U(),
 )
 
-public data class userHGLOBAL_u(
+public data class USERHGLOBAL_U(
     public var raw: ULong = 0uL,
 ) {
     public var hInproc: LONG
@@ -153,16 +153,16 @@ public data class userHGLOBAL_u(
 
 public data class userHGLOBAL(
     public var fContext: LONG = 0,
-    public var u: userHGLOBAL_u = userHGLOBAL_u(),
+    public var u: USERHGLOBAL_U = USERHGLOBAL_U(),
 )
 
 public typealias wireHGLOBAL = ULong
 
-public typealias userHMETAFILE_u = userHGLOBAL_u
+public typealias USERHMETAFILE_U = USERHGLOBAL_U
 
 public data class userHMETAFILE(
     public var fContext: LONG = 0,
-    public var u: userHMETAFILE_u = userHMETAFILE_u(),
+    public var u: USERHMETAFILE_U = USERHMETAFILE_U(),
 )
 
 public data class remoteMETAFILEPICT(
@@ -172,18 +172,18 @@ public data class remoteMETAFILEPICT(
     public var hMF: ULong = 0uL,
 )
 
-public typealias userHMETAFILEPICT_u = userHGLOBAL_u
+public typealias USERHMETAFILEPICT_U = USERHGLOBAL_U
 
 public data class userHMETAFILEPICT(
     public var fContext: LONG = 0,
-    public var u: userHMETAFILEPICT_u = userHMETAFILEPICT_u(),
+    public var u: USERHMETAFILEPICT_U = USERHMETAFILEPICT_U(),
 )
 
-public typealias userHENHMETAFILE_u = userHGLOBAL_u
+public typealias USERHENHMETAFILE_U = USERHGLOBAL_U
 
 public data class userHENHMETAFILE(
     public var fContext: LONG = 0,
-    public var u: userHENHMETAFILE_u = userHENHMETAFILE_u(),
+    public var u: USERHENHMETAFILE_U = USERHENHMETAFILE_U(),
 )
 
 public class userBITMAP(
@@ -197,21 +197,21 @@ public class userBITMAP(
     public var pBuffer: UByteArray = UByteArray(1),
 )
 
-public typealias userHBITMAP_u = userHGLOBAL_u
+public typealias USERHBITMAP_U = USERHGLOBAL_U
 
 public data class userHBITMAP(
     public var fContext: LONG = 0,
-    public var u: userHBITMAP_u = userHBITMAP_u(),
+    public var u: USERHBITMAP_U = USERHBITMAP_U(),
 )
 
-public typealias userHPALETTE_u = userHGLOBAL_u
+public typealias USERHPALETTE_U = USERHGLOBAL_U
 
 public data class userHPALETTE(
     public var fContext: LONG = 0,
-    public var u: userHPALETTE_u = userHPALETTE_u(),
+    public var u: USERHPALETTE_U = USERHPALETTE_U(),
 )
 
-public data class RemotableHandle_u(
+public data class REMOTABLEHANDLE_U(
     public var raw: UInt = 0u,
 ) {
     public var hInproc: LONG
@@ -228,7 +228,7 @@ public data class RemotableHandle_u(
 
 public data class RemotableHandle(
     public var fContext: LONG = 0,
-    public var u: RemotableHandle_u = RemotableHandle_u(),
+    public var u: REMOTABLEHANDLE_U = REMOTABLEHANDLE_U(),
 )
 
 public typealias wireHWND = ULong
@@ -383,27 +383,27 @@ public const val TYSPEC_PROGID: TYSPEC = 4u
 public const val TYSPEC_PACKAGENAME: TYSPEC = 5u
 public const val TYSPEC_OBJECTID: TYSPEC = 6u
 
-public data class uCLSSPEC_ByName(
+public data class UCLSSPEC_BYNAME(
     public var pPackageName: LPOLESTR = 0uL,
     public var PolicyId: GUID = io.github.kotlinmania.winapi.shared.guiddef.IID_NULL,
 )
 
-public data class uCLSSPEC_ByObjectId(
+public data class UCLSSPEC_BYOBJECTID(
     public var ObjectId: GUID = io.github.kotlinmania.winapi.shared.guiddef.IID_NULL,
     public var PolicyId: GUID = io.github.kotlinmania.winapi.shared.guiddef.IID_NULL,
 )
 
-public class uCLSSPEC_u(
+public class UCLSSPEC_U(
     public var clsid: CLSID = io.github.kotlinmania.winapi.shared.guiddef.IID_NULL,
     public var pFileExt: LPOLESTR = 0uL,
     public var pMimeType: LPOLESTR = 0uL,
     public var pProgId: LPOLESTR = 0uL,
     public var pFileName: LPOLESTR = 0uL,
-    public var ByName: uCLSSPEC_ByName = uCLSSPEC_ByName(),
-    public var ByObjectId: uCLSSPEC_ByObjectId = uCLSSPEC_ByObjectId(),
+    public var ByName: UCLSSPEC_BYNAME = UCLSSPEC_BYNAME(),
+    public var ByObjectId: UCLSSPEC_BYOBJECTID = UCLSSPEC_BYOBJECTID(),
 )
 
 public data class uCLSSPEC(
     public var tyspec: DWORD = 0u,
-    public var u: uCLSSPEC_u = uCLSSPEC_u(),
+    public var u: UCLSSPEC_U = UCLSSPEC_U(),
 )

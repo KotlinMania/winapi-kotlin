@@ -7,3 +7,6 @@ import io.github.kotlinmania.winapi.shared.ntdef.HANDLE
 
 public actual fun K32EmptyWorkingSet(hProcess: HANDLE): BOOL =
     WinapiNative.K32EmptyWorkingSet(hProcess.toLong().toDouble())
+
+public actual fun EmptyWorkingSet(hProcess: HANDLE): BOOL =
+    K32EmptyWorkingSet(hProcess)

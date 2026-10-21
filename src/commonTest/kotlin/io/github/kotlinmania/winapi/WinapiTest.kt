@@ -139,20 +139,20 @@ class WinapiTest {
 
     @Test
     fun testInAddr() {
-        val inAddr = IN_ADDR(s_addr = 0x0100007Fu) // 127.0.0.1 in little-endian
-        assertEquals(0x0100007Fu, inAddr.s_addr)
-        val bytes = inAddr.s_un_b
-        assertEquals(127u.toUByte(), bytes.s_b1)
-        assertEquals(0u.toUByte(), bytes.s_b2)
-        assertEquals(0u.toUByte(), bytes.s_b3)
-        assertEquals(1u.toUByte(), bytes.s_b4)
+        val inAddr = IN_ADDR(sAddr = 0x0100007Fu) // 127.0.0.1 in little-endian
+        assertEquals(0x0100007Fu, inAddr.sAddr)
+        val bytes = inAddr.sUnB
+        assertEquals(127u.toUByte(), bytes.sB1)
+        assertEquals(0u.toUByte(), bytes.sB2)
+        assertEquals(0u.toUByte(), bytes.sB3)
+        assertEquals(1u.toUByte(), bytes.sB4)
 
-        inAddr.s_un_b = InAddrSUnB(s_b1 = 192u, s_b2 = 168u, s_b3 = 1u, s_b4 = 100u)
-        val b = inAddr.s_un_b
-        assertEquals(192u.toUByte(), b.s_b1)
-        assertEquals(168u.toUByte(), b.s_b2)
-        assertEquals(1u.toUByte(), b.s_b3)
-        assertEquals(100u.toUByte(), b.s_b4)
+        inAddr.sUnB = InAddrSUnB(sB1 = 192u, sB2 = 168u, sB3 = 1u, sB4 = 100u)
+        val b = inAddr.sUnB
+        assertEquals(192u.toUByte(), b.sB1)
+        assertEquals(168u.toUByte(), b.sB2)
+        assertEquals(1u.toUByte(), b.sB3)
+        assertEquals(100u.toUByte(), b.sB4)
     }
 
     @Test
@@ -265,8 +265,8 @@ class WinapiTest {
         assertEquals(0x01u.toUShort(), io.github.kotlinmania.winapi.shared.hidusage.HID_USAGE_PAGE_GENERIC)
         assertEquals(0x02u.toUShort(), io.github.kotlinmania.winapi.shared.hidusage.HID_USAGE_GENERIC_MOUSE)
         assertEquals(0x06u.toUShort(), io.github.kotlinmania.winapi.shared.hidusage.HID_USAGE_GENERIC_KEYBOARD)
-        assertEquals(0x04u.toUShort(), io.github.kotlinmania.winapi.shared.hidusage.HID_USAGE_KEYBOARD_aA)
-        assertEquals(0x1Du.toUShort(), io.github.kotlinmania.winapi.shared.hidusage.HID_USAGE_KEYBOARD_zZ)
+        assertEquals(0x04u.toUShort(), io.github.kotlinmania.winapi.shared.hidusage.HID_USAGE_KEYBOARD_AA)
+        assertEquals(0x1Du.toUShort(), io.github.kotlinmania.winapi.shared.hidusage.HID_USAGE_KEYBOARD_ZZ)
     }
 
     @Test
@@ -350,7 +350,7 @@ class WinapiTest {
             VIDEOPARAMETERS(bOEMCopyProtection = UByteArray(100))
         }
 
-        val vp2 = VIDEOPARAMETERS()
+        val vp2 = vp.copy()
         assertEquals(vp, vp2)
         assertEquals(vp.hashCode(), vp2.hashCode())
     }

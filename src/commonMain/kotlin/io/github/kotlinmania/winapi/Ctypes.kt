@@ -1,20 +1,12 @@
-// port-lint: source lib.rs
 package io.github.kotlinmania.winapi
 
-// Parceled from upstream lib.rs `pub mod ctypes { ... }`. The
-// upstream module documents itself as "Built in primitive types
-// provided by the C language" and aliases the C-FFI numeric types
-// onto Rust fixed-width integers. Kotlin's stdlib already provides
-// fixed-width integers, so the aliases map straight through.
+// Built in primitive types provided by the C language. Aliases the C-FFI
+// numeric types onto Kotlin fixed-width integers.
 
 /**
- * The opaque C `void` type. Upstream defines `c_void` as
- * `pub use std::os::raw::c_void` under the `std` feature and as the
- * uninhabited `pub enum c_void {}` under `#![no_std]`. The Kotlin port
- * collapses both flavors onto a sealed class with no subclasses, which
- * matches the uninhabited shape: no caller can construct a `CVoid`, so
- * the type is only ever referenced through pointer aliases such as
- * `LPVOID`.
+ * The opaque C void type. The Kotlin port represents this as a sealed class
+ * with no subclasses, matching the uninhabited shape: no caller can construct
+ * a CVoid, so the type is only referenced through pointer aliases such as LPVOID.
  */
 sealed class CVoid
 

@@ -1,28 +1,34 @@
 // port-lint: source um/winnt.rs
 package io.github.kotlinmania.winapi.um.winnt
 
-import io.github.kotlinmania.winapi.shared.basetsd.LONG_PTR
+import io.github.kotlinmania.winapi.shared.basetsd.DWORD64
+import io.github.kotlinmania.winapi.shared.basetsd.SIZE_T
 import io.github.kotlinmania.winapi.shared.basetsd.ULONG_PTR
 import io.github.kotlinmania.winapi.shared.minwindef.BYTE
 import io.github.kotlinmania.winapi.shared.minwindef.DWORD
+import io.github.kotlinmania.winapi.shared.minwindef.ULONG
 import io.github.kotlinmania.winapi.shared.minwindef.WORD
 import io.github.kotlinmania.winapi.shared.ntdef.HANDLE
 import io.github.kotlinmania.winapi.shared.ntdef.LONG
-import io.github.kotlinmania.winapi.shared.ntdef.LPCSTR
 import io.github.kotlinmania.winapi.shared.ntdef.PVOID
 import io.github.kotlinmania.winapi.shared.ntdef.ULONGLONG
 
-public typealias ANYSIZE_ARRAY_LEN = Int
-
 public const val ANYSIZE_ARRAY: Int = 1
-
-public typealias LPCTSTR = LPCSTR
 
 public typealias BOOLEAN = BYTE
 public typealias PBOOLEAN = ULong
 public typealias PLONG = ULong
 public typealias PCONTEXT = ULong
-public typealias CONTEXT = ULong
+
+public class CONTEXT(
+    public var P1Home: DWORD64 = 0uL,
+    public var P2Home: DWORD64 = 0uL,
+    public var P3Home: DWORD64 = 0uL,
+    public var P4Home: DWORD64 = 0uL,
+    public var ContextFlags: DWORD = 0u,
+    public var MxCsr: DWORD = 0u,
+)
+
 public typealias PVECTORED_EXCEPTION_HANDLER = ULong
 public typealias PAPCFUNC = ULong
 public typealias PPROCESSOR_NUMBER = ULong
@@ -154,4 +160,176 @@ public const val PROCESS_QUERY_LIMITED_INFORMATION: DWORD = 0x1000u
 public const val PROCESS_SET_LIMITED_INFORMATION: DWORD = 0x2000u
 public const val PROCESS_ALL_ACCESS: DWORD = 0x001FFFFFu
 
-public typealias PVOID_FUNC = LONG_PTR
+public typealias LCID = DWORD
+public typealias PLCID = ULong
+public typealias LANGID = WORD
+
+public const val NLS_VALID_LOCALE_MASK: DWORD = 0x000FFFFFu
+
+public fun MAKELANGID(p: WORD, s: WORD): LANGID =
+    ((s.toUInt() shl 10) or p.toUInt()).toUShort()
+
+public fun PRIMARYLANGID(lgid: LANGID): WORD =
+    (lgid.toUInt() and 0x3FFu).toUShort()
+
+public fun SUBLANGID(lgid: LANGID): WORD =
+    (lgid.toUInt() shr 10).toUShort()
+
+public fun MAKELCID(lgid: LANGID, srtid: WORD): LCID =
+    (srtid.toUInt() shl 16) or lgid.toUInt()
+
+public fun MAKESORTLCID(lgid: LANGID, srtid: WORD, ver: WORD): LCID =
+    MAKELCID(lgid, srtid) or (ver.toUInt() shl 20)
+
+public fun LANGIDFROMLCID(lcid: LCID): LANGID =
+    lcid.toUShort()
+
+public fun SORTIDFROMLCID(lcid: LCID): WORD =
+    ((lcid shr 16) and 0xFu).toUShort()
+
+public fun SORTVERSIONFROMLCID(lcid: LCID): WORD =
+    ((lcid shr 16) and 0xFu).toUShort()
+
+public const val EXCEPTION_NONCONTINUABLE: DWORD = 0x1u
+public const val EXCEPTION_UNWINDING: DWORD = 0x2u
+public const val EXCEPTION_EXIT_UNWIND: DWORD = 0x4u
+public const val EXCEPTION_STACK_INVALID: DWORD = 0x8u
+public const val EXCEPTION_NESTED_CALL: DWORD = 0x10u
+public const val EXCEPTION_TARGET_UNWIND: DWORD = 0x20u
+public const val EXCEPTION_COLLIDED_UNWIND: DWORD = 0x40u
+public const val EXCEPTION_UNWIND: DWORD = 0x66u
+
+public fun IS_UNWINDING(Flag: DWORD): Boolean =
+    (Flag and EXCEPTION_UNWIND) != 0u
+
+public fun IS_DISPATCHING(Flag: DWORD): Boolean =
+    (Flag and EXCEPTION_UNWIND) == 0u
+
+public fun IS_TARGET_UNWIND(Flag: DWORD): Boolean =
+    (Flag and EXCEPTION_TARGET_UNWIND) != 0u
+
+public const val SECURITY_MANDATORY_LOW_RID: DWORD = 0x00001000u
+public const val SECURITY_MANDATORY_MEDIUM_RID: DWORD = 0x00002000u
+public const val SECURITY_MANDATORY_MEDIUM_PLUS_RID: DWORD = 0x00002010u
+public const val SECURITY_MANDATORY_HIGH_RID: DWORD = 0x00003000u
+public const val SECURITY_MANDATORY_SYSTEM_RID: DWORD = 0x00004000u
+public const val SECURITY_MANDATORY_MAXIMUM_USER_RID: DWORD = SECURITY_MANDATORY_SYSTEM_RID
+
+public fun MANDATORY_LEVEL_TO_MANDATORY_RID(IL: DWORD): DWORD =
+    IL * 0x1000u
+
+public typealias SECURITY_IMPERSONATION_LEVEL = UInt
+
+public const val SecurityAnonymous: SECURITY_IMPERSONATION_LEVEL = 0u
+public const val SecurityIdentification: SECURITY_IMPERSONATION_LEVEL = 1u
+public const val SecurityImpersonation: SECURITY_IMPERSONATION_LEVEL = 2u
+public const val SecurityDelegation: SECURITY_IMPERSONATION_LEVEL = 3u
+
+public typealias PSECURITY_IMPERSONATION_LEVEL = ULong
+
+public const val SECURITY_MAX_IMPERSONATION_LEVEL: SECURITY_IMPERSONATION_LEVEL = SecurityDelegation
+public const val SECURITY_MIN_IMPERSONATION_LEVEL: SECURITY_IMPERSONATION_LEVEL = SecurityAnonymous
+public const val DEFAULT_IMPERSONATION_LEVEL: SECURITY_IMPERSONATION_LEVEL = SecurityImpersonation
+
+public fun VALID_IMPERSONATION_LEVEL(L: SECURITY_IMPERSONATION_LEVEL): Boolean =
+    (L >= SECURITY_MIN_IMPERSONATION_LEVEL) && (L <= SECURITY_MAX_IMPERSONATION_LEVEL)
+
+public fun IsReparseTagMicrosoft(_tag: DWORD): Boolean =
+    (_tag and 0x80000000u) != 0u
+
+public fun IsReparseTagNameSurrogate(_tag: DWORD): Boolean =
+    (_tag and 0x20000000u) != 0u
+
+public fun IsReparseTagDirectory(_tag: DWORD): Boolean =
+    (_tag and 0x10000000u) != 0u
+
+public typealias SharedVirtualDiskHandleState = UInt
+
+public const val SharedVirtualDiskHandleStateNone: SharedVirtualDiskHandleState = 0u
+public const val SharedVirtualDiskHandleStateFileShared: SharedVirtualDiskHandleState = 1u
+public const val SharedVirtualDiskHandleStateHandleShared: SharedVirtualDiskHandleState = 3u
+
+public fun IsVirtualDiskFileShared(HandleState: SharedVirtualDiskHandleState): Boolean =
+    (HandleState and SharedVirtualDiskHandleStateFileShared) != 0u
+
+public const val IMAGE_SYM_CLASS_STRUCT_TAG: BYTE = 0x000Au
+public const val IMAGE_SYM_CLASS_UNION_TAG: BYTE = 0x000Cu
+public const val IMAGE_SYM_CLASS_ENUM_TAG: BYTE = 0x000Fu
+public const val IMAGE_SYM_DTYPE_POINTER: WORD = 1u
+public const val IMAGE_SYM_DTYPE_FUNCTION: WORD = 2u
+public const val IMAGE_SYM_DTYPE_ARRAY: WORD = 3u
+public const val N_BTMASK: WORD = 0x000Fu
+public const val N_TMASK: WORD = 0x0030u
+public const val N_BTSHFT: Int = 4
+public const val N_TSHIFT: Int = 2
+
+public fun BTYPE(x: WORD): Boolean =
+    (x.toUInt() and N_BTMASK.toUInt()) != 0u
+
+public fun ISPTR(x: WORD): Boolean =
+    (x.toUInt() and N_TMASK.toUInt()) == (IMAGE_SYM_DTYPE_POINTER.toUInt() shl N_BTSHFT)
+
+public fun ISFCN(x: WORD): Boolean =
+    (x.toUInt() and N_TMASK.toUInt()) == (IMAGE_SYM_DTYPE_FUNCTION.toUInt() shl N_BTSHFT)
+
+public fun ISARY(x: WORD): Boolean =
+    (x.toUInt() and N_TMASK.toUInt()) == (IMAGE_SYM_DTYPE_ARRAY.toUInt() shl N_BTSHFT)
+
+public fun ISTAG(x: BYTE): Boolean =
+    (x == IMAGE_SYM_CLASS_STRUCT_TAG) || (x == IMAGE_SYM_CLASS_UNION_TAG) || (x == IMAGE_SYM_CLASS_ENUM_TAG)
+
+public fun INCREF(x: WORD): WORD =
+    (((x.toUInt() and N_BTMASK.toUInt().inv()) shl N_TSHIFT) or (IMAGE_SYM_DTYPE_POINTER.toUInt() shl N_BTSHFT) or (x.toUInt() and N_BTMASK.toUInt())).toUShort()
+
+public fun DECREF(x: WORD): WORD =
+    (((x.toUInt() shr N_TSHIFT) and N_BTMASK.toUInt().inv()) or (x.toUInt() and N_BTMASK.toUInt())).toUShort()
+
+public const val IMAGE_ORDINAL_FLAG64: ULONGLONG = 0x8000000000000000uL
+public const val IMAGE_ORDINAL_FLAG32: DWORD = 0x80000000u
+
+public fun IMAGE_ORDINAL64(Ordinal: ULONGLONG): ULONGLONG =
+    Ordinal and 0xFFFFuL
+
+public fun IMAGE_ORDINAL32(Ordinal: DWORD): DWORD =
+    Ordinal and 0xFFFFu
+
+public fun IMAGE_SNAP_BY_ORDINAL64(Ordinal: ULONGLONG): Boolean =
+    (Ordinal and IMAGE_ORDINAL_FLAG64) != 0uL
+
+public fun IMAGE_SNAP_BY_ORDINAL32(Ordinal: DWORD): Boolean =
+    (Ordinal and IMAGE_ORDINAL_FLAG32) != 0u
+
+public fun IMAGE_ORDINAL(Ordinal: ULONGLONG): ULONGLONG =
+    IMAGE_ORDINAL64(Ordinal)
+
+public fun IMAGE_SNAP_BY_ORDINAL(Ordinal: ULONGLONG): Boolean =
+    IMAGE_SNAP_BY_ORDINAL64(Ordinal)
+
+public fun IMAGE_ORDINAL(Ordinal: DWORD): DWORD =
+    IMAGE_ORDINAL32(Ordinal)
+
+public fun IMAGE_SNAP_BY_ORDINAL(Ordinal: DWORD): Boolean =
+    IMAGE_SNAP_BY_ORDINAL32(Ordinal)
+
+public const val HEAP_TAG_SHIFT: Int = 18
+
+public fun HEAP_MAKE_TAG_FLAGS(TagBase: DWORD, Tag: DWORD): DWORD =
+    TagBase + (Tag shl HEAP_TAG_SHIFT)
+
+public fun RtlMoveMemory(Destination: PVOID, Source: PVOID, Length: SIZE_T) {
+}
+
+public fun RtlCopyMemory(Destination: PVOID, Source: PVOID, Length: SIZE_T) {
+}
+
+public fun RtlFillMemory(Destination: PVOID, Length: SIZE_T, Fill: BYTE) {
+}
+
+public fun RtlZeroMemory(Destination: PVOID, Length: SIZE_T) {
+}
+
+public fun IS_VALIDATION_ENABLED(C: DWORD, L: DWORD): Boolean =
+    (L and C) != 0u
+
+public fun WT_SET_MAX_THREADPOOL_THREADS(Flags: ULONG, Limit: ULONG): ULONG =
+    Flags or (Limit shl 16)
