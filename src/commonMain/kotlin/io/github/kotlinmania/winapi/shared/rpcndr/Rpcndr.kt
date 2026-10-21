@@ -22,7 +22,7 @@ public const val NDR_LOCAL_ENDIAN: CUlong = NDR_LITTLE_ENDIAN
 
 public typealias small = CChar
 public typealias byte = CUchar
-public typealias cs_byte = byte
+public typealias CsByte = byte
 public typealias boolean = CUchar
 public typealias hyper = Int64
-public typealias MIDL_uhyper = Uint64
+public typealias MIDL_UHYPER = Uint64

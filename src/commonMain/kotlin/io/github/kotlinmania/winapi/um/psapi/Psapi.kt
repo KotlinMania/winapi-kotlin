@@ -87,35 +87,35 @@ public data class PROCESS_MEMORY_COUNTERS_EX(
 public data class PSAPI_WORKING_SET_BLOCK(
     public var Flags: ULONG_PTR = 0uL,
 ) {
-    public fun Protection(): ULONG_PTR = (Flags shr 0) and 0x1FuL
+    public var Protection: ULONG_PTR
+        get() = (Flags shr 0) and 0x1FuL
+        set(value) {
+            Flags = (Flags and 0x1FuL.inv()) or ((value and 0x1FuL) shl 0)
+        }
 
-    public fun set_Protection(value: ULONG_PTR) {
-        Flags = (Flags and 0x1FuL.inv()) or ((value and 0x1FuL) shl 0)
-    }
+    public var ShareCount: ULONG_PTR
+        get() = (Flags shr 5) and 0x7uL
+        set(value) {
+            Flags = (Flags and (0x7uL shl 5).inv()) or ((value and 0x7uL) shl 5)
+        }
 
-    public fun ShareCount(): ULONG_PTR = (Flags shr 5) and 0x7uL
+    public var Shared: ULONG_PTR
+        get() = (Flags shr 8) and 0x1uL
+        set(value) {
+            Flags = (Flags and (0x1uL shl 8).inv()) or ((value and 0x1uL) shl 8)
+        }
 
-    public fun set_ShareCount(value: ULONG_PTR) {
-        Flags = (Flags and (0x7uL shl 5).inv()) or ((value and 0x7uL) shl 5)
-    }
+    public var Reserved: ULONG_PTR
+        get() = (Flags shr 9) and 0x7uL
+        set(value) {
+            Flags = (Flags and (0x7uL shl 9).inv()) or ((value and 0x7uL) shl 9)
+        }
 
-    public fun Shared(): ULONG_PTR = (Flags shr 8) and 0x1uL
-
-    public fun set_Shared(value: ULONG_PTR) {
-        Flags = (Flags and (0x1uL shl 8).inv()) or ((value and 0x1uL) shl 8)
-    }
-
-    public fun Reserved(): ULONG_PTR = (Flags shr 9) and 0x7uL
-
-    public fun set_Reserved(value: ULONG_PTR) {
-        Flags = (Flags and (0x7uL shl 9).inv()) or ((value and 0x7uL) shl 9)
-    }
-
-    public fun VirtualPage(): ULONG_PTR = (Flags shr 12) and 0xFFFFFuL
-
-    public fun set_VirtualPage(value: ULONG_PTR) {
-        Flags = (Flags and (0xFFFFFuL shl 12).inv()) or ((value and 0xFFFFFuL) shl 12)
-    }
+    public var VirtualPage: ULONG_PTR
+        get() = (Flags shr 12) and 0xFFFFFuL
+        set(value) {
+            Flags = (Flags and (0xFFFFFuL shl 12).inv()) or ((value and 0xFFFFFuL) shl 12)
+        }
 }
 
 public typealias PPSAPI_WORKING_SET_BLOCK = ULong
@@ -123,65 +123,65 @@ public typealias PPSAPI_WORKING_SET_BLOCK = ULong
 public data class PSAPI_WORKING_SET_EX_BLOCK(
     public var Flags: ULONG_PTR = 0uL,
 ) {
-    public fun Valid(): ULONG_PTR = Flags and 0x1uL
+    public var Valid: ULONG_PTR
+        get() = Flags and 0x1uL
+        set(value) {
+            Flags = (Flags and 0x1uL.inv()) or (value and 0x1uL)
+        }
 
-    public fun set_Valid(value: ULONG_PTR) {
-        Flags = (Flags and 0x1uL.inv()) or (value and 0x1uL)
-    }
+    public var ShareCount: ULONG_PTR
+        get() = (Flags shr 1) and 0x7uL
+        set(value) {
+            Flags = (Flags and (0x7uL shl 1).inv()) or ((value and 0x7uL) shl 1)
+        }
 
-    public fun ShareCount(): ULONG_PTR = (Flags shr 1) and 0x7uL
+    public var Win32Protection: ULONG_PTR
+        get() = (Flags shr 4) and 0x7FFuL
+        set(value) {
+            Flags = (Flags and (0x7FFuL shl 4).inv()) or ((value and 0x7FFuL) shl 4)
+        }
 
-    public fun set_ShareCount(value: ULONG_PTR) {
-        Flags = (Flags and (0x7uL shl 1).inv()) or ((value and 0x7uL) shl 1)
-    }
+    public var Shared: ULONG_PTR
+        get() = (Flags shr 15) and 0x1uL
+        set(value) {
+            Flags = (Flags and (0x1uL shl 15).inv()) or ((value and 0x1uL) shl 15)
+        }
 
-    public fun Win32Protection(): ULONG_PTR = (Flags shr 4) and 0x7FFuL
+    public var Node: ULONG_PTR
+        get() = (Flags shr 16) and 0x3FuL
+        set(value) {
+            Flags = (Flags and (0x3FuL shl 16).inv()) or ((value and 0x3FuL) shl 16)
+        }
 
-    public fun set_Win32Protection(value: ULONG_PTR) {
-        Flags = (Flags and (0x7FFuL shl 4).inv()) or ((value and 0x7FFuL) shl 4)
-    }
+    public var Locked: ULONG_PTR
+        get() = (Flags shr 22) and 0x1uL
+        set(value) {
+            Flags = (Flags and (0x1uL shl 22).inv()) or ((value and 0x1uL) shl 22)
+        }
 
-    public fun Shared(): ULONG_PTR = (Flags shr 15) and 0x1uL
+    public var LargePage: ULONG_PTR
+        get() = (Flags shr 23) and 0x1uL
+        set(value) {
+            Flags = (Flags and (0x1uL shl 23).inv()) or ((value and 0x1uL) shl 23)
+        }
 
-    public fun set_Shared(value: ULONG_PTR) {
-        Flags = (Flags and (0x1uL shl 15).inv()) or ((value and 0x1uL) shl 15)
-    }
+    public var Reserved: ULONG_PTR
+        get() = (Flags shr 24) and 0x7FuL
+        set(value) {
+            Flags = (Flags and (0x7FuL shl 24).inv()) or ((value and 0x7FuL) shl 24)
+        }
 
-    public fun Node(): ULONG_PTR = (Flags shr 16) and 0x3FuL
+    public var Bad: ULONG_PTR
+        get() = (Flags shr 31) and 0x1uL
+        set(value) {
+            Flags = (Flags and (0x1uL shl 31).inv()) or ((value and 0x1uL) shl 31)
+        }
 
-    public fun set_Node(value: ULONG_PTR) {
-        Flags = (Flags and (0x3FuL shl 16).inv()) or ((value and 0x3FuL) shl 16)
-    }
-
-    public fun Locked(): ULONG_PTR = (Flags shr 22) and 0x1uL
-
-    public fun set_Locked(value: ULONG_PTR) {
-        Flags = (Flags and (0x1uL shl 22).inv()) or ((value and 0x1uL) shl 22)
-    }
-
-    public fun LargePage(): ULONG_PTR = (Flags shr 23) and 0x1uL
-
-    public fun set_LargePage(value: ULONG_PTR) {
-        Flags = (Flags and (0x1uL shl 23).inv()) or ((value and 0x1uL) shl 23)
-    }
-
-    public fun Reserved(): ULONG_PTR = (Flags shr 24) and 0x7FuL
-
-    public fun set_Reserved(value: ULONG_PTR) {
-        Flags = (Flags and (0x7FuL shl 24).inv()) or ((value and 0x7FuL) shl 24)
-    }
-
-    public fun Bad(): ULONG_PTR = (Flags shr 31) and 0x1uL
-
-    public fun set_Bad(value: ULONG_PTR) {
-        Flags = (Flags and (0x1uL shl 31).inv()) or ((value and 0x1uL) shl 31)
-    }
-
-    public fun ReservedUlong(): ULONG_PTR = (Flags shr 32) and 0xFFFFFFFFuL
-
-    public fun set_ReservedULong(value: ULONG_PTR) {
-        Flags = (Flags and 0xFFFFFFFFuL) or ((value and 0xFFFFFFFFuL) shl 32)
-    }
+    public var ReservedUlong: ULONG_PTR
+        get() = (Flags shr 32) and 0xFFFFFFFFuL
+        set(value) {
+            Flags = (Flags and 0xFFFFFFFFuL) or ((value and 0xFFFFFFFFuL) shl 32)
+        }
 }
 
 public typealias PPSAPI_WORKING_SET_EX_BLOCK = ULong
@@ -209,4 +209,4 @@ public data class PSAPI_WS_WATCH_INFORMATION_EX(
 
 public expect fun K32EmptyWorkingSet(hProcess: HANDLE): BOOL
 
-public fun EmptyWorkingSet(hProcess: HANDLE): BOOL = K32EmptyWorkingSet(hProcess)
+public expect fun EmptyWorkingSet(hProcess: HANDLE): BOOL

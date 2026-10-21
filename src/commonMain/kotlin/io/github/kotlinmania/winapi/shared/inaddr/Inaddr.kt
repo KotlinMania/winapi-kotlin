@@ -6,56 +6,95 @@ import io.github.kotlinmania.winapi.shared.minwindef.ULONG
 import io.github.kotlinmania.winapi.shared.minwindef.USHORT
 
 public data class InAddrSUnB(
-    public var s_b1: UCHAR = 0u,
-    public var s_b2: UCHAR = 0u,
-    public var s_b3: UCHAR = 0u,
-    public var s_b4: UCHAR = 0u,
+    public var sB1: UCHAR = 0u,
+    public var sB2: UCHAR = 0u,
+    public var sB3: UCHAR = 0u,
+    public var sB4: UCHAR = 0u,
 )
 
 public data class InAddrSUnW(
-    public var s_w1: USHORT = 0u,
-    public var s_w2: USHORT = 0u,
+    public var sW1: USHORT = 0u,
+    public var sW2: USHORT = 0u,
 )
 
-public class IN_ADDR(
-    public var s_addr: ULONG = 0u,
+public data class InAddrSUn(
+    public var S_UN_B: InAddrSUnB = InAddrSUnB(),
+    public var S_UN_W: InAddrSUnW = InAddrSUnW(),
+    public var S_ADDR: ULONG = 0u,
+)
+
+public data class IN_ADDR(
+    public var S_UN: InAddrSUn = InAddrSUn(),
 ) {
-    public var s_un_b: InAddrSUnB
-        get() =
-            InAddrSUnB(
-                s_b1 = (s_addr and 0xFFu).toUByte(),
-                s_b2 = ((s_addr shr 8) and 0xFFu).toUByte(),
-                s_b3 = ((s_addr shr 16) and 0xFFu).toUByte(),
-                s_b4 = ((s_addr shr 24) and 0xFFu).toUByte(),
-            )
+    public constructor(sAddr: ULONG) : this(
+        InAddrSUn(
+            S_UN_B =
+                InAddrSUnB(
+                    sB1 = (sAddr and 0xFFu).toUByte(),
+                    sB2 = ((sAddr shr 8) and 0xFFu).toUByte(),
+                    sB3 = ((sAddr shr 16) and 0xFFu).toUByte(),
+                    sB4 = ((sAddr shr 24) and 0xFFu).toUByte(),
+                ),
+            S_UN_W =
+                InAddrSUnW(
+                    sW1 = (sAddr and 0xFFFFu).toUShort(),
+                    sW2 = ((sAddr shr 16) and 0xFFFFu).toUShort(),
+                ),
+            S_ADDR = sAddr,
+        ),
+    )
+
+    public var sAddr: ULONG
+        get() = S_UN.S_ADDR
         set(value) {
-            s_addr = value.s_b1.toUInt() or
-                (value.s_b2.toUInt() shl 8) or
-                (value.s_b3.toUInt() shl 16) or
-                (value.s_b4.toUInt() shl 24)
+            S_UN.S_ADDR = value
+            S_UN.S_UN_B =
+                InAddrSUnB(
+                    sB1 = (value and 0xFFu).toUByte(),
+                    sB2 = ((value shr 8) and 0xFFu).toUByte(),
+                    sB3 = ((value shr 16) and 0xFFu).toUByte(),
+                    sB4 = ((value shr 24) and 0xFFu).toUByte(),
+                )
+            S_UN.S_UN_W =
+                InAddrSUnW(
+                    sW1 = (value and 0xFFFFu).toUShort(),
+                    sW2 = ((value shr 16) and 0xFFFFu).toUShort(),
+                )
         }
 
-    public var s_un_w: InAddrSUnW
-        get() =
-            InAddrSUnW(
-                s_w1 = (s_addr and 0xFFFFu).toUShort(),
-                s_w2 = ((s_addr shr 16) and 0xFFFFu).toUShort(),
-            )
+    public var sUnB: InAddrSUnB
+        get() = S_UN.S_UN_B
         set(value) {
-            s_addr = value.s_w1.toUInt() or (value.s_w2.toUInt() shl 16)
+            S_UN.S_UN_B = value
+            val newAddr =
+                value.sB1.toUInt() or
+                    (value.sB2.toUInt() shl 8) or
+                    (value.sB3.toUInt() shl 16) or
+                    (value.sB4.toUInt() shl 24)
+            S_UN.S_ADDR = newAddr
+            S_UN.S_UN_W =
+                InAddrSUnW(
+                    sW1 = (newAddr and 0xFFFFu).toUShort(),
+                    sW2 = ((newAddr shr 16) and 0xFFFFu).toUShort(),
+                )
         }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is IN_ADDR) return false
-        return s_addr == other.s_addr
-    }
-
-    override fun hashCode(): Int = s_addr.hashCode()
-
-    override fun toString(): String = "IN_ADDR(s_addr=$s_addr)"
+    public var sUnW: InAddrSUnW
+        get() = S_UN.S_UN_W
+        set(value) {
+            S_UN.S_UN_W = value
+            val newAddr = value.sW1.toUInt() or (value.sW2.toUInt() shl 16)
+            S_UN.S_ADDR = newAddr
+            S_UN.S_UN_B =
+                InAddrSUnB(
+                    sB1 = (newAddr and 0xFFu).toUByte(),
+                    sB2 = ((newAddr shr 8) and 0xFFu).toUByte(),
+                    sB3 = ((newAddr shr 16) and 0xFFu).toUByte(),
+                    sB4 = ((newAddr shr 24) and 0xFFu).toUByte(),
+                )
+        }
 }
 
-public typealias in_addr = IN_ADDR
+public typealias InAddr = IN_ADDR
 public typealias PIN_ADDR = ULong
 public typealias LPIN_ADDR = ULong

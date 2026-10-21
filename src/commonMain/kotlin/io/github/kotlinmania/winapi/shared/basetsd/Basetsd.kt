@@ -12,15 +12,9 @@ import io.github.kotlinmania.winapi.Uint64
 
 // Type definitions for the basic sized types.
 //
-// Rust upstream conditionally compiles the half-pointer and pointer-sized
-// types on `target_pointer_width`. The Kotlin port targets 64-bit hosts
-// only (mingwX64 is the only Windows native target in the matrix), so
-// each `#[cfg(target_pointer_width = "64")]` branch is what survives and
-// the 32-bit branch is dropped as inapplicable.
-//
-// Rust pointer types `*mut T` translate to ULong (pointer value) on the
-// 64-bit Kotlin port: callers manipulate the pointer as an opaque
-// address token and never dereference it from Kotlin.
+// The Kotlin port targets 64-bit hosts (mingwX64).
+// Pointer types translate to ULong on the 64-bit Kotlin port: callers manipulate the pointer
+// as an opaque address token.
 
 typealias POINTER_64_INT = ULong
 typealias INT8 = CSchar

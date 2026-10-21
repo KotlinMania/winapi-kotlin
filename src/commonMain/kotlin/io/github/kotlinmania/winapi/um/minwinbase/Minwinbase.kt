@@ -32,17 +32,17 @@ public data class SECURITY_ATTRIBUTES(
 public typealias PSECURITY_ATTRIBUTES = ULong
 public typealias LPSECURITY_ATTRIBUTES = ULong
 
-public data class OVERLAPPED_u_s(
+public data class OVERLAPPED_U_S(
     public var Offset: DWORD = 0u,
     public var OffsetHigh: DWORD = 0u,
 )
 
-public data class OVERLAPPED_u(
+public data class OVERLAPPED_U(
     public var raw: ULong = 0uL,
 ) {
-    public var s: OVERLAPPED_u_s
+    public var s: OVERLAPPED_U_S
         get() =
-            OVERLAPPED_u_s(
+            OVERLAPPED_U_S(
                 Offset = (raw and 0xFFFFFFFFuL).toUInt(),
                 OffsetHigh = ((raw shr 32) and 0xFFFFFFFFuL).toUInt(),
             )
@@ -60,7 +60,7 @@ public data class OVERLAPPED_u(
 public data class OVERLAPPED(
     public var Internal: ULONG_PTR = 0uL,
     public var InternalHigh: ULONG_PTR = 0uL,
-    public var u: OVERLAPPED_u = OVERLAPPED_u(),
+    public var u: OVERLAPPED_U = OVERLAPPED_U(),
     public var hEvent: HANDLE = 0uL,
 )
 
@@ -181,21 +181,21 @@ public typealias LPOVERLAPPED_COMPLETION_ROUTINE = ULong
 public const val LOCKFILE_FAIL_IMMEDIATELY: DWORD = 0x00000001u
 public const val LOCKFILE_EXCLUSIVE_LOCK: DWORD = 0x00000002u
 
-public class PROCESS_HEAP_ENTRY_Block(
+public class PROCESS_HEAP_ENTRY_BLOCK(
     public var hMem: HANDLE = 0uL,
     public var dwReserved: UIntArray = UIntArray(3),
 )
 
-public data class PROCESS_HEAP_ENTRY_Region(
+public data class PROCESS_HEAP_ENTRY_REGION(
     public var dwCommittedSize: DWORD = 0u,
     public var dwUnCommittedSize: DWORD = 0u,
     public var lpFirstBlock: LPVOID = 0uL,
     public var lpLastBlock: LPVOID = 0uL,
 )
 
-public class PROCESS_HEAP_ENTRY_u(
-    public var Block: PROCESS_HEAP_ENTRY_Block = PROCESS_HEAP_ENTRY_Block(),
-    public var Region: PROCESS_HEAP_ENTRY_Region = PROCESS_HEAP_ENTRY_Region(),
+public class PROCESS_HEAP_ENTRY_U(
+    public var Block: PROCESS_HEAP_ENTRY_BLOCK = PROCESS_HEAP_ENTRY_BLOCK(),
+    public var Region: PROCESS_HEAP_ENTRY_REGION = PROCESS_HEAP_ENTRY_REGION(),
 )
 
 public class PROCESS_HEAP_ENTRY(
@@ -204,7 +204,7 @@ public class PROCESS_HEAP_ENTRY(
     public var cbOverhead: BYTE = 0u,
     public var iRegionIndex: BYTE = 0u,
     public var wFlags: WORD = 0u,
-    public var u: PROCESS_HEAP_ENTRY_u = PROCESS_HEAP_ENTRY_u(),
+    public var u: PROCESS_HEAP_ENTRY_U = PROCESS_HEAP_ENTRY_U(),
 )
 
 public typealias LPPROCESS_HEAP_ENTRY = ULong
@@ -217,22 +217,22 @@ public const val PROCESS_HEAP_SEG_ALLOC: WORD = 0x0008u
 public const val PROCESS_HEAP_ENTRY_MOVEABLE: WORD = 0x0010u
 public const val PROCESS_HEAP_ENTRY_DDESHARE: WORD = 0x0020u
 
-public data class REASON_CONTEXT_Detailed(
+public data class REASON_CONTEXT_DETAILED(
     public var LocalizedReasonModule: HMODULE = 0uL,
     public var LocalizedReasonId: ULONG = 0u,
     public var ReasonStringCount: ULONG = 0u,
     public var ReasonStrings: ULong = 0uL,
 )
 
-public class REASON_CONTEXT_Reason(
-    public var Detailed: REASON_CONTEXT_Detailed = REASON_CONTEXT_Detailed(),
+public class REASON_CONTEXT_REASON(
+    public var Detailed: REASON_CONTEXT_DETAILED = REASON_CONTEXT_DETAILED(),
     public var SimpleReasonString: LPWSTR = 0uL,
 )
 
 public class REASON_CONTEXT(
     public var Version: ULONG = 0u,
     public var Flags: DWORD = 0u,
-    public var Reason: REASON_CONTEXT_Reason = REASON_CONTEXT_Reason(),
+    public var Reason: REASON_CONTEXT_REASON = REASON_CONTEXT_REASON(),
 )
 
 public typealias PREASON_CONTEXT = ULong
@@ -326,7 +326,7 @@ public data class RIP_INFO(
 
 public typealias LPRIP_INFO = ULong
 
-public class DEBUG_EVENT_u(
+public class DEBUG_EVENT_U(
     public var Exception: EXCEPTION_DEBUG_INFO = EXCEPTION_DEBUG_INFO(),
     public var CreateThread: CREATE_THREAD_DEBUG_INFO = CREATE_THREAD_DEBUG_INFO(),
     public var CreateProcessInfo: CREATE_PROCESS_DEBUG_INFO = CREATE_PROCESS_DEBUG_INFO(),
@@ -342,7 +342,7 @@ public class DEBUG_EVENT(
     public var dwDebugEventCode: DWORD = 0u,
     public var dwProcessId: DWORD = 0u,
     public var dwThreadId: DWORD = 0u,
-    public var u: DEBUG_EVENT_u = DEBUG_EVENT_u(),
+    public var u: DEBUG_EVENT_U = DEBUG_EVENT_U(),
 )
 
 public typealias LPDEBUG_EVENT = ULong

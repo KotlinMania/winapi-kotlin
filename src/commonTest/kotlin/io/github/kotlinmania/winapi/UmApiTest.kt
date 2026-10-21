@@ -44,7 +44,7 @@ import io.github.kotlinmania.winapi.um.handleapi.SetHandleInformation
 import io.github.kotlinmania.winapi.um.libloaderapi.FreeLibrary
 import io.github.kotlinmania.winapi.um.libloaderapi.LOAD_LIBRARY_SEARCH_SYSTEM32
 import io.github.kotlinmania.winapi.um.minwinbase.OVERLAPPED
-import io.github.kotlinmania.winapi.um.minwinbase.OVERLAPPED_u_s
+import io.github.kotlinmania.winapi.um.minwinbase.OVERLAPPED_U_S
 import io.github.kotlinmania.winapi.um.minwinbase.SECURITY_ATTRIBUTES
 import io.github.kotlinmania.winapi.um.minwinbase.STILL_ACTIVE
 import io.github.kotlinmania.winapi.um.minwinbase.SYSTEMTIME
@@ -85,13 +85,58 @@ import io.github.kotlinmania.winapi.um.winbase.HANDLE_FLAG_INHERIT
 import io.github.kotlinmania.winapi.um.winbase.INFINITE
 import io.github.kotlinmania.winapi.um.winbase.LocalFree
 import io.github.kotlinmania.winapi.um.winbase.RtlNtStatusToDosError
+import io.github.kotlinmania.winapi.um.winnt.BTYPE
+import io.github.kotlinmania.winapi.um.winnt.DECREF
 import io.github.kotlinmania.winapi.um.winnt.DUPLICATE_SAME_ACCESS
+import io.github.kotlinmania.winapi.um.winnt.EXCEPTION_TARGET_UNWIND
+import io.github.kotlinmania.winapi.um.winnt.EXCEPTION_UNWINDING
 import io.github.kotlinmania.winapi.um.winnt.FILE_ATTRIBUTE_NORMAL
 import io.github.kotlinmania.winapi.um.winnt.GENERIC_READ
+import io.github.kotlinmania.winapi.um.winnt.HEAP_MAKE_TAG_FLAGS
+import io.github.kotlinmania.winapi.um.winnt.IMAGE_ORDINAL
+import io.github.kotlinmania.winapi.um.winnt.IMAGE_ORDINAL32
+import io.github.kotlinmania.winapi.um.winnt.IMAGE_ORDINAL64
+import io.github.kotlinmania.winapi.um.winnt.IMAGE_ORDINAL_FLAG32
+import io.github.kotlinmania.winapi.um.winnt.IMAGE_ORDINAL_FLAG64
+import io.github.kotlinmania.winapi.um.winnt.IMAGE_SNAP_BY_ORDINAL
+import io.github.kotlinmania.winapi.um.winnt.IMAGE_SNAP_BY_ORDINAL32
+import io.github.kotlinmania.winapi.um.winnt.IMAGE_SNAP_BY_ORDINAL64
+import io.github.kotlinmania.winapi.um.winnt.INCREF
+import io.github.kotlinmania.winapi.um.winnt.ISARY
+import io.github.kotlinmania.winapi.um.winnt.ISFCN
+import io.github.kotlinmania.winapi.um.winnt.ISPTR
+import io.github.kotlinmania.winapi.um.winnt.ISTAG
+import io.github.kotlinmania.winapi.um.winnt.IS_DISPATCHING
+import io.github.kotlinmania.winapi.um.winnt.IS_TARGET_UNWIND
+import io.github.kotlinmania.winapi.um.winnt.IS_UNWINDING
+import io.github.kotlinmania.winapi.um.winnt.IS_VALIDATION_ENABLED
+import io.github.kotlinmania.winapi.um.winnt.IsReparseTagDirectory
+import io.github.kotlinmania.winapi.um.winnt.IsReparseTagMicrosoft
+import io.github.kotlinmania.winapi.um.winnt.IsReparseTagNameSurrogate
+import io.github.kotlinmania.winapi.um.winnt.IsVirtualDiskFileShared
+import io.github.kotlinmania.winapi.um.winnt.LANGIDFROMLCID
+import io.github.kotlinmania.winapi.um.winnt.MAKELANGID
+import io.github.kotlinmania.winapi.um.winnt.MAKELCID
+import io.github.kotlinmania.winapi.um.winnt.MAKESORTLCID
+import io.github.kotlinmania.winapi.um.winnt.MANDATORY_LEVEL_TO_MANDATORY_RID
+import io.github.kotlinmania.winapi.um.winnt.PRIMARYLANGID
 import io.github.kotlinmania.winapi.um.winnt.PROCESS_QUERY_LIMITED_INFORMATION
+import io.github.kotlinmania.winapi.um.winnt.RtlCopyMemory
+import io.github.kotlinmania.winapi.um.winnt.RtlFillMemory
+import io.github.kotlinmania.winapi.um.winnt.RtlMoveMemory
+import io.github.kotlinmania.winapi.um.winnt.RtlZeroMemory
+import io.github.kotlinmania.winapi.um.winnt.SORTIDFROMLCID
+import io.github.kotlinmania.winapi.um.winnt.SORTVERSIONFROMLCID
+import io.github.kotlinmania.winapi.um.winnt.SUBLANGID
+import io.github.kotlinmania.winapi.um.winnt.SecurityAnonymous
+import io.github.kotlinmania.winapi.um.winnt.SecurityDelegation
+import io.github.kotlinmania.winapi.um.winnt.SharedVirtualDiskHandleStateFileShared
+import io.github.kotlinmania.winapi.um.winnt.SharedVirtualDiskHandleStateNone
 import io.github.kotlinmania.winapi.um.winnt.TIME_ZONE_ID_DAYLIGHT
 import io.github.kotlinmania.winapi.um.winnt.TIME_ZONE_ID_STANDARD
 import io.github.kotlinmania.winapi.um.winnt.TIME_ZONE_ID_UNKNOWN
+import io.github.kotlinmania.winapi.um.winnt.VALID_IMPERSONATION_LEVEL
+import io.github.kotlinmania.winapi.um.winnt.WT_SET_MAX_THREADPOOL_THREADS
 import io.github.kotlinmania.winapi.um.winuser.LockWorkStation
 import io.github.kotlinmania.winapi.um.winuser.SLE_ERROR
 import io.github.kotlinmania.winapi.um.winuser.SetLastErrorEx
@@ -256,7 +301,7 @@ class UmApiTest {
         assertEquals(TRUE, sa.bInheritHandle)
 
         val overlapped = OVERLAPPED()
-        overlapped.u.s = OVERLAPPED_u_s(Offset = 0x11223344u, OffsetHigh = 0x55667788u)
+        overlapped.u.s = OVERLAPPED_U_S(Offset = 0x11223344u, OffsetHigh = 0x55667788u)
         assertEquals(0x11223344u, overlapped.u.s.Offset)
         assertEquals(0x55667788u, overlapped.u.s.OffsetHigh)
         assertEquals(0x5566778811223344uL, overlapped.u.Pointer)
@@ -273,24 +318,24 @@ class UmApiTest {
         assertEquals(99u, pi.dwThreadId)
 
         val wsb = PSAPI_WORKING_SET_BLOCK()
-        wsb.set_Protection(0x15uL)
-        wsb.set_ShareCount(0x5uL)
-        wsb.set_Shared(1uL)
-        wsb.set_VirtualPage(0xABCDEuL)
-        assertEquals(0x15uL, wsb.Protection())
-        assertEquals(0x5uL, wsb.ShareCount())
-        assertEquals(1uL, wsb.Shared())
-        assertEquals(0xABCDEuL, wsb.VirtualPage())
+        wsb.Protection = 0x15uL
+        wsb.ShareCount = 0x5uL
+        wsb.Shared = 1uL
+        wsb.VirtualPage = 0xABCDEuL
+        assertEquals(0x15uL, wsb.Protection)
+        assertEquals(0x5uL, wsb.ShareCount)
+        assertEquals(1uL, wsb.Shared)
+        assertEquals(0xABCDEuL, wsb.VirtualPage)
 
         val wsex = PSAPI_WORKING_SET_EX_BLOCK()
-        wsex.set_Valid(1uL)
-        wsex.set_Win32Protection(0x123uL)
-        wsex.set_Node(0x2AuL)
-        wsex.set_Bad(1uL)
-        assertEquals(1uL, wsex.Valid())
-        assertEquals(0x123uL, wsex.Win32Protection())
-        assertEquals(0x2AuL, wsex.Node())
-        assertEquals(1uL, wsex.Bad())
+        wsex.Valid = 1uL
+        wsex.Win32Protection = 0x123uL
+        wsex.Node = 0x2AuL
+        wsex.Bad = 1uL
+        assertEquals(1uL, wsex.Valid)
+        assertEquals(0x123uL, wsex.Win32Protection)
+        assertEquals(0x2AuL, wsex.Node)
+        assertEquals(1uL, wsex.Bad)
 
         val dec = DECIMAL(wReserved = 1u, scale = 2u, sign = 0x80u, Hi32 = 3u, Lo64 = 4uL)
         DECIMAL_SETZERO(dec)
@@ -313,5 +358,66 @@ class UmApiTest {
         assertEquals(0xFFFFFFFFu, TLS_OUT_OF_INDEXES)
         assertEquals(3u, LIST_MODULES_ALL)
         assertEquals(0x00000800u, LOAD_LIBRARY_SEARCH_SYSTEM32)
+    }
+
+    @Test
+    fun winntFunctionsTest() {
+        val langId = MAKELANGID(0x09u, 0x01u)
+        assertEquals(0x0409u.toUShort(), langId)
+        assertEquals(0x09u.toUShort(), PRIMARYLANGID(langId))
+        assertEquals(0x01u.toUShort(), SUBLANGID(langId))
+
+        val lcid = MAKELCID(langId, 0x00u)
+        assertEquals(0x0409u, lcid)
+        val sortLcid = MAKESORTLCID(langId, 0x01u, 0x02u)
+        assertEquals(0x00210409u, sortLcid)
+        assertEquals(langId, LANGIDFROMLCID(lcid))
+        assertEquals(1u.toUShort(), SORTIDFROMLCID(sortLcid))
+        assertEquals(1u.toUShort(), SORTVERSIONFROMLCID(sortLcid))
+
+        assertTrue(IS_UNWINDING(EXCEPTION_UNWINDING))
+        assertTrue(IS_DISPATCHING(0u))
+        assertTrue(IS_TARGET_UNWIND(EXCEPTION_TARGET_UNWIND))
+
+        assertEquals(0x2000u, MANDATORY_LEVEL_TO_MANDATORY_RID(2u))
+        assertTrue(VALID_IMPERSONATION_LEVEL(SecurityAnonymous))
+        assertTrue(VALID_IMPERSONATION_LEVEL(SecurityDelegation))
+        assertTrue(!VALID_IMPERSONATION_LEVEL(99u))
+
+        assertTrue(IsReparseTagMicrosoft(0x80000000u))
+        assertTrue(!IsReparseTagMicrosoft(0x40000000u))
+        assertTrue(IsReparseTagNameSurrogate(0x20000000u))
+        assertTrue(IsReparseTagDirectory(0x10000000u))
+
+        assertTrue(IsVirtualDiskFileShared(SharedVirtualDiskHandleStateFileShared))
+        assertTrue(!IsVirtualDiskFileShared(SharedVirtualDiskHandleStateNone))
+
+        assertTrue(BTYPE(0x0001u))
+        assertTrue(!BTYPE(0x0000u))
+        assertTrue(ISPTR(0x0010u))
+        assertTrue(ISFCN(0x0020u))
+        assertTrue(ISARY(0x0030u))
+        assertTrue(ISTAG(0x000Au.toUByte()))
+        val inc = INCREF(0x0001u)
+        assertEquals(0x0001u.toUShort(), DECREF(inc))
+
+        assertEquals(0x1234uL, IMAGE_ORDINAL64(0x8000000000001234uL))
+        assertEquals(0x1234u, IMAGE_ORDINAL32(0x80001234u))
+        assertTrue(IMAGE_SNAP_BY_ORDINAL64(IMAGE_ORDINAL_FLAG64 or 1uL))
+        assertTrue(IMAGE_SNAP_BY_ORDINAL32(IMAGE_ORDINAL_FLAG32 or 1u))
+        assertEquals(0x5678uL, IMAGE_ORDINAL(0x8000000000005678uL))
+        assertEquals(0x5678u, IMAGE_ORDINAL(0x80005678u))
+        assertTrue(IMAGE_SNAP_BY_ORDINAL(IMAGE_ORDINAL_FLAG64 or 2uL))
+        assertTrue(IMAGE_SNAP_BY_ORDINAL(IMAGE_ORDINAL_FLAG32 or 2u))
+
+        assertEquals(0x00040001u, HEAP_MAKE_TAG_FLAGS(1u, 1u))
+        assertTrue(IS_VALIDATION_ENABLED(1u, 1u))
+        assertTrue(!IS_VALIDATION_ENABLED(1u, 2u))
+        assertEquals(0x00020001u, WT_SET_MAX_THREADPOOL_THREADS(1u, 2u))
+
+        RtlMoveMemory(0uL, 0uL, 0uL)
+        RtlCopyMemory(0uL, 0uL, 0uL)
+        RtlFillMemory(0uL, 0uL, 0u.toUByte())
+        RtlZeroMemory(0uL, 0uL)
     }
 }
