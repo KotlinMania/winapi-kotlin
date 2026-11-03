@@ -1,5 +1,5 @@
-# Detekt configuration for a Rust-to-Kotlin port.
-# The codebase preserves the structure, naming, and organization of the
+# Detekt configuration for KotlinMania ports.
+# Relaxed from template defaults because this is a line-by-line port of
 # upstream source code; many structural/style rules that make sense for
 # idiomatic Kotlin would create false positives here.
 
@@ -9,20 +9,20 @@ config:
 processors:
   active: true
 
-console-reports:
+potential-bugs:
   active: true
+  EqualsWithHashCodeExist: { active: false }
+  ExplicitGarbageCollectionCall: { active: true }
+  LateinitUsage: { active: true }
+  NullCheckOnMutableProperty: { active: true }
+  UnreachableCode: { active: true }
+  WrongEqualsTypeParameter: { active: false }
+  UnsafeCallOnNullableType: { active: false }
+  UnnecessaryNotNullOperator: { active: false }
+  ImplicitDefaultLocale: { active: false }
 
-comments:
-  active: false
-
-coroutines:
+performance:
   active: true
-  GlobalCoroutineUsage: { active: false }
-  InjectDispatcher: { active: false }
-  RedundantSuspendModifier: { active: false }
-  SleepInsteadOfDelay: { active: true }
-  SuspendFunWithFlowReturnType: { active: true }
-  SuspendFunWithCoroutineScopeReceiver: { active: false }
 
 style:
   active: true
@@ -34,38 +34,35 @@ style:
   UnnecessaryInheritance: { active: true }
   UtilityClassWithPublicConstructor: { active: true }
   DestructuringDeclarationWithTooManyEntries: { active: true, maxDestructuringEntries: 3 }
+  ProtectedMemberInFinalClass: { active: false }
   MaxLineLength: { active: false }
+  UseCheckOrError: { active: false }
+  UseRequire: { active: false }
+  ForbiddenComment: { active: false }
   ThrowsCount: { active: false }
   LoopWithTooManyJumpStatements: { active: false }
-  ForbiddenComment: { active: false }
   UnusedParameter: { active: false }
   FunctionOnlyReturningConstant: { active: false }
-  OptionalAbstractKeyword: { active: true }
-  SafeCast: { active: true }
-  UnnecessaryParentheses: { active: false }
   WildcardImport: { active: false }
   ModifierOrder: { active: false }
   UnusedPrivateProperty: { active: false }
   RedundantVisibilityModifier: { active: false }
   AbstractClassCanBeInterface: { active: false }
+  AbstractClassCanBeConcreteClass: { active: false }
 
 complexity:
   active: true
-  ComplexCondition: { active: false }
-  CyclomaticComplexMethod: { active: false }
-  LargeClass: { active: false }
   LongMethod: { active: false }
-  LongParameterList: { active: false }
-  MethodOverloading: { active: false }
-  NestedBlockDepth: { active: false }
-  StringLiteralDuplication: { active: false }
+  LargeClass: { active: false }
+  CyclomaticComplexMethod: { active: false }
   TooManyFunctions: { active: false }
-  CognitiveComplexMethod: { active: false }
+  NestedBlockDepth: { active: false }
+  LongParameterList: { active: false }
+  ComplexCondition: { active: false }
 
 empty-blocks:
   active: true
-  EmptyCatchBlock: { active: false }
-  EmptyClassBlock: { active: false }
+  EmptyClassBlock: { active: true }
   EmptyDefaultConstructor: { active: true }
   EmptyDoWhileBlock: { active: true }
   EmptyElseBlock: { active: true }
@@ -77,17 +74,16 @@ empty-blocks:
   EmptySecondaryConstructor: { active: true }
   EmptyTryBlock: { active: true }
   EmptyWhenBlock: { active: true }
-  EmptyWhileBlock: { active: false }
+  EmptyWhileBlock: { active: true }
 
 naming:
   active: true
-  VariableNaming: { active: false }
-  FunctionNaming: { active: false }
   TopLevelPropertyNaming: { active: false }
-  PackageNaming: { active: false }
-  ClassNaming: { active: false }
+  FunctionNaming: { active: false }
+  ClassNaming: { active: true }
+  EnumNaming: { active: true }
+  VariableNaming: { active: false }
   ConstructorParameterNaming: { active: false }
-  EnumNaming: { active: false }
   FunctionParameterNaming: { active: false }
   MatchingDeclarationName: { active: false }
   ObjectPropertyNaming: { active: false }
@@ -95,27 +91,12 @@ naming:
 
 exceptions:
   active: true
-  TooGenericExceptionCaught: { active: false }
   TooGenericExceptionThrown: { active: false }
+  TooGenericExceptionCaught: { active: false }
   SwallowedException: { active: false }
   InstanceOfCheckForException: { active: false }
+  ExceptionRaisedInUnexpectedLocation: { active: false }
   ThrowingExceptionsWithoutMessageOrCause: { active: false }
-  PrintStackTrace: { active: false }
 
-potential-bugs:
-  active: true
-  UnsafeCallOnNullableType: { active: false }
-  UnreachableCode: { active: true }
-  EqualsWithHashCodeExist: { active: true }
-  InvalidRange: { active: true }
-  WrongEqualsTypeParameter: { active: true }
-  ExplicitGarbageCollectionCall: { active: true }
-  HasPlatformType: { active: false }
-  ImplicitDefaultLocale: { active: false }
-
-performance:
-  active: true
-  ArrayPrimitive: { active: true }
-  ForEachOnRange: { active: true }
-  SpreadOperator: { active: false }
-  UnnecessaryTemporaryInstantiation: { active: true }
+coroutines:
+  active: false
