@@ -16,26 +16,26 @@ let package = Package(
         .macOS(.v15),
     ],
     dependencies: [
-        .package(name: "Template", path: "../../../build/SPMPackage/macosArm64/\(swiftExportConfiguration)"),
+        .package(name: "Winapi", path: "../../../build/SPMPackage/macosArm64/\(swiftExportConfiguration)"),
     ],
     targets: [
         .testTarget(
             name: "SwiftTestHarnessTests",
             dependencies: [
-                .product(name: "TemplateLibrary", package: "Template"),
+                .product(name: "WinapiLibrary", package: "Winapi"),
             ],
             linkerSettings: [
                 .unsafeFlags(
                     [
                         "-L", "../../../build/swift-test/Debug",
-                        "-lTemplate",
+                        "-lWinapi",
                     ],
                     .when(configuration: .debug)
                 ),
                 .unsafeFlags(
                     [
                         "-L", "../../../build/swift-test/Release",
-                        "-lTemplate",
+                        "-lWinapi",
                     ],
                     .when(configuration: .release)
                 ),

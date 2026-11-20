@@ -1,4 +1,3 @@
-// port-lint: source N/A
 @file:OptIn(kotlin.js.ExperimentalWasmJsInterop::class)
 
 package io.github.kotlinmania.winapi.internal
@@ -6,12 +5,19 @@ package io.github.kotlinmania.winapi.internal
 @JsFun(
     """() => {
         if (globalThis.__kotlinmania_winapi_native) return 1;
+        if (typeof globalThis.process === 'undefined' || !globalThis.process.versions || !globalThis.process.versions.node) {
+            return 0;
+        }
         const proc = globalThis.process;
         const modMod = proc.getBuiltinModule("module");
         const path = proc.getBuiltinModule("path");
         const req = modMod.createRequire(path.join(proc.cwd(), "package.json"));
-        globalThis.__kotlinmania_winapi_native = req("@kotlinmania/winapi-native-bindings");
-        return 1;
+        try {
+            globalThis.__kotlinmania_winapi_native = req("@kotlinmania/winapi-native-bindings");
+            return 1;
+        } catch (_) {
+            return 0;
+        }
     }""",
 )
 private external fun ensureWinapiNapiLoaded(): Int
@@ -264,32 +270,56 @@ private external fun wasmLockWorkStation(): Int
 private external fun wasmDisconnectNamedPipe(hNamedPipe: Double): Int
 
 internal object WinapiNapiWasm {
-    init {
-        ensureWinapiNapiLoaded()
+    private val addonAvailable: Boolean = ensureWinapiNapiLoaded() != 0
+
+    private fun requireAddon() {
+        if (!addonAvailable) {
+            throw UnsupportedOperationException("Winapi native FFI addon is not available")
+        }
     }
 
-    fun CloseHandle(hObject: Long): Int = wasmCloseHandle(hObject.toDouble())
+    fun CloseHandle(hObject: Long): Int {
+        requireAddon()
+        return wasmCloseHandle(hObject.toDouble())
+    }
 
-    fun GetLastError(): UInt = wasmGetLastError().toUInt()
+    fun GetLastError(): UInt {
+        requireAddon()
+        return wasmGetLastError().toUInt()
+    }
 
     fun SetLastError(dwErrCode: UInt) {
+        requireAddon()
         wasmSetLastError(dwErrCode.toInt())
     }
 
     fun SetLastErrorEx(dwErrCode: UInt, dwType: UInt) {
+        requireAddon()
         wasmSetLastErrorEx(dwErrCode.toInt(), dwType.toInt())
     }
 
-    fun LocalFree(hMem: Long): Long = wasmLocalFree(hMem.toDouble()).toLong()
+    fun LocalFree(hMem: Long): Long {
+        requireAddon()
+        return wasmLocalFree(hMem.toDouble()).toLong()
+    }
 
-    fun GlobalFree(hMem: Long): Long = wasmGlobalFree(hMem.toDouble()).toLong()
+    fun GlobalFree(hMem: Long): Long {
+        requireAddon()
+        return wasmGlobalFree(hMem.toDouble()).toLong()
+    }
 
-    fun FreeLibrary(hLibModule: Long): Int = wasmFreeLibrary(hLibModule.toDouble())
+    fun FreeLibrary(hLibModule: Long): Int {
+        requireAddon()
+        return wasmFreeLibrary(hLibModule.toDouble())
+    }
 
-    fun SetHandleInformation(hObject: Long, dwMask: UInt, dwFlags: UInt): Int =
-        wasmSetHandleInformation(hObject.toDouble(), dwMask.toInt(), dwFlags.toInt())
+    fun SetHandleInformation(hObject: Long, dwMask: UInt, dwFlags: UInt): Int {
+        requireAddon()
+        return wasmSetHandleInformation(hObject.toDouble(), dwMask.toInt(), dwFlags.toInt())
+    }
 
     fun GetHandleInformation(hObject: Long, lpdwFlags: UIntArray): Int {
+        requireAddon()
         val success = wasmGetHandleInformation(hObject.toDouble())
         if (lpdwFlags.isNotEmpty()) {
             lpdwFlags[0] = wasmGetLastHandleFlags().toUInt()
@@ -297,8 +327,10 @@ internal object WinapiNapiWasm {
         return success
     }
 
-    fun CompareObjectHandles(h1: Long, h2: Long): Int =
-        wasmCompareObjectHandles(h1.toDouble(), h2.toDouble())
+    fun CompareObjectHandles(h1: Long, h2: Long): Int {
+        requireAddon()
+        return wasmCompareObjectHandles(h1.toDouble(), h2.toDouble())
+    }
 
     fun DuplicateHandle(
         hSourceProcessHandle: Long,
@@ -309,6 +341,7 @@ internal object WinapiNapiWasm {
         bInheritHandle: Int,
         dwOptions: UInt,
     ): Int {
+        requireAddon()
         val success =
             wasmDuplicateHandle(
                 hSourceProcessHandle.toDouble(),
@@ -324,21 +357,33 @@ internal object WinapiNapiWasm {
         return success
     }
 
-    fun RtlNtStatusToDosError(status: Int): UInt = wasmRtlNtStatusToDosError(status).toUInt()
+    fun RtlNtStatusToDosError(status: Int): UInt {
+        requireAddon()
+        return wasmRtlNtStatusToDosError(status).toUInt()
+    }
 
-    fun SysAllocString(psz: Long): Long = wasmSysAllocString(psz.toDouble()).toLong()
+    fun SysAllocString(psz: Long): Long {
+        requireAddon()
+        return wasmSysAllocString(psz.toDouble()).toLong()
+    }
 
-    fun SysAllocStringByteLen(psz: Long, len: UInt): Long =
-        wasmSysAllocStringByteLen(psz.toDouble(), len.toInt()).toLong()
+    fun SysAllocStringByteLen(psz: Long, len: UInt): Long {
+        requireAddon()
+        return wasmSysAllocStringByteLen(psz.toDouble(), len.toInt()).toLong()
+    }
 
-    fun SysAllocStringLen(strIn: Long, ui: UInt): Long =
-        wasmSysAllocStringLen(strIn.toDouble(), ui.toInt()).toLong()
+    fun SysAllocStringLen(strIn: Long, ui: UInt): Long {
+        requireAddon()
+        return wasmSysAllocStringLen(strIn.toDouble(), ui.toInt()).toLong()
+    }
 
     fun SysFreeString(bstrString: Long) {
+        requireAddon()
         wasmSysFreeString(bstrString.toDouble())
     }
 
     fun SysReAllocString(pbstr: LongArray, psz: Long): Int {
+        requireAddon()
         val current = if (pbstr.isNotEmpty()) pbstr[0] else 0L
         val res = wasmSysReAllocString(current.toDouble(), psz.toDouble())
         if (pbstr.isNotEmpty()) {
@@ -348,6 +393,7 @@ internal object WinapiNapiWasm {
     }
 
     fun SysReAllocStringLen(pbstr: LongArray, psz: Long, len: UInt): Int {
+        requireAddon()
         val current = if (pbstr.isNotEmpty()) pbstr[0] else 0L
         val res = wasmSysReAllocStringLen(current.toDouble(), psz.toDouble(), len.toInt())
         if (pbstr.isNotEmpty()) {
@@ -356,27 +402,45 @@ internal object WinapiNapiWasm {
         return res
     }
 
-    fun SysAddRefString(bstrString: Long): Int = wasmSysAddRefString(bstrString.toDouble())
+    fun SysAddRefString(bstrString: Long): Int {
+        requireAddon()
+        return wasmSysAddRefString(bstrString.toDouble())
+    }
 
     fun SysReleaseString(bstrString: Long) {
+        requireAddon()
         wasmSysReleaseString(bstrString.toDouble())
     }
 
-    fun SysStringByteLen(bstr: Long): UInt = wasmSysStringByteLen(bstr.toDouble()).toUInt()
+    fun SysStringByteLen(bstr: Long): UInt {
+        requireAddon()
+        return wasmSysStringByteLen(bstr.toDouble()).toUInt()
+    }
 
-    fun SysStringLen(pbstr: Long): UInt = wasmSysStringLen(pbstr.toDouble()).toUInt()
+    fun SysStringLen(pbstr: Long): UInt {
+        requireAddon()
+        return wasmSysStringLen(pbstr.toDouble()).toUInt()
+    }
 
-    fun SetFileAttributesW(lpFileName: Long, dwFileAttributes: UInt): Int =
-        wasmSetFileAttributesW(lpFileName.toDouble(), dwFileAttributes.toInt())
+    fun SetFileAttributesW(lpFileName: Long, dwFileAttributes: UInt): Int {
+        requireAddon()
+        return wasmSetFileAttributesW(lpFileName.toDouble(), dwFileAttributes.toInt())
+    }
 
-    fun SetFileAttributesA(lpFileName: Long, dwFileAttributes: UInt): Int =
-        wasmSetFileAttributesA(lpFileName.toDouble(), dwFileAttributes.toInt())
+    fun SetFileAttributesA(lpFileName: Long, dwFileAttributes: UInt): Int {
+        requireAddon()
+        return wasmSetFileAttributesA(lpFileName.toDouble(), dwFileAttributes.toInt())
+    }
 
-    fun GetFileAttributesW(lpFileName: Long): UInt =
-        wasmGetFileAttributesW(lpFileName.toDouble()).toUInt()
+    fun GetFileAttributesW(lpFileName: Long): UInt {
+        requireAddon()
+        return wasmGetFileAttributesW(lpFileName.toDouble()).toUInt()
+    }
 
-    fun GetFileAttributesA(lpFileName: Long): UInt =
-        wasmGetFileAttributesA(lpFileName.toDouble()).toUInt()
+    fun GetFileAttributesA(lpFileName: Long): UInt {
+        requireAddon()
+        return wasmGetFileAttributesA(lpFileName.toDouble()).toUInt()
+    }
 
     fun CreateFileW(
         lpFileName: Long,
@@ -386,8 +450,9 @@ internal object WinapiNapiWasm {
         dwCreationDisposition: UInt,
         dwFlagsAndAttributes: UInt,
         hTemplateFile: Long,
-    ): Long =
-        wasmCreateFileW(
+    ): Long {
+        requireAddon()
+        return wasmCreateFileW(
             lpFileName.toDouble(),
             dwDesiredAccess.toInt(),
             dwShareMode.toInt(),
@@ -396,6 +461,7 @@ internal object WinapiNapiWasm {
             dwFlagsAndAttributes.toInt(),
             hTemplateFile.toDouble(),
         ).toLong()
+    }
 
     fun CreateFileA(
         lpFileName: Long,
@@ -405,8 +471,9 @@ internal object WinapiNapiWasm {
         dwCreationDisposition: UInt,
         dwFlagsAndAttributes: UInt,
         hTemplateFile: Long,
-    ): Long =
-        wasmCreateFileA(
+    ): Long {
+        requireAddon()
+        return wasmCreateFileA(
             lpFileName.toDouble(),
             dwDesiredAccess.toInt(),
             dwShareMode.toInt(),
@@ -415,16 +482,30 @@ internal object WinapiNapiWasm {
             dwFlagsAndAttributes.toInt(),
             hTemplateFile.toDouble(),
         ).toLong()
+    }
 
-    fun DeleteFileW(lpFileName: Long): Int = wasmDeleteFileW(lpFileName.toDouble())
+    fun DeleteFileW(lpFileName: Long): Int {
+        requireAddon()
+        return wasmDeleteFileW(lpFileName.toDouble())
+    }
 
-    fun DeleteFileA(lpFileName: Long): Int = wasmDeleteFileA(lpFileName.toDouble())
+    fun DeleteFileA(lpFileName: Long): Int {
+        requireAddon()
+        return wasmDeleteFileA(lpFileName.toDouble())
+    }
 
-    fun FlushFileBuffers(hFile: Long): Int = wasmFlushFileBuffers(hFile.toDouble())
+    fun FlushFileBuffers(hFile: Long): Int {
+        requireAddon()
+        return wasmFlushFileBuffers(hFile.toDouble())
+    }
 
-    fun AreFileApisANSI(): Int = wasmAreFileApisANSI()
+    fun AreFileApisANSI(): Int {
+        requireAddon()
+        return wasmAreFileApisANSI()
+    }
 
     fun GetFileSize(hFile: Long, lpFileSizeHigh: UIntArray?): UInt {
+        requireAddon()
         val hasHigh = if (lpFileSizeHigh != null && lpFileSizeHigh.isNotEmpty()) 1 else 0
         val low = wasmGetFileSize(hFile.toDouble(), hasHigh)
         if (hasHigh != 0 && lpFileSizeHigh != null) {
@@ -439,6 +520,7 @@ internal object WinapiNapiWasm {
         lpDistanceToMoveHigh: IntArray?,
         dwMoveMethod: UInt,
     ): UInt {
+        requireAddon()
         val hasHigh = if (lpDistanceToMoveHigh != null && lpDistanceToMoveHigh.isNotEmpty()) 1 else 0
         val inHigh = if (hasHigh != 0 && lpDistanceToMoveHigh != null) lpDistanceToMoveHigh[0] else 0
         val low =
@@ -455,30 +537,58 @@ internal object WinapiNapiWasm {
         return low.toUInt()
     }
 
-    fun GetCurrentProcess(): Long = wasmGetCurrentProcess().toLong()
+    fun GetCurrentProcess(): Long {
+        requireAddon()
+        return wasmGetCurrentProcess().toLong()
+    }
 
-    fun GetCurrentProcessId(): UInt = wasmGetCurrentProcessId().toUInt()
+    fun GetCurrentProcessId(): UInt {
+        requireAddon()
+        return wasmGetCurrentProcessId().toUInt()
+    }
 
-    fun GetCurrentThread(): Long = wasmGetCurrentThread().toLong()
+    fun GetCurrentThread(): Long {
+        requireAddon()
+        return wasmGetCurrentThread().toLong()
+    }
 
-    fun GetCurrentThreadId(): UInt = wasmGetCurrentThreadId().toUInt()
+    fun GetCurrentThreadId(): UInt {
+        requireAddon()
+        return wasmGetCurrentThreadId().toUInt()
+    }
 
-    fun TerminateProcess(hProcess: Long, uExitCode: UInt): Int =
-        wasmTerminateProcess(hProcess.toDouble(), uExitCode.toInt())
+    fun TerminateProcess(hProcess: Long, uExitCode: UInt): Int {
+        requireAddon()
+        return wasmTerminateProcess(hProcess.toDouble(), uExitCode.toInt())
+    }
 
     fun ExitProcess(uExitCode: UInt) {
+        requireAddon()
         wasmExitProcess(uExitCode.toInt())
     }
 
-    fun OpenProcess(dwDesiredAccess: UInt, bInheritHandle: Int, dwProcessId: UInt): Long =
-        wasmOpenProcess(dwDesiredAccess.toInt(), bInheritHandle, dwProcessId.toInt()).toLong()
+    fun OpenProcess(dwDesiredAccess: UInt, bInheritHandle: Int, dwProcessId: UInt): Long {
+        requireAddon()
+        return wasmOpenProcess(dwDesiredAccess.toInt(), bInheritHandle, dwProcessId.toInt()).toLong()
+    }
 
-    fun K32EmptyWorkingSet(hProcess: Long): Int = wasmK32EmptyWorkingSet(hProcess.toDouble())
+    fun K32EmptyWorkingSet(hProcess: Long): Int {
+        requireAddon()
+        return wasmK32EmptyWorkingSet(hProcess.toDouble())
+    }
 
-    fun GetTimeZoneInformation(lpTimeZoneInformation: Long): UInt =
-        wasmGetTimeZoneInformation(lpTimeZoneInformation.toDouble()).toUInt()
+    fun GetTimeZoneInformation(lpTimeZoneInformation: Long): UInt {
+        requireAddon()
+        return wasmGetTimeZoneInformation(lpTimeZoneInformation.toDouble()).toUInt()
+    }
 
-    fun LockWorkStation(): Int = wasmLockWorkStation()
+    fun LockWorkStation(): Int {
+        requireAddon()
+        return wasmLockWorkStation()
+    }
 
-    fun DisconnectNamedPipe(hNamedPipe: Long): Int = wasmDisconnectNamedPipe(hNamedPipe.toDouble())
+    fun DisconnectNamedPipe(hNamedPipe: Long): Int {
+        requireAddon()
+        return wasmDisconnectNamedPipe(hNamedPipe.toDouble())
+    }
 }
