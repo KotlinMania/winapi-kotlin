@@ -89,6 +89,10 @@ int32_t winapi_k32_empty_working_set(int64_t hProcess);
 uint32_t winapi_get_time_zone_information(int64_t lpTimeZoneInformation);
 int32_t winapi_lock_work_station(void);
 int32_t winapi_disconnect_named_pipe(int64_t hNamedPipe);
+void winapi_rtl_move_memory(int64_t destination, int64_t source, uint64_t length);
+void winapi_rtl_copy_memory(int64_t destination, int64_t source, uint64_t length);
+void winapi_rtl_fill_memory(int64_t destination, uint64_t length, uint8_t fill);
+void winapi_rtl_zero_memory(int64_t destination, uint64_t length);
 
 #ifdef __cplusplus
 }

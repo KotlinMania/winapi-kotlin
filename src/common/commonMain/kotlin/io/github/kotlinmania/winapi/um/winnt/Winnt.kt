@@ -316,17 +316,13 @@ public const val HEAP_TAG_SHIFT: Int = 18
 public fun HEAP_MAKE_TAG_FLAGS(TagBase: DWORD, Tag: DWORD): DWORD =
     TagBase + (Tag shl HEAP_TAG_SHIFT)
 
-public fun RtlMoveMemory(Destination: PVOID, Source: PVOID, Length: SIZE_T) {
-}
+public expect fun RtlMoveMemory(Destination: PVOID, Source: PVOID, Length: SIZE_T)
 
-public fun RtlCopyMemory(Destination: PVOID, Source: PVOID, Length: SIZE_T) {
-}
+public expect fun RtlCopyMemory(Destination: PVOID, Source: PVOID, Length: SIZE_T)
 
-public fun RtlFillMemory(Destination: PVOID, Length: SIZE_T, Fill: BYTE) {
-}
+public expect fun RtlFillMemory(Destination: PVOID, Length: SIZE_T, Fill: BYTE)
 
-public fun RtlZeroMemory(Destination: PVOID, Length: SIZE_T) {
-}
+public expect fun RtlZeroMemory(Destination: PVOID, Length: SIZE_T)
 
 public fun IS_VALIDATION_ENABLED(C: DWORD, L: DWORD): Boolean =
     (L and C) != 0u

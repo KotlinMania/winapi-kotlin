@@ -168,4 +168,16 @@ internal object WinapiJni {
 
     @JvmStatic
     external fun DisconnectNamedPipe(hNamedPipe: Long): Int
+
+    @JvmStatic
+    external fun RtlMoveMemory(destination: Long, source: Long, length: Long)
+
+    @JvmStatic
+    external fun RtlCopyMemory(destination: Long, source: Long, length: Long)
+
+    @JvmStatic
+    external fun RtlFillMemory(destination: Long, length: Long, fill: Int)
+
+    @JvmStatic
+    external fun RtlZeroMemory(destination: Long, length: Long)
 }

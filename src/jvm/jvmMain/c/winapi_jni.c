@@ -1,5 +1,6 @@
 #include <jni.h>
 #include <stdint.h>
+#include <string.h>
 
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
@@ -785,6 +786,46 @@ JNIEXPORT jint JNICALL Java_io_github_kotlinmania_winapi_internal_WinapiJni_Disc
     (void)hNamedPipe;
     return 0;
 #endif
+}
+
+JNIEXPORT void JNICALL Java_io_github_kotlinmania_winapi_internal_WinapiJni_RtlMoveMemory
+  (JNIEnv *env, jclass cls, jlong destination, jlong source, jlong length) {
+    (void)env;
+    (void)cls;
+    if (length <= 0 || destination == 0 || source == 0) {
+        return;
+    }
+    memmove((void *)(uintptr_t)destination, (const void *)(uintptr_t)source, (size_t)length);
+}
+
+JNIEXPORT void JNICALL Java_io_github_kotlinmania_winapi_internal_WinapiJni_RtlCopyMemory
+  (JNIEnv *env, jclass cls, jlong destination, jlong source, jlong length) {
+    (void)env;
+    (void)cls;
+    if (length <= 0 || destination == 0 || source == 0) {
+        return;
+    }
+    memcpy((void *)(uintptr_t)destination, (const void *)(uintptr_t)source, (size_t)length);
+}
+
+JNIEXPORT void JNICALL Java_io_github_kotlinmania_winapi_internal_WinapiJni_RtlFillMemory
+  (JNIEnv *env, jclass cls, jlong destination, jlong length, jint fill) {
+    (void)env;
+    (void)cls;
+    if (length <= 0 || destination == 0) {
+        return;
+    }
+    memset((void *)(uintptr_t)destination, (int)(fill & 0xFF), (size_t)length);
+}
+
+JNIEXPORT void JNICALL Java_io_github_kotlinmania_winapi_internal_WinapiJni_RtlZeroMemory
+  (JNIEnv *env, jclass cls, jlong destination, jlong length) {
+    (void)env;
+    (void)cls;
+    if (length <= 0 || destination == 0) {
+        return;
+    }
+    memset((void *)(uintptr_t)destination, 0, (size_t)length);
 }
 
 #ifdef __cplusplus

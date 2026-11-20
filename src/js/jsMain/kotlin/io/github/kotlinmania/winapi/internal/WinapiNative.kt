@@ -198,5 +198,21 @@ internal object WinapiNative {
 
     fun DisconnectNamedPipe(hNamedPipe: Double): Int = requireAddon().DisconnectNamedPipe(hNamedPipe) as Int
 
+    fun RtlMoveMemory(destination: Double, source: Double, length: Double) {
+        requireAddon().RtlMoveMemory(destination, source, length)
+    }
+
+    fun RtlCopyMemory(destination: Double, source: Double, length: Double) {
+        requireAddon().RtlCopyMemory(destination, source, length)
+    }
+
+    fun RtlFillMemory(destination: Double, length: Double, fill: Int) {
+        requireAddon().RtlFillMemory(destination, length, fill)
+    }
+
+    fun RtlZeroMemory(destination: Double, length: Double) {
+        requireAddon().RtlZeroMemory(destination, length)
+    }
+
     fun isNativeAvailable(): Boolean = winapiNapiAddon != null && (winapiNapiAddon.isNativeAvailable() as Boolean)
 }

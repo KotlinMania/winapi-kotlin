@@ -269,6 +269,18 @@ private external fun wasmLockWorkStation(): Int
 @JsFun("(hNamedPipe) => globalThis.__kotlinmania_winapi_native.DisconnectNamedPipe(hNamedPipe) | 0")
 private external fun wasmDisconnectNamedPipe(hNamedPipe: Double): Int
 
+@JsFun("(destination, source, length) => { globalThis.__kotlinmania_winapi_native.RtlMoveMemory(destination, source, length); }")
+private external fun wasmRtlMoveMemory(destination: Double, source: Double, length: Double)
+
+@JsFun("(destination, source, length) => { globalThis.__kotlinmania_winapi_native.RtlCopyMemory(destination, source, length); }")
+private external fun wasmRtlCopyMemory(destination: Double, source: Double, length: Double)
+
+@JsFun("(destination, length, fill) => { globalThis.__kotlinmania_winapi_native.RtlFillMemory(destination, length, fill & 0xFF); }")
+private external fun wasmRtlFillMemory(destination: Double, length: Double, fill: Int)
+
+@JsFun("(destination, length) => { globalThis.__kotlinmania_winapi_native.RtlZeroMemory(destination, length); }")
+private external fun wasmRtlZeroMemory(destination: Double, length: Double)
+
 internal object WinapiNapiWasm {
     private val addonAvailable: Boolean = ensureWinapiNapiLoaded() != 0
 
@@ -590,5 +602,25 @@ internal object WinapiNapiWasm {
     fun DisconnectNamedPipe(hNamedPipe: Long): Int {
         requireAddon()
         return wasmDisconnectNamedPipe(hNamedPipe.toDouble())
+    }
+
+    fun RtlMoveMemory(destination: Long, source: Long, length: Long) {
+        requireAddon()
+        wasmRtlMoveMemory(destination.toDouble(), source.toDouble(), length.toDouble())
+    }
+
+    fun RtlCopyMemory(destination: Long, source: Long, length: Long) {
+        requireAddon()
+        wasmRtlCopyMemory(destination.toDouble(), source.toDouble(), length.toDouble())
+    }
+
+    fun RtlFillMemory(destination: Long, length: Long, fill: Int) {
+        requireAddon()
+        wasmRtlFillMemory(destination.toDouble(), length.toDouble(), fill)
+    }
+
+    fun RtlZeroMemory(destination: Long, length: Long) {
+        requireAddon()
+        wasmRtlZeroMemory(destination.toDouble(), length.toDouble())
     }
 }

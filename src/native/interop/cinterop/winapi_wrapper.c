@@ -1,4 +1,5 @@
 #include "winapi_wrapper.h"
+#include <string.h>
 
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
@@ -668,4 +669,32 @@ int32_t winapi_disconnect_named_pipe(int64_t hNamedPipe) {
     (void)hNamedPipe;
     return 0;
 #endif
+}
+
+void winapi_rtl_move_memory(int64_t destination, int64_t source, uint64_t length) {
+    if (length == 0 || destination == 0 || source == 0) {
+        return;
+    }
+    memmove((void *)(uintptr_t)destination, (const void *)(uintptr_t)source, (size_t)length);
+}
+
+void winapi_rtl_copy_memory(int64_t destination, int64_t source, uint64_t length) {
+    if (length == 0 || destination == 0 || source == 0) {
+        return;
+    }
+    memcpy((void *)(uintptr_t)destination, (const void *)(uintptr_t)source, (size_t)length);
+}
+
+void winapi_rtl_fill_memory(int64_t destination, uint64_t length, uint8_t fill) {
+    if (length == 0 || destination == 0) {
+        return;
+    }
+    memset((void *)(uintptr_t)destination, (int)fill, (size_t)length);
+}
+
+void winapi_rtl_zero_memory(int64_t destination, uint64_t length) {
+    if (length == 0 || destination == 0) {
+        return;
+    }
+    memset((void *)(uintptr_t)destination, 0, (size_t)length);
 }

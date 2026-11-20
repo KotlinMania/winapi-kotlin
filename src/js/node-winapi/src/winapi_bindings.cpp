@@ -1,4 +1,6 @@
 #include <napi.h>
+#include <cstdint>
+#include <cstring>
 
 #if defined(_WIN32) || defined(WIN32)
 #define WIN32_LEAN_AND_MEAN
@@ -829,6 +831,65 @@ Napi::Value IsNativeAvailableBinding(const Napi::CallbackInfo& info) {
     return Napi::Boolean::New(env, IS_WINDOWS != 0);
 }
 
+Napi::Value RtlMoveMemoryBinding(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+    int64_t destVal = info.Length() >= 1 ? info[0].As<Napi::Number>().Int64Value() : 0;
+    int64_t srcVal = info.Length() >= 2 ? info[1].As<Napi::Number>().Int64Value() : 0;
+    int64_t lenVal = info.Length() >= 3 ? info[2].As<Napi::Number>().Int64Value() : 0;
+    if (lenVal > 0 && destVal != 0 && srcVal != 0) {
+        std::memmove(
+            reinterpret_cast<void*>(static_cast<std::uintptr_t>(destVal)),
+            reinterpret_cast<const void*>(static_cast<std::uintptr_t>(srcVal)),
+            static_cast<std::size_t>(lenVal)
+        );
+    }
+    return env.Undefined();
+}
+
+Napi::Value RtlCopyMemoryBinding(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+    int64_t destVal = info.Length() >= 1 ? info[0].As<Napi::Number>().Int64Value() : 0;
+    int64_t srcVal = info.Length() >= 2 ? info[1].As<Napi::Number>().Int64Value() : 0;
+    int64_t lenVal = info.Length() >= 3 ? info[2].As<Napi::Number>().Int64Value() : 0;
+    if (lenVal > 0 && destVal != 0 && srcVal != 0) {
+        std::memcpy(
+            reinterpret_cast<void*>(static_cast<std::uintptr_t>(destVal)),
+            reinterpret_cast<const void*>(static_cast<std::uintptr_t>(srcVal)),
+            static_cast<std::size_t>(lenVal)
+        );
+    }
+    return env.Undefined();
+}
+
+Napi::Value RtlFillMemoryBinding(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+    int64_t destVal = info.Length() >= 1 ? info[0].As<Napi::Number>().Int64Value() : 0;
+    int64_t lenVal = info.Length() >= 2 ? info[1].As<Napi::Number>().Int64Value() : 0;
+    uint32_t fillVal = info.Length() >= 3 ? info[2].As<Napi::Number>().Uint32Value() : 0;
+    if (lenVal > 0 && destVal != 0) {
+        std::memset(
+            reinterpret_cast<void*>(static_cast<std::uintptr_t>(destVal)),
+            static_cast<int>(fillVal & 0xFFu),
+            static_cast<std::size_t>(lenVal)
+        );
+    }
+    return env.Undefined();
+}
+
+Napi::Value RtlZeroMemoryBinding(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+    int64_t destVal = info.Length() >= 1 ? info[0].As<Napi::Number>().Int64Value() : 0;
+    int64_t lenVal = info.Length() >= 2 ? info[1].As<Napi::Number>().Int64Value() : 0;
+    if (lenVal > 0 && destVal != 0) {
+        std::memset(
+            reinterpret_cast<void*>(static_cast<std::uintptr_t>(destVal)),
+            0,
+            static_cast<std::size_t>(lenVal)
+        );
+    }
+    return env.Undefined();
+}
+
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
     exports.Set("CloseHandle", Napi::Function::New(env, CloseHandleBinding));
     exports.Set("GetLastError", Napi::Function::New(env, GetLastErrorBinding));
@@ -875,6 +936,10 @@ Napi::Object Init(Napi::Env env, Napi::Object exports) {
     exports.Set("GetTimeZoneInformation", Napi::Function::New(env, GetTimeZoneInformationBinding));
     exports.Set("LockWorkStation", Napi::Function::New(env, LockWorkStationBinding));
     exports.Set("DisconnectNamedPipe", Napi::Function::New(env, DisconnectNamedPipeBinding));
+    exports.Set("RtlMoveMemory", Napi::Function::New(env, RtlMoveMemoryBinding));
+    exports.Set("RtlCopyMemory", Napi::Function::New(env, RtlCopyMemoryBinding));
+    exports.Set("RtlFillMemory", Napi::Function::New(env, RtlFillMemoryBinding));
+    exports.Set("RtlZeroMemory", Napi::Function::New(env, RtlZeroMemoryBinding));
     exports.Set("isNativeAvailable", Napi::Function::New(env, IsNativeAvailableBinding));
     return exports;
 }
