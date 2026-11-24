@@ -10,36 +10,16 @@ on:
         type: choice
         options:
           - all
+          - windows
           - jvm
           - js
-          - wasm
-          - android
-          - android-native
-          - macos
-          - ios
-          - tvos
-          - watchos
-          - linux
-          - windows
-          - swift
       platform:
-        description: "Platform runner / architecture slice (e.g. macosArm64 for jvm)"
+        description: "Platform runner / architecture slice"
         required: false
-        default: "all"
+        default: "mingwX64"
         type: choice
         options:
           - all
-          - macosArm64
-          - iosArm64
-          - iosSimulatorArm64
-          - tvosArm64
-          - tvosSimulatorArm64
-          - watchosDeviceArm64
-          - watchosSimulatorArm64
-          - androidNativeArm64
-          - androidNativeX64
-          - linuxX64
-          - linuxArm64
           - mingwX64
       phase:
         description: "Execution phase (build, test, or both)"
@@ -55,13 +35,24 @@ permissions:
   contents: read
 
 jobs:
+  windows:
+    if: >-
+      (inputs.target == '' || inputs.target == 'all' || inputs.target == 'windows') &&
+      (inputs.platform == '' || inputs.platform == 'all' || inputs.platform == 'mingwX64')
+    uses: ./.github/workflows/windows.yml
+    with:
+      platform: mingwX64
+      phase: ${{ inputs.phase || 'build-and-test' }}
+    permissions:
+      contents: read
+
   jvm:
     if: >-
       (inputs.target == '' || inputs.target == 'all' || inputs.target == 'jvm') &&
-      (inputs.platform == '' || inputs.platform == 'all' || inputs.platform == 'macosArm64' || inputs.platform == 'linuxX64' || inputs.platform == 'linuxArm64' || inputs.platform == 'mingwX64')
+      (inputs.platform == '' || inputs.platform == 'all' || inputs.platform == 'mingwX64')
     uses: ./.github/workflows/jvm.yml
     with:
-      platform: ${{ inputs.platform || 'all' }}
+      platform: mingwX64
       phase: ${{ inputs.phase || 'build-and-test' }}
     permissions:
       contents: read
@@ -69,120 +60,10 @@ jobs:
   js:
     if: >-
       (inputs.target == '' || inputs.target == 'all' || inputs.target == 'js') &&
-      (inputs.platform == '' || inputs.platform == 'all' || inputs.platform == 'macosArm64' || inputs.platform == 'linuxX64' || inputs.platform == 'linuxArm64' || inputs.platform == 'mingwX64')
+      (inputs.platform == '' || inputs.platform == 'all' || inputs.platform == 'mingwX64')
     uses: ./.github/workflows/js.yml
     with:
-      platform: ${{ inputs.platform || 'all' }}
-      phase: ${{ inputs.phase || 'build-and-test' }}
-    permissions:
-      contents: read
-
-  wasm:
-    if: >-
-      (inputs.target == '' || inputs.target == 'all' || inputs.target == 'wasm') &&
-      (inputs.platform == '' || inputs.platform == 'all' || inputs.platform == 'macosArm64' || inputs.platform == 'linuxX64' || inputs.platform == 'linuxArm64' || inputs.platform == 'mingwX64')
-    uses: ./.github/workflows/wasm.yml
-    with:
-      platform: ${{ inputs.platform || 'all' }}
-      phase: ${{ inputs.phase || 'build-and-test' }}
-    permissions:
-      contents: read
-
-  android:
-    if: >-
-      (inputs.target == '' || inputs.target == 'all' || inputs.target == 'android') &&
-      (inputs.platform == '' || inputs.platform == 'all' || inputs.platform == 'macosArm64' || inputs.platform == 'linuxX64')
-    uses: ./.github/workflows/android.yml
-    with:
-      platform: ${{ inputs.platform || 'all' }}
-      phase: ${{ inputs.phase || 'build-and-test' }}
-    permissions:
-      contents: read
-
-  android-native:
-    if: >-
-      (inputs.target == '' || inputs.target == 'all' || inputs.target == 'android-native') &&
-      (inputs.platform == '' || inputs.platform == 'all' || inputs.platform == 'androidNativeArm64' || inputs.platform == 'androidNativeX64')
-    uses: ./.github/workflows/android-native.yml
-    with:
-      platform: ${{ inputs.platform || 'all' }}
-      phase: ${{ inputs.phase || 'build-and-test' }}
-    permissions:
-      contents: read
-
-  macos:
-    if: >-
-      (inputs.target == '' || inputs.target == 'all' || inputs.target == 'macos') &&
-      (inputs.platform == '' || inputs.platform == 'all' || inputs.platform == 'macosArm64')
-    uses: ./.github/workflows/macos.yml
-    with:
-      platform: ${{ inputs.platform || 'all' }}
-      phase: ${{ inputs.phase || 'build-and-test' }}
-    permissions:
-      contents: read
-
-  ios:
-    if: >-
-      (inputs.target == '' || inputs.target == 'all' || inputs.target == 'ios') &&
-      (inputs.platform == '' || inputs.platform == 'all' || inputs.platform == 'iosArm64' || inputs.platform == 'iosSimulatorArm64')
-    uses: ./.github/workflows/ios.yml
-    with:
-      platform: ${{ inputs.platform || 'all' }}
-      phase: ${{ inputs.phase || 'build-and-test' }}
-    permissions:
-      contents: read
-
-  tvos:
-    if: >-
-      (inputs.target == '' || inputs.target == 'all' || inputs.target == 'tvos') &&
-      (inputs.platform == '' || inputs.platform == 'all' || inputs.platform == 'tvosArm64' || inputs.platform == 'tvosSimulatorArm64')
-    uses: ./.github/workflows/tvos.yml
-    with:
-      platform: ${{ inputs.platform || 'all' }}
-      phase: ${{ inputs.phase || 'build-and-test' }}
-    permissions:
-      contents: read
-
-  watchos:
-    if: >-
-      (inputs.target == '' || inputs.target == 'all' || inputs.target == 'watchos') &&
-      (inputs.platform == '' || inputs.platform == 'all' || inputs.platform == 'watchosDeviceArm64' || inputs.platform == 'watchosSimulatorArm64')
-    uses: ./.github/workflows/watchos.yml
-    with:
-      platform: ${{ inputs.platform || 'all' }}
-      phase: ${{ inputs.phase || 'build-and-test' }}
-    permissions:
-      contents: read
-
-  linux:
-    if: >-
-      (inputs.target == '' || inputs.target == 'all' || inputs.target == 'linux') &&
-      (inputs.platform == '' || inputs.platform == 'all' || inputs.platform == 'linuxX64' || inputs.platform == 'linuxArm64')
-    uses: ./.github/workflows/linux.yml
-    with:
-      platform: ${{ inputs.platform || 'all' }}
-      phase: ${{ inputs.phase || 'build-and-test' }}
-    permissions:
-      contents: read
-
-  windows:
-    if: >-
-      (inputs.target == '' || inputs.target == 'all' || inputs.target == 'windows') &&
-      (inputs.platform == '' || inputs.platform == 'all' || inputs.platform == 'mingwX64')
-    uses: ./.github/workflows/windows.yml
-    with:
-      platform: ${{ inputs.platform || 'all' }}
-      phase: ${{ inputs.phase || 'build-and-test' }}
-    permissions:
-      contents: read
-
-  swift:
-    if: >-
-      (inputs.target == '' || inputs.target == 'all' || inputs.target == 'swift') &&
-      (inputs.platform == '' || inputs.platform == 'all' || inputs.platform == 'macosArm64')
-    uses: ./.github/workflows/swift.yml
-    with:
-      platform: ${{ inputs.platform || 'all' }}
+      platform: mingwX64
       phase: ${{ inputs.phase || 'build-and-test' }}
     permissions:
       contents: read
