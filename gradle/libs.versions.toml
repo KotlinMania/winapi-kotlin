@@ -1,16 +1,18 @@
 [versions]
 kotlin = "2.4.21"
 coroutines = "1.11.0"
-serialization = "1.11.0"
+serialization = "1.13.0"
 datetime = "0.8.0"
 collectionsImmutable = "0.5.2"
-androidKmp = "9.4.1"
+androidKmp = "9.5.2"
 detekt = "2.0.0-alpha.6"
 ktlint = "14.2.0"
 ktlintEngine = "1.8.0"
 kotlinxBenchmark = "0.5.0"
 
 androidxTestRunner = "1.7.0"
+
+rustLang = "0.3.0"
 
 [plugins]
 android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "androidKmp" }
@@ -32,8 +34,13 @@ kotlinx-benchmark-runtime = { module = "org.jetbrains.kotlinx:kotlinx-benchmark-
 
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidxTestRunner" }
 
+rust-lang-kotlin = { module = "io.github.kotlinmania:rust-lang-kotlin", version.ref = "rustLang" }
+
 [bundles]
 template-commonMain = [
   "kotlinx-coroutines-core",
   "collections-immutable",
+]
+rust-lang-commonMain = [
+  "rust-lang-kotlin",
 ]

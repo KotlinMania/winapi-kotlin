@@ -128,7 +128,7 @@ public final class CentralPortalSupport {
             task.setGroup("publishing");
             task.setDescription("Uploads the deployment bundle to the Sonatype Central Portal.");
             task.dependsOn(centralPortalBundle);
-            if (jvmFfiEnabled) {
+            if (jvmFfiEnabled && project.getTasks().getNames().contains("verifyJniDistribution")) {
                 task.dependsOn("verifyJniDistribution");
             }
             task.doLast(t -> uploadToCentralPortal(project, publishProjectName, centralPortalBundle.get().getArchiveFile().get().getAsFile()));

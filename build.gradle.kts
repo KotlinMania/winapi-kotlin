@@ -1393,20 +1393,20 @@ if (jvmFfiEnabled && jvmTargetEnabled) {
             filter.includeTestsMatching("*.HostIoTest")
         }
     tasks.named("check") { dependsOn(packagedJniTest) }
+}
 
-    if (androidTargetEnabled) {
-        val compileAndroidJni =
-            FfiBuildSupport.registerAndroidJniTask(
-                project,
-                ffiName,
-                ffiNameLower,
-                nativeFfiEnabled,
-                nativeFfiCompileWrapper,
-                projectKonanDataDirectory.get(),
-            )
-        extensions.getByType<KotlinMultiplatformAndroidComponentsExtension>().onVariants { variant ->
-            requireNotNull(variant.sources.jniLibs).addGeneratedSourceDirectory(compileAndroidJni) { it.nativeDirectory }
-        }
+if (jvmFfiEnabled && androidTargetEnabled) {
+    val compileAndroidJni =
+        FfiBuildSupport.registerAndroidJniTask(
+            project,
+            ffiName,
+            ffiNameLower,
+            nativeFfiEnabled,
+            nativeFfiCompileWrapper,
+            projectKonanDataDirectory.get(),
+        )
+    extensions.getByType<KotlinMultiplatformAndroidComponentsExtension>().onVariants { variant ->
+        requireNotNull(variant.sources.jniLibs).addGeneratedSourceDirectory(compileAndroidJni) { it.nativeDirectory }
     }
 }
 
